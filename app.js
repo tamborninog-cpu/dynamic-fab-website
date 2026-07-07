@@ -9,28 +9,42 @@
 
   /* ---- Real leads (address, metro, units, price, published cap %).
      Each links to a live search that finds the actual listing. ---- */
+  // [address, city, state, units, price, listed cap %, building sqft (0 = unknown)]
   const RAW = [
-    ["8021 Birmingham St",   "Houston",   "TX", 10,   825000, 8.48],
-    ["3815 Fannin St",       "Houston",   "TX", 15,   895000, 8.89],
-    ["4322 Roseland Ave",    "Dallas",    "TX", 10,  4999000, 4.62],
-    ["Dallas 75214 (23-unit)","Dallas",   "TX", 23,  3500000, 4.64],
-    ["Dallas 75204 (10-unit)","Dallas",   "TX", 10,  6100000, 6.00],
-    ["Dallas 75204 (13-unit)","Dallas",   "TX", 13,  2300000, 8.31],
-    ["Dallas 75204 (10-unit B)","Dallas", "TX", 10,  3090000, 5.83],
-    ["1200 Utoy Springs Rd", "Atlanta",   "GA", 34,  2999999, 7.76],
-    ["1132 Virginia Ave NE", "Atlanta",   "GA", 28,  6250000, 6.86],
-    ["Atlanta 30xxx (14-unit value-add)","Atlanta","GA", 14, 1000000, 9.85],
-    ["11202 Buckeye Rd",     "Cleveland", "OH", 17,   949000, 10.79],
-    ["18051 Lake Shore Blvd","Cleveland", "OH", 21,  1100000, 7.54],
-    ["3501 E 93rd St",       "Cleveland", "OH", 13,   874900, 8.33],
-    ["261 Keel Ave",         "Memphis",   "TN", 10,   846284, 8.85],
-    ["1772-1776 Madison Ave","Memphis",   "TN", 16,  1900000, 6.42],
-    ["Memphis 38116 (20-unit)","Memphis", "TN", 20,  1546000, 10.44],
-    ["207 S Barksdale St",   "Memphis",   "TN", 16,  2250000, 5.42],
-    ["1572 Hanauer St",      "Memphis",   "TN", 46,  2100000, 3.53]
+    ["8021 Birmingham St",   "Houston",     "TX", 10,   825000,  8.48, 0],
+    ["3815 Fannin St",       "Houston",     "TX", 15,   895000,  8.89, 0],
+    ["4322 Roseland Ave",    "Dallas",      "TX", 10,  4999000,  4.62, 0],
+    ["Dallas 75214 (23-unit)","Dallas",     "TX", 23,  3500000,  4.64, 0],
+    ["Dallas 75204 (10-unit)","Dallas",     "TX", 10,  6100000,  6.00, 0],
+    ["Dallas 75204 (13-unit)","Dallas",     "TX", 13,  2300000,  8.31, 19541],
+    ["Dallas 75204 (10-unit B)","Dallas",   "TX", 10,  3090000,  5.83, 0],
+    ["1200 Utoy Springs Rd", "Atlanta",     "GA", 34,  2999999,  7.76, 0],
+    ["1132 Virginia Ave NE", "Atlanta",     "GA", 28,  6250000,  6.86, 0],
+    ["Atlanta 30xxx (14-unit value-add)","Atlanta","GA", 14, 1000000, 9.85, 0],
+    ["11202 Buckeye Rd",     "Cleveland",   "OH", 17,   949000, 10.79, 0],
+    ["18051 Lake Shore Blvd","Cleveland",   "OH", 21,  1100000,  7.54, 0],
+    ["3501 E 93rd St",       "Cleveland",   "OH", 13,   874900,  8.33, 0],
+    ["261 Keel Ave",         "Memphis",     "TN", 10,   846284,  8.85, 0],
+    ["1772-1776 Madison Ave","Memphis",     "TN", 16,  1900000,  6.42, 0],
+    ["Memphis 38116 (20-unit)","Memphis",   "TN", 20,  1546000, 10.44, 0],
+    ["207 S Barksdale St",   "Memphis",     "TN", 16,  2250000,  5.42, 0],
+    ["1572 Hanauer St",      "Memphis",     "TN", 46,  2100000,  3.53, 0],
+    ["2620 N 40th St",       "Phoenix",     "AZ", 43, 12247000,  5.75, 0],
+    ["4128 N 10th St",       "Phoenix",     "AZ", 10,  2873000,  6.00, 0],
+    ["825 E Missouri Ave",   "Phoenix",     "AZ", 10,  2709000,  6.00, 0],
+    ["1623-1625 W Missouri Ave","Phoenix",  "AZ", 29,  4450000,  6.75, 0],
+    ["2020 W Orangewood Ave","Phoenix",     "AZ", 27,  3895000,  5.02, 0],
+    ["9730-9768 Locust St",  "Kansas City", "MO", 28,  4250000,  6.50, 0],
+    ["600-638 Francis Ave",  "Clarksville", "IN", 20,  1850000,  6.97, 0],
+    ["624 Riley Blvd",       "Bedford",     "IN", 26,  1850000,  7.57, 0],
+    ["7778-7780 4th Ave S",  "Birmingham",  "AL", 20,  2100000,  6.63, 15250],
+    ["1328 W Greenfield Ave","Milwaukee",   "WI", 10,  2200000,  6.07, 0],
+    ["1816 E Kane Pl",       "Milwaukee",   "WI", 10,  2300000,  6.10, 0],
+    ["Oklahoma City 73107 (40-unit)","Oklahoma City","OK", 40, 3300000, 8.33, 32720],
+    ["735 NW 30th St",       "Oklahoma City","OK", 12,  2375000,  4.34, 11520]
   ];
   const DEALS = RAW.map((r, i) => ({
-    id: "p" + i, addr: r[0], city: r[1], state: r[2], units: r[3], price: r[4], cap: r[5],
+    id: "p" + i, addr: r[0], city: r[1], state: r[2], units: r[3], price: r[4], cap: r[5], sf: r[6],
     src: "https://www.google.com/search?q=" +
          encodeURIComponent(`${r[0]} ${r[1]} ${r[2]} apartment building for sale`)
   }));
@@ -159,21 +173,68 @@
       </div>`;
   }
 
+  function assetClass(cap) {
+    if (cap < 5) return "Premium, primary-market (Class A)";
+    if (cap < 5.75) return "Stabilized Class A / B";
+    if (cap < 7) return "Solid Class B";
+    if (cap < 9) return "Higher-yield Class B / C";
+    return "High-cap Class C / value-add";
+  }
+  function describe(d, u, a) {
+    const rel = d.cap >= 7 ? "well above" : d.cap >= 5.75 ? "above" : d.cap >= 5 ? "roughly in line with" : "below";
+    const sfBit = d.sf ? ` · ${money(d.price / d.sf)}/sf across ${d.sf.toLocaleString()} sf` : "";
+    const money0 = (n) => money(Math.round(n));
+    const fin = u.cf >= 0
+      ? `it throws off <b>${money0(u.cf)}/yr</b> in cash flow (${pct(u.coc)} cash-on-cash) at a ${u.dscr === Infinity ? "very high" : xx(u.dscr)} DSCR`
+      : `it runs <b class="neg">${money0(u.cf)}/yr</b> negative — you'd need a lower price, more down, or seller terms to make it cash-flow`;
+    return `A <b>${d.units}-unit</b> multifamily property in <b>${esc(d.city)}, ${d.state}</b>, listed at <b>${money(d.price)}</b> ` +
+      `(${money(u.ppu)}/unit${sfBit}). The listed <b>${pct(d.cap)}</b> cap rate sits ${rel} the ~5.5% national multifamily average — ` +
+      `a profile that reads as <b>${assetClass(d.cap)}</b>. Financed at your ${a.down}% down / ${a.rate}% terms, ${fin}.`;
+  }
+
+  function plTable(title, tag, s, amort, kind) {
+    const pi = pmt(s.loan, s.rate, amort);
+    const cfCls = s.cf < 0 ? "neg" : "";
+    const extra = kind === "seller"
+      ? `<tr><td>Balloon balance @ yr 5</td><td class="tnum">${money(s.balloon)}</td></tr>`
+      : `<tr><td>Cash to close</td><td class="tnum">${money(s.invested)}</td></tr>`;
+    return `
+      <div class="dcard">
+        <h4>${title} <span class="h4sub">${tag}</span></h4>
+        <table class="kv">
+          <tr><td>Down payment</td><td class="tnum">${money(s.down)} (${pct(s.downPct, 0)})</td></tr>
+          <tr><td>${kind === "seller" ? "Seller carry note" : "Loan amount"}</td><td class="tnum">${money(s.loan)}</td></tr>
+          <tr><td>Interest rate</td><td class="tnum">${pct(s.rate)}</td></tr>
+          <tr><td>Monthly P&amp;I</td><td class="tnum">${money(pi)}</td></tr>
+          <tr><td>Annual debt service</td><td class="tnum">${money(s.ds)}</td></tr>
+          <tr class="hl"><td>Cash flow / yr</td><td class="tnum ${cfCls}">${money(s.cf)}</td></tr>
+          <tr class="hl"><td>Cash-on-cash</td><td class="tnum ${cfCls}">${pct(s.coc)}</td></tr>
+          <tr><td>DSCR</td><td class="tnum">${s.dscr === Infinity ? "∞" : xx(s.dscr)}</td></tr>
+          ${extra}
+        </table>
+      </div>`;
+  }
+
   function detail(d, u) {
+    const a = assumptions();
     const factor = (label, pts, max) => { const r = pts / max; const c = r >= 0.66 ? "good" : r >= 0.33 ? "mid" : "bad"; return `<span class="factor ${c}">${label}</span>`; };
-    const cfCls = u.cf < 0 ? "neg" : "";
-    const scfCls = u.seller.cf < 0 ? "neg" : "";
+    const attr = (k, v) => `<span class="attr"><em>${k}</em>${v}</span>`;
+    const conv = { down: u.down, downPct: a.down, loan: u.loan, rate: a.rate, ds: u.ds, cf: u.cf, coc: u.coc, dscr: u.dscr, invested: u.invested };
+    const sell = { ...u.seller, downPct: 15 };
     return `
       <div class="detail__grid">
-        <div class="dcard">
-          <h4>📐 Deal math</h4>
-          <table class="kv">
-            <tr><td>Purchase price</td><td class="tnum">${money(d.price)}</td></tr>
-            <tr><td>Units</td><td class="tnum">${d.units}</td></tr>
-            <tr><td>Price / unit</td><td class="tnum">${money(u.ppu)}</td></tr>
-            <tr><td>Cap rate (listed)</td><td class="tnum">${pct(d.cap)}</td></tr>
-            <tr class="hl"><td>NOI / yr</td><td class="tnum">${money(u.noi)}</td></tr>
-          </table>
+        <div class="dcard wide">
+          <h4>🧭 Snapshot &amp; description</h4>
+          <p class="snap">${describe(d, u, a)}</p>
+          <div class="attrs">
+            ${attr("Market", esc(d.city) + ", " + d.state)}
+            ${attr("Units", d.units)}
+            ${attr("$/unit", money(u.ppu))}
+            ${d.sf ? attr("$/sf", money(d.price / d.sf)) : ""}
+            ${attr("Cap", pct(d.cap))}
+            ${attr("NOI/yr", money(u.noi))}
+            ${attr("Class", assetClass(d.cap))}
+          </div>
           <div class="factors">
             ${factor("Cap " + pct(d.cap), u.capPts, 35)}
             ${factor("CoC " + pct(u.coc), u.cocPts, 25)}
@@ -181,20 +242,17 @@
             ${factor(money(u.cfPU) + "/unit/mo", u.cfPts, 15)}
           </div>
         </div>
-        <div class="dcard">
-          <h4>🏦 Conventional <span style="font-weight:500;color:var(--muted)">(your assumptions)</span></h4>
-          <table class="kv">
-            <tr><td>Down payment</td><td class="tnum">${money(u.down)}</td></tr>
-            <tr><td>Loan / Monthly P&amp;I</td><td class="tnum">${money(u.loan)} · ${money(pmt(u.loan, assumptions().rate, assumptions().amort))}</td></tr>
-            <tr class="hl"><td>Cash flow / yr</td><td class="tnum ${cfCls}">${money(u.cf)}</td></tr>
-            <tr class="hl"><td>Cash-on-cash</td><td class="tnum ${cfCls}">${pct(u.coc)}</td></tr>
-            <tr><td>DSCR</td><td class="tnum">${u.dscr === Infinity ? "∞" : xx(u.dscr)}</td></tr>
-            <tr><td>Cash to close</td><td class="tnum">${money(u.invested)}</td></tr>
-          </table>
-          <table class="kv" style="margin-top:8px;border-top:1px solid var(--line);padding-top:4px">
-            <tr><td>🤝 Seller-fin (15% dn, ${pct(u.seller.rate, 2)})</td><td class="tnum ${scfCls}">${money(u.seller.cf)}/yr · ${pct(u.seller.coc)} CoC</td></tr>
-            <tr><td>Balloon bal @ yr 5</td><td class="tnum">${money(u.seller.balloon)}</td></tr>
-          </table>
+        ${plTable("🏦 Conventional", "your assumptions", conv, a.amort, "conv")}
+        ${plTable("🤝 Seller financing", "15% down · 30-yr · 5-yr balloon", sell, a.amort, "seller")}
+        <div class="dcard wide verify">
+          <h4>✅ Before you offer, verify</h4>
+          <ul>
+            <li>Rent roll &amp; trailing-12 income (is the ${pct(d.cap)} cap real or pro-forma?)</li>
+            <li>Actual property taxes &amp; insurance — often reset on sale</li>
+            <li>Unit mix, occupancy &amp; any below-market/rent-controlled leases</li>
+            <li>Deferred maintenance, roof/HVAC/plumbing age, deferred capex</li>
+            <li>A real lender quote — rates &amp; terms drive the whole return</li>
+          </ul>
         </div>
       </div>
       <div class="detail__actions">

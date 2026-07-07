@@ -96,7 +96,9 @@ a { color: inherit; text-decoration: none; }
 .logo__m { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 9px;
   background: linear-gradient(140deg, var(--brand), var(--brand-2)); color: #fff; font-size: 16px; box-shadow: 0 4px 12px -4px var(--brand); }
 .logo b { color: var(--brand); }
-.top__tabs { display: flex; gap: 2px; margin-left: 8px; padding: 3px; background: var(--surface-2); border-radius: 999px; }
+.top__tabs { display: flex; gap: 2px; margin-left: 8px; padding: 3px; background: var(--surface-2); border-radius: 999px; max-width: 100%; overflow-x: auto; scrollbar-width: none; }
+.top__tabs::-webkit-scrollbar { display: none; }
+.tab { flex-shrink: 0; }
 .tab { border: 0; background: transparent; color: var(--muted); font-weight: 600; font-size: 13.5px; padding: 7px 16px; border-radius: 999px; transition: color .15s, background .15s; }
 .tab:hover { color: var(--text); }
 .tab.is-active { color: var(--brand); background: var(--surface); box-shadow: var(--shadow-1); }
@@ -394,6 +396,35 @@ a { color: inherit; text-decoration: none; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 
+/* ---------- Printable one-pager ---------- */
+#printSheet { display: none; }
+.ps { color: #111; font-size: 13px; }
+.ps-head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #4a41d6; padding-bottom: 8px; margin-bottom: 14px; }
+.ps-brand { font-size: 20px; font-weight: 800; color: #111; } .ps-brand b { color: #4a41d6; }
+.ps-date { font-size: 12px; color: #555; }
+.ps-title { font-size: 22px; margin: 0 0 2px; color: #111; }
+.ps-sub { font-size: 13px; color: #555; margin-bottom: 8px; }
+.ps-score { display: inline-block; font-size: 13px; font-weight: 700; background: #eef1fb; color: #4a41d6; padding: 5px 12px; border-radius: 6px; margin-bottom: 14px; }
+.ps-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.ps-metrics div { border: 1px solid #ddd; border-radius: 8px; padding: 10px 12px; }
+.ps-metrics span { display: block; font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: .4px; }
+.ps-metrics b { font-size: 18px; }
+.ps-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.ps-tbl { width: 100%; border-collapse: collapse; }
+.ps-tbl caption { text-align: left; font-weight: 700; font-size: 13px; margin-bottom: 6px; color: #4a41d6; }
+.ps-tbl td { padding: 5px 0; border-bottom: 1px solid #eee; font-size: 12.5px; }
+.ps-tbl td:last-child { text-align: right; font-weight: 700; }
+.ps-max { margin: 16px 0 6px; padding: 10px 14px; background: #eef1fb; border-radius: 8px; font-size: 14px; }
+.ps-max b { color: #4a41d6; }
+.ps-foot { font-size: 11px; color: #777; margin-top: 14px; border-top: 1px solid #ddd; padding-top: 8px; }
+
+@media print {
+  body.printing { background: #fff !important; }
+  body.printing > *:not(#printSheet) { display: none !important; }
+  body.printing #printSheet { display: block !important; padding: 24px; }
+  @page { margin: 14mm; }
+}
+
   </style>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A2%3C/text%3E%3C/svg%3E" />
 </head>
@@ -459,7 +490,7 @@ a { color: inherit; text-decoration: none; }
     <section class="view" id="view-deals">
       <div class="hero">
         <div class="hero__l">
-          <span class="eyebrow">Multifamily acquisitions · 180+ listings · 32 states</span>
+          <span class="eyebrow">Multifamily acquisitions · 185+ listings · 33 states</span>
           <h1>Ranked deal board</h1>
           <p>Every property is scored by one underwriting engine and ranked strongest-first. Tune your financing once and the whole board re-scores live. Click a row to underwrite it.</p>
         </div>
@@ -598,6 +629,7 @@ a { color: inherit; text-decoration: none; }
 
           <div class="an-actions">
             <button class="btn btn--brand" id="anSave">＋ Save to Pipeline</button>
+            <button class="btn btn--ghost" id="anSheet">🖨 One-pager</button>
             <button class="btn btn--ghost" id="anReset">Reset</button>
           </div>
         </div>
@@ -641,6 +673,7 @@ a { color: inherit; text-decoration: none; }
   </footer>
 
   <div class="toast" id="toast" hidden></div>
+  <div id="printSheet" aria-hidden="true"></div>
   <script>
 /* ============================================================
    DealScout 2 — in-app ranked deal list
@@ -834,7 +867,13 @@ a { color: inherit; text-decoration: none; }
     ["145 W Flora St",       "Stockton",    "CA", 45,  3995000,  6.80, 60434],
     ["721 Erickson Ave",     "Modesto",     "CA", 17,  1860000,  5.70, 13000],
     ["3212-3244 S Victoria St","Wichita",   "KS", 25,   735000,  7.32, 0],
-    ["Mobile 36604 (32-unit)","Mobile",     "AL", 32,  4200000,  7.90, 0]
+    ["Mobile 36604 (32-unit)","Mobile",     "AL", 32,  4200000,  7.90, 0],
+    ["316 W Columbus Dr",    "Tampa",       "FL", 12,  1099999,  7.64, 0],
+    ["Tampa 33613 (12-unit)","Tampa",       "FL", 12,  1750000,  7.05, 0],
+    ["Tampa 33604 (10-unit)","Tampa",       "FL", 10,  1100000,  7.55, 0],
+    ["268-288 Central Ave",  "Saint Petersburg","FL", 10, 1315000, 6.32, 0],
+    ["9212 W Brogan Dr",     "Boise",       "ID", 15,  1700000,  5.60, 9424],
+    ["810 N D St",           "Grangeville", "ID", 16,  3300000,  6.00, 18000]
   ];
   const DEALS = RAW.map((r, i) => ({
     id: "p" + i, addr: r[0], city: r[1], state: r[2], units: r[3], price: r[4], cap: r[5], sf: r[6],
@@ -1166,7 +1205,49 @@ a { color: inherit; text-decoration: none; }
       <div class="detail__actions">
         <button class="btn btn--brand btn--sm" data-add="${d.id}">＋ Add to pipeline</button>
         <a class="btn btn--ghost btn--sm" href="${esc(d.src)}" target="_blank" rel="noopener noreferrer">🔎 Find live listing ↗</a>
+        <button class="btn btn--ghost btn--sm" data-sheet="${d.id}">🖨 One-pager</button>
       </div>`;
+  }
+
+  /* ---- printable underwriting one-pager ---- */
+  function renderSheet(name, sub, price, units, cap, u, a) {
+    const g = gradeOf(u.total);
+    const pi = pmt(u.loan, a.rate, a.amort), spi = pmt(u.seller.loan, u.seller.rate, a.amort);
+    const mo = maxOffer(u.noi, a, 8, 1.25);
+    const row = (k, v) => `<tr><td>${k}</td><td>${v}</td></tr>`;
+    let dt = ""; try { dt = new Date().toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }); } catch { dt = ""; }
+    $("printSheet").innerHTML = `
+      <div class="ps">
+        <div class="ps-head"><div class="ps-brand">🏢 Deal<b>Scout</b></div><div class="ps-date">Underwriting summary${dt ? " · " + dt : ""}</div></div>
+        <h1 class="ps-title">${esc(name)}</h1>
+        <div class="ps-sub">${esc(sub)}</div>
+        <div class="ps-score">Deal score <b>${u.total}/100</b> — Grade ${g.l} · ${g.t}</div>
+        <div class="ps-metrics">
+          <div><span>Price</span><b>${money(price)}</b></div>
+          <div><span>Units</span><b>${units}</b></div>
+          <div><span>Price / unit</span><b>${money(u.ppu)}</b></div>
+          <div><span>Cap rate</span><b>${pct(cap)}</b></div>
+          <div><span>NOI / yr</span><b>${money(u.noi)}</b></div>
+          <div><span>Cash flow / yr</span><b>${money(u.cf)}</b></div>
+        </div>
+        <div class="ps-cols">
+          <table class="ps-tbl"><caption>Conventional — ${a.down}% down, ${pct(a.rate)}, ${a.amort}-yr</caption><tbody>
+            ${row("Down payment", money(u.down))}${row("Loan amount", money(u.loan))}${row("Monthly P&amp;I", money(pi))}${row("Annual debt service", money(u.ds))}${row("Cash flow / yr", money(u.cf))}${row("Cash-on-cash", pct(u.coc))}${row("DSCR", u.dscr === Infinity ? "∞" : xx(u.dscr))}${row("Cash to close", money(u.invested))}
+          </tbody></table>
+          <table class="ps-tbl"><caption>Seller financing — 15% down, ${pct(u.seller.rate)}, 5-yr balloon</caption><tbody>
+            ${row("Down payment", money(u.seller.down))}${row("Seller note", money(u.seller.loan))}${row("Monthly P&amp;I", money(spi))}${row("Annual debt service", money(u.seller.ds))}${row("Cash flow / yr", money(u.seller.cf))}${row("Cash-on-cash", pct(u.seller.coc))}${row("DSCR", u.seller.dscr === Infinity ? "∞" : xx(u.seller.dscr))}${row("Balloon @ yr 5", money(u.seller.balloon))}
+          </tbody></table>
+        </div>
+        <div class="ps-max">🎯 Max offer to still hit 8% cash-on-cash &amp; 1.25× DSCR: <b>${moneyOr(mo.max)}</b></div>
+        <div class="ps-foot">Screening estimate only — not financial advice. Verify rent roll, T-12, taxes &amp; insurance before making an offer. Generated by DealScout.</div>
+      </div>`;
+    document.body.classList.add("printing");
+    window.print();
+  }
+  function sheetForDeal(id) {
+    const d = DEALS.find((x) => x.id === id); if (!d) return;
+    const a = assumptions(), u = underwrite(d, a);
+    renderSheet(`${d.addr}`, `${d.city}, ${d.state} · ${d.units} units`, d.price, d.units, d.cap, u, a);
   }
 
   function wireRows() {
@@ -1178,6 +1259,9 @@ a { color: inherit; text-decoration: none; }
     });
     document.querySelectorAll("[data-add]").forEach((btn) => {
       btn.addEventListener("click", (e) => { e.stopPropagation(); addToPipeline(btn.dataset.add); });
+    });
+    document.querySelectorAll("[data-sheet]").forEach((btn) => {
+      btn.addEventListener("click", (e) => { e.stopPropagation(); sheetForDeal(btn.dataset.sheet); });
     });
   }
 
@@ -1311,6 +1395,11 @@ a { color: inherit; text-decoration: none; }
     ["anPrice", "anUnits", "anRent", "anOther", "anVac", "anExpVal", "anCap", "anDown", "anRate", "anAmort", "anClosing"]
       .forEach((id) => $(id).addEventListener("input", renderAnalyze));
     $("anSave").addEventListener("click", anSave);
+    $("anSheet").addEventListener("click", () => {
+      const { price, units, a, u } = anCompute();
+      const name = $("anName").value.trim() || `${units || "?"}-unit — ${money(price)}`;
+      renderSheet(name, `${units || "?"} units · underwritten in Analyze`, price, units, u.cap, u, a);
+    });
     $("anReset").addEventListener("click", () => { $("anName").value = ""; $("anUrl").value = ""; renderAnalyze(); });
     renderAnalyze();
   }
@@ -1459,6 +1548,8 @@ a { color: inherit; text-decoration: none; }
     renderMarkets();
     renderBoard();
   }
+
+  window.addEventListener("afterprint", () => document.body.classList.remove("printing"));
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

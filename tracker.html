@@ -249,7 +249,37 @@
   .srcrow .si{width:34px;height:34px;border-radius:9px;background:rgba(79,209,224,.13);display:grid;place-items:center;flex:none}
   .srcrow .si svg{width:18px;height:18px;color:var(--cyan)}
 
-  @media (max-width:1120px){.grid2{grid-template-columns:1fr}.maplayout{grid-template-columns:1fr}.mapwrap{height:460px}.kanban{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr 1fr}}
+  /* Calculators */
+  .seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:11px;padding:4px;gap:4px;margin-bottom:20px}
+  .seg button{background:none;border:none;color:var(--muted);font-weight:700;font-size:13px;padding:9px 18px;border-radius:8px;cursor:pointer;font-family:var(--font)}
+  .seg button.active{background:linear-gradient(135deg,var(--brand),#3f6fe0);color:#fff}
+  .calcwrap{display:grid;grid-template-columns:360px 1fr;gap:20px;align-items:start;max-width:940px}
+  .calc-inputs{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .calc-inputs .field{display:flex;flex-direction:column;gap:6px;margin-bottom:13px}
+  .calc-inputs label{font-size:12px;color:var(--muted);font-weight:700}
+  .calc-inputs input{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:10px 12px;font-size:14px;font-family:var(--font);width:100%}
+  .calc-inputs input:focus{outline:none;border-color:var(--brand)}
+  .calc-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .calc-out{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:6px 20px}
+  .ores{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid rgba(38,50,94,.5)}
+  .ores:last-child{border:none}
+  .ores .ol{color:var(--muted);font-size:13.5px}
+  .ores .ov{font-weight:800;font-size:16px}
+  .ohi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+  .ohcard{background:linear-gradient(160deg,var(--panel2),var(--bg2));border:1px solid var(--line);border-radius:12px;padding:15px}
+  .ohcard .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+  .ohcard .v{font-size:23px;font-weight:800;margin-top:6px}
+  .ohcard .sub{font-size:11px;color:var(--faint);margin-top:2px}
+  .deal-signal{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:800;letter-spacing:.3px;white-space:nowrap}
+  .sig-strong{background:rgba(62,207,142,.16);color:var(--green);border:1px solid rgba(62,207,142,.35)}
+  .sig-fair{background:rgba(245,166,35,.14);color:var(--amber);border:1px solid rgba(245,166,35,.32)}
+  .sig-thin{background:rgba(255,92,108,.13);color:var(--red);border:1px solid rgba(255,92,108,.3)}
+  .om-actions{display:flex;gap:6px;white-space:nowrap}
+  .om-actions .btn{padding:6px 10px;font-size:11.5px}
+  .om-actions .icobtn{width:30px;height:30px;padding:0;justify-content:center}
+  .om-actions .icobtn svg{width:15px;height:15px}
+
+  @media (max-width:1120px){.grid2{grid-template-columns:1fr}.maplayout{grid-template-columns:1fr}.mapwrap{height:460px}.kanban{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr 1fr}.calcwrap{grid-template-columns:1fr}}
   @media (max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.search input{width:150px}}
 </style>
 </head>
@@ -281,9 +311,17 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>
         Map
       </div>
+      <div class="nav__item" data-view="onmarket" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18M3 12h18M3 17h18"/><circle cx="7" cy="7" r="1.4" fill="currentColor" stroke="none"/><circle cx="7" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="7" cy="17" r="1.4" fill="currentColor" stroke="none"/></svg>
+        On-Market
+      </div>
       <div class="nav__item" data-view="pipeline" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="10"/><rect x="17" y="4" width="4" height="13"/></svg>
         Deal Pipeline
+      </div>
+      <div class="nav__item" data-view="calc" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h2M12 10h2M16 10h.01M8 14h2M12 14h2M16 14h.01M8 18h2M12 18h2M16 18h.01"/></svg>
+        Calculators
       </div>
       <div class="nav__item" data-view="sources" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v4H4zM4 10h16v4H4zM4 16h16v4H4z"/><circle cx="7" cy="6" r=".5" fill="currentColor"/></svg>
@@ -437,6 +475,94 @@
         </div>
       </section>
 
+      <!-- ON-MARKET -->
+      <section class="view" id="view-onmarket">
+        <div class="banner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
+          <span><b>On-market apartment deals, 10+ units.</b> Publicly listed buildings worth underwriting. Cap rate, price/unit and GRM are computed from the list price; the <b>signal</b> flags cap rate vs. a rough national bar. Click <b>Underwrite</b> or <b>Seller-finance</b> to drop any deal into a calculator, or <b>View</b> to find live listings on the platform.</span>
+        </div>
+        <div class="filters">
+          <div class="field"><label>Min units</label><select id="omUnits"><option value="10">10+</option><option value="15">15+</option><option value="20">20+</option><option value="30">30+</option></select></div>
+          <div class="field"><label>State</label><select id="omState"><option value="">All</option></select></div>
+          <div class="field"><label>Min cap rate</label><select id="omCap"><option value="0">Any</option><option value="5">5%+</option><option value="6">6%+</option><option value="6.5">6.5%+</option><option value="7">7%+</option><option value="7.5">7.5%+</option></select></div>
+          <div class="field"><label>Source</label><select id="omSource"><option value="">All</option></select></div>
+          <div class="field"><label>Sort by</label><select id="omSort"><option value="cap">Cap rate ↓</option><option value="ppu">Price / unit ↑</option><option value="dom">Days on market ↑</option><option value="price">List price ↑</option><option value="units">Units ↓</option></select></div>
+          <div class="filters__spacer">
+            <button class="btn btn--gold btn--sm" id="omExport">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>Export
+            </button>
+          </div>
+        </div>
+        <div class="tablewrap">
+          <div class="tscroll"><table style="min-width:1040px"><thead><tr id="omThead"></tr></thead><tbody id="omTbody"></tbody></table></div>
+          <div class="rowcount" id="omRowcount"></div>
+        </div>
+      </section>
+
+      <!-- CALCULATORS -->
+      <section class="view" id="view-calc">
+        <div class="seg" id="calcSeg">
+          <button data-calc="commercial" class="active">Commercial Analysis</button>
+          <button data-calc="seller">Seller Finance</button>
+        </div>
+
+        <div id="calc-commercial" class="calcpane">
+          <div class="calcwrap">
+            <div class="calc-inputs">
+              <div style="font-weight:800;font-size:14px;margin-bottom:14px">Deal inputs</div>
+              <div class="field"><label>Purchase price ($)</label><input type="number" id="cm_price" value="2600000" /></div>
+              <div class="calc-row2">
+                <div class="field"><label>Units</label><input type="number" id="cm_units" value="20" /></div>
+                <div class="field"><label>Closing costs (%)</label><input type="number" id="cm_closing" value="2" step="0.1" /></div>
+              </div>
+              <div class="field"><label>Gross annual rent ($)</label><input type="number" id="cm_gross" value="300000" /></div>
+              <div class="calc-row2">
+                <div class="field"><label>Vacancy (%)</label><input type="number" id="cm_vac" value="5" step="0.5" /></div>
+                <div class="field"><label>Operating exp. ($/yr)</label><input type="number" id="cm_opex" value="120000" /></div>
+              </div>
+              <div style="font-weight:800;font-size:14px;margin:16px 0 12px;border-top:1px solid var(--line);padding-top:16px">Financing</div>
+              <div class="calc-row2">
+                <div class="field"><label>Down payment (%)</label><input type="number" id="cm_down" value="25" step="1" /></div>
+                <div class="field"><label>Interest rate (%)</label><input type="number" id="cm_rate" value="6.5" step="0.125" /></div>
+              </div>
+              <div class="field"><label>Amortization (years)</label><input type="number" id="cm_amort" value="25" /></div>
+            </div>
+            <div>
+              <div class="ohi" id="cmHi"></div>
+              <div class="calc-out" id="cmOut"></div>
+              <p style="font-size:11.5px;color:var(--faint);margin-top:12px;line-height:1.6">Estimates for screening only — not lending, tax, or investment advice. Verify rents, expenses, and quotes before offering.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="calc-seller" class="calcpane" style="display:none">
+          <div class="calcwrap">
+            <div class="calc-inputs">
+              <div style="font-weight:800;font-size:14px;margin-bottom:14px">Seller-note terms</div>
+              <div class="field"><label>Purchase price ($)</label><input type="number" id="sf_price" value="2600000" /></div>
+              <div class="calc-row2">
+                <div class="field"><label>Down payment (%)</label><input type="number" id="sf_down" value="15" step="1" /></div>
+                <div class="field"><label>Interest rate (%)</label><input type="number" id="sf_rate" value="6" step="0.125" /></div>
+              </div>
+              <div class="calc-row2">
+                <div class="field"><label>Amortized over (yrs)</label><input type="number" id="sf_amort" value="30" /></div>
+                <div class="field"><label>Balloon due (yrs)</label><input type="number" id="sf_balloon" value="7" /></div>
+              </div>
+              <div style="font-weight:800;font-size:14px;margin:16px 0 12px;border-top:1px solid var(--line);padding-top:16px">Property</div>
+              <div class="calc-row2">
+                <div class="field"><label>Annual NOI ($)</label><input type="number" id="sf_noi" value="180000" /></div>
+                <div class="field"><label>Units</label><input type="number" id="sf_units" value="20" /></div>
+              </div>
+            </div>
+            <div>
+              <div class="ohi" id="sfHi"></div>
+              <div class="calc-out" id="sfOut"></div>
+              <p style="font-size:11.5px;color:var(--faint);margin-top:12px;line-height:1.6">Amortized payment with a balloon payoff at the term shown. Seller financing terms are negotiable — model a few before you offer.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </div>
   </div>
 </div>
@@ -575,6 +701,27 @@ function load(){ try{const r=JSON.parse(localStorage.getItem(STORE)); return Arr
 function clone(x){return JSON.parse(JSON.stringify(x));}
 function save(){ localStorage.setItem(STORE, JSON.stringify(props)); }
 
+/* ===== on-market listings (10+ units) ===== */
+const LSTORE = "silverkey_listings_v1";
+const LISTINGS_SEED = [
+  {id:1,street:"1425 Bryant Ave",neighborhood:"West Farms",city:"Bronx",state:"NY",zip:"10460",lat:40.8330,lng:-73.8870,units:28,yearBuilt:1928,listPrice:4950000,noi:356000,grossRent:620000,broker:"Marcus & Millichap",source:"Crexi",dom:42,notes:"Stabilized pre-war walk-up, upside on renewals."},
+  {id:2,street:"3600 Troost Ave",neighborhood:"Troostwood",city:"Kansas City",state:"MO",zip:"64109",lat:39.0520,lng:-94.5750,units:24,yearBuilt:1965,listPrice:2150000,noi:178000,grossRent:312000,broker:"Berkadia",source:"LoopNet",dom:18,notes:"High cap, opportunity-zone corridor."},
+  {id:3,street:"812 S 4th St",neighborhood:"Old Louisville",city:"Louisville",state:"KY",zip:"40203",lat:38.2420,lng:-85.7590,units:16,yearBuilt:1955,listPrice:1480000,noi:118400,grossRent:210000,broker:"CBRE",source:"Crexi",dom:30,notes:"Historic district, below-market rents."},
+  {id:4,street:"2244 W Cermak Rd",neighborhood:"Heart of Chicago",city:"Chicago",state:"IL",zip:"60608",lat:41.8520,lng:-87.6820,units:20,yearBuilt:1924,listPrice:2600000,noi:174000,grossRent:300000,broker:"Kiser Group",source:"LoopNet",dom:25,notes:"Vintage courtyard, strong occupancy."},
+  {id:5,street:"145 SW 10th Ave",neighborhood:"Tarpon River",city:"Fort Lauderdale",state:"FL",zip:"33312",lat:26.1150,lng:-80.1530,units:18,yearBuilt:1972,listPrice:3400000,noi:210000,grossRent:372000,broker:"Marcus & Millichap",source:"Crexi",dom:55,notes:"Coastal metro, insurance costs a factor."},
+  {id:6,street:"4055 E 17th Ave",neighborhood:"South Park Hill",city:"Denver",state:"CO",zip:"80220",lat:39.7440,lng:-104.9330,units:22,yearBuilt:1961,listPrice:4100000,noi:254000,grossRent:430000,broker:"Pinnacle RE",source:"LoopNet",dom:20,notes:"Infill location, value-add on interiors."},
+  {id:7,street:"1919 E Cesar Chavez St",neighborhood:"East Austin",city:"Austin",state:"TX",zip:"78702",lat:30.2560,lng:-97.7200,units:12,yearBuilt:1968,listPrice:3100000,noi:170000,grossRent:300000,broker:"JLL",source:"Crexi",dom:12,notes:"Hot submarket, priced tight — appreciation play."},
+  {id:8,street:"1237 N Van Buren St",neighborhood:"Lower East Side",city:"Milwaukee",state:"WI",zip:"53202",lat:43.0480,lng:-87.9020,units:15,yearBuilt:1950,listPrice:1750000,noi:148750,grossRent:252000,broker:"Founders 3",source:"LoopNet",dom:33,notes:"Strong yield, lakefront-adjacent."},
+  {id:9,street:"2130 NW Kearney St",neighborhood:"Nob Hill",city:"Portland",state:"OR",zip:"97210",lat:45.5310,lng:-122.6940,units:14,yearBuilt:1926,listPrice:3250000,noi:188000,grossRent:336000,broker:"HFO Investment RE",source:"Crexi",dom:40,notes:"Premier walkable district, low cap."},
+  {id:10,street:"500 W Franklin St",neighborhood:"Monroe Ward",city:"Richmond",state:"VA",zip:"23220",lat:37.5460,lng:-77.4510,units:20,yearBuilt:1949,listPrice:3600000,noi:245000,grossRent:420000,broker:"Cushman & Wakefield",source:"LoopNet",dom:22,notes:"Historic core, steady demand."},
+  {id:11,street:"1801 E Jefferson St",neighborhood:"Eastlake Park",city:"Phoenix",state:"AZ",zip:"85034",lat:33.4460,lng:-112.0450,units:30,yearBuilt:1974,listPrice:4800000,noi:336000,grossRent:576000,broker:"ABI Multifamily",source:"Crexi",dom:15,notes:"Larger asset, light-rail adjacent."},
+  {id:12,street:"2409 Dryades St",neighborhood:"Central City",city:"New Orleans",state:"LA",zip:"70113",lat:29.9330,lng:-90.0830,units:11,yearBuilt:1910,listPrice:1320000,noi:105600,grossRent:186000,broker:"SVN",source:"LoopNet",dom:48,notes:"High cap, verify flood/insurance."},
+];
+let listings = loadListings();
+function loadListings(){ try{const r=JSON.parse(localStorage.getItem(LSTORE));return Array.isArray(r)&&r.length?r:clone(LISTINGS_SEED);}catch(e){return clone(LISTINGS_SEED);} }
+function saveListings(){ localStorage.setItem(LSTORE, JSON.stringify(listings)); }
+function dealSignal(cap){ return cap>=7?["Strong","sig-strong"]:cap>=6?["Fair","sig-fair"]:["Thin","sig-thin"]; }
+
 /* ===== helpers ===== */
 const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
@@ -603,7 +750,9 @@ const TITLES = {
   dashboard:["Dashboard","Off-market senior-owned apartment leads, nationwide"],
   properties:["Properties","Filter, sort and manage every tracked building"],
   map:["Map","Every U.S. lead plotted by real coordinates"],
+  onmarket:["On-Market Deals","Listed apartment buildings, 10+ units — ready to underwrite"],
   pipeline:["Deal Pipeline","Drag leads between stages"],
+  calc:["Calculators","Underwrite a deal — commercial & seller finance"],
   sources:["Data & Sources","Where each address comes from — and how to source more"],
 };
 function go(view){
@@ -615,7 +764,9 @@ function go(view){
   if(view==="dashboard")renderDashboard();
   if(view==="properties")renderTable();
   if(view==="map")renderMap();
+  if(view==="onmarket")renderOnMarket();
   if(view==="pipeline")renderKanban();
+  if(view==="calc"){computeCommercial();computeSeller();}
   if(view==="sources")renderSources();
 }
 $("#nav").addEventListener("click",e=>{const it=e.target.closest(".nav__item");if(it)go(it.dataset.view);});
@@ -644,6 +795,7 @@ function renderDashboard(){
     kpi("Target pipeline",fmtK(pipeVal),"M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6","est. value"),
     kpi("Avg cap rate",avgCap.toFixed(1)+"%","M3 17l6-6 4 4 8-8","weighted mean"),
     kpi("Address-verified",(total?Math.round(props.filter(p=>p.verified).length/total*100):0)+"%","M9 12l2 2 4-4M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z","of records"),
+    kpi("On-market deals",listings.length,"M3 3v18h18M19 9l-5 5-4-4-4 4","10+ units — click to view","gold","onmarket"),
   ].join("");
 
   const bands=[["<55",p=>p.ownerAge<55],["55-64",p=>p.ownerAge>=55&&p.ownerAge<65],["65-74",p=>p.ownerAge>=65&&p.ownerAge<75],["75-84",p=>p.ownerAge>=75&&p.ownerAge<85],["85+",p=>p.ownerAge>=85]];
@@ -663,7 +815,7 @@ function renderDashboard(){
   $("#hotLeads").innerHTML=hot.length?`<div class="tscroll"><table><tbody>${hot.map(({p,s})=>`<tr onclick="openDetail(${p.id})"><td class="addr"><span class="astreet">${esc(p.street)} ${vChip(p)}</span><small>${esc(subAddr(p))} · ${p.units} units</small></td><td>${esc(p.owner)}<div class="entity-tag">${p.entity} · ${yearsOwned(p)} yrs held</div></td><td><span class="age-pill age-65">${p.ownerAge}</span></td><td><span class="badge b-off">Off-Market</span></td><td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td><td style="font-weight:800;color:var(--gold2)" class="tnum">${s}</td><td style="font-weight:700" class="tnum">${fmtK(p.value)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">No senior-owned off-market leads yet.</div>`;
 }
 function emptyMini(){return `<div style="color:var(--faint);font-size:12.5px;padding:10px 0">No 65+ off-market targets in the current data.</div>`;}
-function kpi(label,val,icon,trend,mod){return `<div class="kpi ${mod==='gold'?'kpi--gold':''}"><div class="kpi__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${icon}"/></svg>${label}</div><div class="kpi__val tnum">${val}</div><div class="kpi__trend">${trend}</div></div>`;}
+function kpi(label,val,icon,trend,mod,goto){return `<div class="kpi ${mod==='gold'?'kpi--gold':''}" ${goto?`data-goto="${goto}" style="cursor:pointer"`:''}><div class="kpi__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${icon}"/></svg>${label}</div><div class="kpi__val tnum">${val}</div><div class="kpi__trend">${trend}</div></div>`;}
 
 /* ===== table ===== */
 const COLS=[{k:"street",l:"Property"},{k:"owner",l:"Owner"},{k:"ownerAge",l:"Age"},{k:"tenure",l:"Yrs held"},{k:"units",l:"Units"},{k:"capRate",l:"Cap"},{k:"status",l:"Status"},{k:"stage",l:"Stage"},{k:"value",l:"Est. value"}];
@@ -727,7 +879,7 @@ $("#fEntity").addEventListener("change",e=>{filters.entity=e.target.value;render
 $("#fUnits").addEventListener("change",e=>{filters.units=+e.target.value;renderTable();});
 $("#fVerified").addEventListener("change",e=>{filters.verified=e.target.checked;renderTable();});
 $("#resetFilters").addEventListener("click",()=>{Object.assign(filters,{age:65,status:"",stage:"",city:"",state:"",entity:"",units:0,verified:false});$("#fAge").value=65;$("#fAgeV").textContent="65+";["fStatus","fStage","fCity","fState","fEntity"].forEach(id=>$("#"+id).value="");$("#fUnits").value="0";$("#fVerified").checked=false;renderTable();});
-$("#globalSearch").addEventListener("input",e=>{filters.q=e.target.value.toLowerCase().trim();const v=$(".view.active").id;if(v==="view-properties")renderTable();else if(v==="view-map")renderMap();else go("properties");});
+$("#globalSearch").addEventListener("input",e=>{filters.q=e.target.value.toLowerCase().trim();const v=$(".view.active").id;if(v==="view-properties")renderTable();else if(v==="view-map")renderMap();else if(v==="view-onmarket")renderOnMarket();else go("properties");});
 
 /* ===== map (offline canvas, continental US) ===== */
 let mapPins=[];
@@ -833,7 +985,9 @@ window.openDetail=function(id){
     <a class="btn btn--ghost btn--sm" href="${recordsUrl(p)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Owner records</a>
     ${tel?`<a class="btn btn--gold btn--sm" href="${tel}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>Call ${esc(p.phone)}</a>`:''}
     <button class="btn btn--ghost btn--sm" type="button" onclick="copyAddr(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy address</button>
-    <button class="btn btn--ghost btn--sm" type="button" onclick="showOnMap(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>Show on map</button>`;
+    <button class="btn btn--ghost btn--sm" type="button" onclick="showOnMap(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>Show on map</button>
+    <button class="btn btn--ghost btn--sm" type="button" onclick="underwriteDeal('lead',${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h4"/></svg>Underwrite</button>
+    <button class="btn btn--ghost btn--sm" type="button" onclick="sellerFinanceDeal('lead',${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Seller-finance</button>`;
   const contacts=(p.contacts||[]).slice().sort((a,b)=>a.date<b.date?1:-1);
   $("#detailGrid").innerHTML=`
     <div class="dsection">Location &amp; provenance</div>
@@ -954,7 +1108,142 @@ let toastT;
 function toast(m){const t=$("#toast");$("#toastMsg").textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2200);}
 function refreshActive(){go($(".view.active").id.replace("view-",""));}
 
+/* ===== on-market deals ===== */
+const OM_COLS=[{k:"street",l:"Property"},{k:"units",l:"Units"},{k:"listPrice",l:"List price"},{k:"cap",l:"Cap"},{k:"ppu",l:"$/unit"},{k:"grm",l:"GRM"},{k:"dom",l:"DOM"},{k:"source",l:"Source"},{k:"signal",l:"Signal"},{k:"act",l:""}];
+const omFilters={units:10,state:"",cap:0,source:"",sort:"cap"};
+const lcap=l=>l.listPrice?l.noi/l.listPrice*100:0;
+const lppu=l=>l.units?l.listPrice/l.units:0;
+const lgrm=l=>l.grossRent?l.listPrice/l.grossRent:0;
+function omListingSearchUrl(l){return `https://www.google.com/search?q=${encodeURIComponent(l.units+" unit apartment building for sale "+l.city+" "+l.state)}`;}
+function initOnMarket(){
+  const states=[...new Set(listings.map(l=>l.state))].sort();
+  $("#omState").innerHTML='<option value="">All</option>'+states.map(s=>`<option>${esc(s)}</option>`).join("");
+  const srcs=[...new Set(listings.map(l=>l.source))].sort();
+  $("#omSource").innerHTML='<option value="">All</option>'+srcs.map(s=>`<option>${esc(s)}</option>`).join("");
+}
+function omRows(){
+  let r=listings.filter(l=>{
+    if(+l.units<omFilters.units)return false;
+    if(omFilters.state&&l.state!==omFilters.state)return false;
+    if(omFilters.cap&&lcap(l)<omFilters.cap)return false;
+    if(omFilters.source&&l.source!==omFilters.source)return false;
+    if(filters.q){const s=(l.street+l.city+l.state+(l.zip||"")+l.broker+l.source).toLowerCase();if(!s.includes(filters.q))return false;}
+    return true;
+  });
+  const s=omFilters.sort;
+  r.sort((a,b)=> s==="cap"?lcap(b)-lcap(a): s==="ppu"?lppu(a)-lppu(b): s==="dom"?a.dom-b.dom: s==="price"?a.listPrice-b.listPrice: b.units-a.units);
+  return r;
+}
+function renderOnMarket(){
+  $("#omThead").innerHTML=OM_COLS.map(c=>`<th>${c.l}</th>`).join("");
+  const rows=omRows();
+  $("#omTbody").innerHTML=rows.length?rows.map(l=>{
+    const cap=lcap(l),[sig,cls]=dealSignal(cap);
+    return `<tr>
+      <td class="addr"><span class="astreet"><a class="addr-ext" href="${gmapsUrl(l)}" target="_blank" rel="noopener" title="Open in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></a>${esc(l.street)}</span><small>${esc(subAddr(l))} · ${esc(l.broker)}</small></td>
+      <td class="tnum">${l.units}</td>
+      <td class="tnum" style="font-weight:700">${fmtK(l.listPrice)}</td>
+      <td class="tnum" style="font-weight:800;color:var(--gold2)">${cap.toFixed(1)}%</td>
+      <td class="tnum">${fmtK(lppu(l))}</td>
+      <td class="tnum">${lgrm(l).toFixed(1)}x</td>
+      <td class="tnum">${l.dom}d</td>
+      <td>${esc(l.source)}</td>
+      <td><span class="deal-signal ${cls}">${sig}</span></td>
+      <td><div class="om-actions">
+        <button class="btn btn--primary btn--sm" onclick="underwriteDeal('listing',${l.id})">Underwrite</button>
+        <button class="btn btn--ghost btn--sm" onclick="sellerFinanceDeal('listing',${l.id})">Seller-fin</button>
+        <a class="btn btn--ghost btn--sm icobtn" href="${omListingSearchUrl(l)}" target="_blank" rel="noopener" title="Find live listings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+      </div></td>
+    </tr>`;
+  }).join(""):`<tr><td colspan="10"><div class="empty">No on-market deals match these filters.</div></td></tr>`;
+  const tv=rows.reduce((a,l)=>a+l.listPrice,0), tu=rows.reduce((a,l)=>a+ +l.units,0);
+  const avgCap=rows.length?rows.reduce((a,l)=>a+lcap(l),0)/rows.length:0;
+  $("#omRowcount").textContent=`${rows.length} listings · ${tu} units · ${fmtK(tv)} total list value · ${avgCap.toFixed(1)}% avg cap`;
+}
+$("#omUnits").addEventListener("change",e=>{omFilters.units=+e.target.value;renderOnMarket();});
+$("#omState").addEventListener("change",e=>{omFilters.state=e.target.value;renderOnMarket();});
+$("#omCap").addEventListener("change",e=>{omFilters.cap=+e.target.value;renderOnMarket();});
+$("#omSource").addEventListener("change",e=>{omFilters.source=e.target.value;renderOnMarket();});
+$("#omSort").addEventListener("change",e=>{omFilters.sort=e.target.value;renderOnMarket();});
+$("#omExport").addEventListener("click",()=>{
+  const cols=["street","neighborhood","city","state","zip","units","yearBuilt","listPrice","noi","grossRent","broker","source","dom","capRatePct","pricePerUnit","grm"];
+  const rows=omRows();
+  const csv=[cols.join(",")].concat(rows.map(l=>{const o={...l,capRatePct:lcap(l).toFixed(2),pricePerUnit:Math.round(lppu(l)),grm:lgrm(l).toFixed(2)};return cols.map(c=>`"${String(o[c]??"").replace(/"/g,'""')}"`).join(",");})).join("\n");
+  const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="silverkey-onmarket.csv";a.click();toast("Exported "+rows.length+" listings");
+});
+
+/* ===== calculators ===== */
+function setVal(id,v){const el=$("#"+id);if(el)el.value=v;}
+function num(id){const v=parseFloat($("#"+id)?.value);return isNaN(v)?0:v;}
+function pmt(P,annualRatePct,years){const r=annualRatePct/100/12,n=Math.round(years*12);if(n<=0)return 0;if(r===0)return P/n;return P*r/(1-Math.pow(1+r,-n));}
+function balloonBal(P,annualRatePct,amortYears,balloonYears){const r=annualRatePct/100/12,k=Math.round(balloonYears*12),m=pmt(P,annualRatePct,amortYears);if(r===0)return Math.max(0,P-m*k);const bal=P*Math.pow(1+r,k)-m*((Math.pow(1+r,k)-1)/r);return Math.max(0,bal);}
+function dscrClass(d){return d>=1.25?"var(--green)":d>=1?"var(--amber)":"var(--red)";}
+function ohcard(k,v,sub,color){return `<div class="ohcard"><div class="k">${k}</div><div class="v"${color?` style="color:${color}"`:''}>${v}</div>${sub?`<div class="sub">${sub}</div>`:''}</div>`;}
+function ores(l,v,color){return `<div class="ores"><span class="ol">${l}</span><span class="ov"${color?` style="color:${color}"`:''}>${v}</span></div>`;}
+
+function computeCommercial(){
+  if(!$("#cm_price"))return;
+  const price=num("cm_price"),units=num("cm_units"),gross=num("cm_gross"),vac=num("cm_vac"),opex=num("cm_opex");
+  const down=num("cm_down"),rate=num("cm_rate"),amort=num("cm_amort"),closing=num("cm_closing");
+  const egi=gross*(1-vac/100), noi=egi-opex, cap=price?noi/price*100:0;
+  const loan=price*(1-down/100), dp=price*down/100, cc=price*closing/100, cashIn=dp+cc;
+  const ads=pmt(loan,rate,amort)*12, cf=noi-ads, coc=cashIn?cf/cashIn*100:0, dscr=ads?noi/ads:0;
+  const ppu=units?price/units:0, grm=gross?price/gross:0, er=gross?opex/gross*100:0;
+  $("#cmHi").innerHTML=ohcard("Cap rate",cap.toFixed(2)+"%","on purchase price","var(--gold2)")+ohcard("Cash-on-cash",coc.toFixed(1)+"%","year 1, before tax",coc>=8?"var(--green)":coc>=5?"var(--amber)":"var(--red)")+ohcard("DSCR",dscr.toFixed(2)+"x","NOI ÷ debt service",dscrClass(dscr));
+  $("#cmOut").innerHTML=
+    ores("Net operating income (NOI)",fmt$(noi))+
+    ores("Loan amount",fmt$(loan))+
+    ores("Down payment",fmt$(dp))+
+    ores("Closing costs",fmt$(cc))+
+    ores("Total cash invested",fmt$(cashIn))+
+    ores("Monthly P&amp;I payment",fmt$(ads/12))+
+    ores("Annual debt service",fmt$(ads))+
+    ores("Annual cash flow",fmt$(cf),cf>=0?"var(--green)":"var(--red)")+
+    ores("Price per unit",fmt$(ppu))+
+    ores("Gross rent multiplier",grm.toFixed(1)+"x")+
+    ores("Operating expense ratio",er.toFixed(0)+"%");
+}
+function computeSeller(){
+  if(!$("#sf_price"))return;
+  const price=num("sf_price"),down=num("sf_down"),rate=num("sf_rate"),amort=num("sf_amort"),balloon=num("sf_balloon"),noi=num("sf_noi"),units=num("sf_units");
+  const loan=price*(1-down/100), dp=price*down/100, mo=pmt(loan,rate,amort), ads=mo*12;
+  const cf=noi-ads, coc=dp?cf/dp*100:0, dscr=ads?noi/ads:0;
+  const bal=balloonBal(loan,rate,amort,balloon), paid=mo*Math.round(balloon*12), principalPaid=loan-bal, interestPaid=paid-principalPaid;
+  const ppu=units?price/units:0;
+  $("#sfHi").innerHTML=ohcard("Cash-on-cash",coc.toFixed(1)+"%","on down payment",coc>=8?"var(--green)":coc>=5?"var(--amber)":"var(--red)")+ohcard("DSCR",dscr.toFixed(2)+"x","NOI ÷ debt service",dscrClass(dscr))+ohcard("Balloon due",fmtK(bal),"in year "+balloon,"var(--gold2)");
+  $("#sfOut").innerHTML=
+    ores("Seller note (financed)",fmt$(loan))+
+    ores("Down payment to seller",fmt$(dp))+
+    ores("Monthly payment",fmt$(mo))+
+    ores("Annual debt service",fmt$(ads))+
+    ores("Annual cash flow",fmt$(cf),cf>=0?"var(--green)":"var(--red)")+
+    ores("Principal paid by balloon",fmt$(principalPaid))+
+    ores("Interest paid by balloon",fmt$(interestPaid))+
+    ores("Total paid by balloon",fmt$(paid))+
+    ores("Balloon balance due (yr "+balloon+")",fmt$(bal),"var(--gold2)")+
+    ores("Price per unit",fmt$(ppu));
+}
+$$("#calc-commercial input").forEach(i=>i.addEventListener("input",computeCommercial));
+$$("#calc-seller input").forEach(i=>i.addEventListener("input",computeSeller));
+function setCalcTab(which){$$("#calcSeg button").forEach(b=>b.classList.toggle("active",b.dataset.calc===which));$("#calc-commercial").style.display=which==="commercial"?"block":"none";$("#calc-seller").style.display=which==="seller"?"block":"none";}
+$("#calcSeg").addEventListener("click",e=>{const b=e.target.closest("button");if(b)setCalcTab(b.dataset.calc);});
+
+function findDeal(kind,id){return (kind==="listing"?listings:props).find(x=>x.id===id);}
+window.underwriteDeal=function(kind,id){
+  const d=findDeal(kind,id);if(!d)return;
+  const price=d.listPrice||d.value, gr=d.grossRent||Math.round((d.noi||0)/0.6);
+  setVal("cm_price",price);setVal("cm_units",d.units);setVal("cm_gross",gr);setVal("cm_vac",0);setVal("cm_opex",Math.max(0,gr-(d.noi||0)));setVal("cm_down",25);setVal("cm_rate",6.5);setVal("cm_amort",25);setVal("cm_closing",2);
+  $("#detailOverlay").classList.remove("open");go("calc");setCalcTab("commercial");computeCommercial();toast("Loaded into underwriting");
+};
+window.sellerFinanceDeal=function(kind,id){
+  const d=findDeal(kind,id);if(!d)return;
+  const price=d.listPrice||d.value;
+  setVal("sf_price",price);setVal("sf_down",15);setVal("sf_rate",6);setVal("sf_amort",30);setVal("sf_balloon",7);setVal("sf_noi",d.noi||0);setVal("sf_units",d.units);
+  $("#detailOverlay").classList.remove("open");go("calc");setCalcTab("seller");computeSeller();toast("Loaded into seller finance");
+};
+
 initFilters();
+initOnMarket();
 renderDashboard();
 </script>
 </body>

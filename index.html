@@ -3,304 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DealScout — Multifamily Deal Finder & Analyzer</title>
-  <meta name="description" content="Find live 5, 10, 20+ unit multifamily listings across the U.S., analyze cap rate, conventional & seller financing, score deal strength, and track your pipeline." />
+  <title>DealScout — Ranked Multifamily Deals</title>
+  <meta name="description" content="Browse scored & ranked 5/10/20+ unit multifamily properties in-app, underwrite each, and track your pipeline." />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A2%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
-  <!-- ============ NAV ============ -->
-  <header class="nav">
-    <div class="nav__inner">
-      <a href="#top" class="brand">
-        <span class="brand__mark">🏢</span>
-        <span class="brand__name">Deal<span>Scout</span></span>
-      </a>
-      <nav class="nav__links">
-        <a href="#find">Find Listings</a>
-        <a href="#analyzer">Analyzer</a>
-        <a href="#pipeline">Pipeline</a>
-      </nav>
-      <a href="#analyzer" class="btn btn--sm btn--primary nav__cta">Analyze a Deal</a>
+  <header class="top">
+    <div class="top__in">
+      <div class="logo"><span class="logo__m">🏢</span> Deal<b>Scout</b></div>
+      <div class="top__tabs">
+        <button class="tab is-active" data-view="deals">Deals</button>
+        <button class="tab" data-view="pipeline">Pipeline</button>
+      </div>
+      <div class="top__sp"></div>
+      <button class="icon-btn" id="themeBtn" title="Toggle light / dark">◐</button>
     </div>
   </header>
 
-  <main id="top">
-    <!-- ============ HERO ============ -->
-    <section class="hero">
-      <div class="hero__glow"></div>
-      <div class="hero__inner">
-        <span class="pill">Live listings · Real underwriting · Deal pipeline</span>
-        <h1>Find &amp; underwrite multifamily deals<br /><em>5, 10, 20+ units</em> across the U.S.</h1>
-        <p class="hero__sub">
-          Search <strong>live, current</strong> listings on the major marketplaces, then run cap rate,
-          conventional &amp; seller financing, and a deal-strength score — and save the winners to your pipeline.
-        </p>
-        <div class="hero__cta">
-          <a href="#find" class="btn btn--primary btn--lg">🔎 Find Live Listings</a>
-          <a href="#analyzer" class="btn btn--ghost btn--lg">📊 Analyze a Property</a>
+  <!-- ============ DEALS ============ -->
+  <main class="wrap">
+    <section class="view is-active" id="view-deals">
+      <div class="pagehead">
+        <h1>Ranked multifamily deals</h1>
+        <p>Every property below is scored by the same underwriting engine and ranked strongest-first. Adjust your financing assumptions and the whole board re-scores instantly. Click any row to underwrite it.</p>
+      </div>
+
+      <div class="notice">
+        <span>ℹ️</span>
+        <div><b>These are real leads gathered from live marketplaces</b> (LoopNet, Crexi, CityFeet, Showcase) — but they're unverified snapshots. Confirm price, units, and cap rate on the source before acting. Want auto-updating verified data? A RentCast API key turns on a live feed.</div>
+      </div>
+
+      <!-- Financing assumptions (re-scores everything) -->
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Your financing assumptions — applied to every deal</div>
+          <div class="ctrl"><label for="gDown">Down %</label><input id="gDown" inputmode="decimal" value="25" /></div>
+          <div class="ctrl"><label for="gRate">Rate %</label><input id="gRate" inputmode="decimal" value="6.75" /></div>
+          <div class="ctrl"><label for="gAmort">Amort (yrs)</label><input id="gAmort" inputmode="numeric" value="30" /></div>
+          <div class="ctrl"><label for="gClosing">Closing %</label><input id="gClosing" inputmode="decimal" value="3" /></div>
+          <div class="ctrl"><label for="gExp">Op-ex % (for unlisted cap)</label><input id="gExp" inputmode="decimal" value="45" /></div>
         </div>
-        <p class="hero__note">
-          Listings open directly on LoopNet, Crexi, CommercialCafe, Auction.com &amp; more — always the
-          <strong>real, current</strong> results. Nothing here is faked.
-        </p>
-      </div>
-    </section>
-
-    <!-- ============ FIND LISTINGS ============ -->
-    <section id="find" class="section">
-      <div class="section__head">
-        <h2>1 · Find Live Listings</h2>
-        <p>Set your buy box. We build live search links into the top marketplaces — click to see current for-sale multifamily properties.</p>
       </div>
 
-      <div class="finder card">
-        <form id="finderForm" class="finder__form">
-          <div class="field">
-            <label for="fCity">City <span class="muted">(optional)</span></label>
-            <input type="text" id="fCity" placeholder="e.g. Houston" autocomplete="off" />
-          </div>
-          <div class="field">
-            <label for="fState">State</label>
-            <select id="fState"></select>
-          </div>
-          <div class="field">
-            <label for="fUnits">Minimum units</label>
+      <!-- Filters -->
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Filters</div>
+          <div class="ctrl"><label for="fState">State</label><select id="fState"></select></div>
+          <div class="ctrl"><label for="fUnits">Min units</label>
             <select id="fUnits">
-              <option value="5">5+ units</option>
-              <option value="10">10+ units</option>
-              <option value="20" selected>20+ units</option>
-              <option value="50">50+ units</option>
+              <option value="0">Any</option><option value="5">5+</option>
+              <option value="10">10+</option><option value="20">20+</option><option value="40">40+</option>
             </select>
           </div>
-          <div class="field">
-            <label for="fMin">Min price <span class="muted">(optional)</span></label>
-            <input type="text" id="fMin" inputmode="numeric" placeholder="$500,000" />
-          </div>
-          <div class="field">
-            <label for="fMax">Max price <span class="muted">(optional)</span></label>
-            <input type="text" id="fMax" inputmode="numeric" placeholder="$3,000,000" />
-          </div>
-          <div class="field field--btn">
-            <button type="submit" class="btn btn--primary">Build live searches →</button>
-          </div>
-        </form>
-
-        <div id="finderResults" class="finder__results" hidden>
-          <div class="finder__summary" id="finderSummary"></div>
-          <div class="market-grid" id="marketGrid"></div>
-          <p class="finder__disclaimer">
-            💡 Each button opens the marketplace's <strong>live search</strong> in a new tab. Unit-count
-            filtering precision varies by site — refine on the marketplace, then paste a specific listing's
-            URL into the Analyzer below to underwrite it.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ ANALYZER ============ -->
-    <section id="analyzer" class="section">
-      <div class="section__head">
-        <h2>2 · Deal Analyzer</h2>
-        <p>Enter the numbers from a listing. Get cap rate, cash flow, conventional &amp; seller-financing scenarios, and a 0–100 deal score.</p>
-      </div>
-
-      <div class="analyzer">
-        <!-- INPUTS -->
-        <div class="card analyzer__inputs">
-          <h3 class="card__title">Property &amp; Income</h3>
-
-          <div class="field">
-            <label for="aName">Deal name / address</label>
-            <input type="text" id="aName" placeholder="e.g. 12-unit — 123 Oak St, Houston TX" />
-          </div>
-          <div class="field">
-            <label for="aUrl">Listing URL <span class="muted">(paste from LoopNet/Crexi/etc.)</span></label>
-            <input type="url" id="aUrl" placeholder="https://www.loopnet.com/Listing/..." />
-          </div>
-
-          <div class="grid2">
-            <div class="field">
-              <label for="aPrice">Purchase price</label>
-              <input type="text" id="aPrice" inputmode="numeric" value="1,500,000" />
-            </div>
-            <div class="field">
-              <label for="aUnitsCount">Units</label>
-              <input type="text" id="aUnitsCount" inputmode="numeric" value="12" />
-            </div>
-          </div>
-
-          <div class="grid2">
-            <div class="field">
-              <label for="aRent">Gross rent <span class="muted">/mo (all units)</span></label>
-              <input type="text" id="aRent" inputmode="numeric" value="13,200" />
-            </div>
-            <div class="field">
-              <label for="aOther">Other income <span class="muted">/mo</span></label>
-              <input type="text" id="aOther" inputmode="numeric" value="600" />
-            </div>
-          </div>
-
-          <div class="grid2">
-            <div class="field">
-              <label for="aVacancy">Vacancy %</label>
-              <input type="text" id="aVacancy" inputmode="decimal" value="5" />
-            </div>
-            <div class="field">
-              <label for="aExpenseRatio">
-                Operating expenses %
-                <button type="button" class="hint" title="Share of effective income spent on taxes, insurance, repairs, management, utilities, etc. 40–50% is typical for smaller multifamily.">?</button>
-              </label>
-              <input type="text" id="aExpenseRatio" inputmode="decimal" value="45" />
-            </div>
-          </div>
-
-          <hr class="divider" />
-          <h3 class="card__title">🏦 Conventional Financing</h3>
-          <div class="grid2">
-            <div class="field">
-              <label for="cDown">Down payment %</label>
-              <input type="text" id="cDown" inputmode="decimal" value="25" />
-            </div>
-            <div class="field">
-              <label for="cRate">Interest rate %</label>
-              <input type="text" id="cRate" inputmode="decimal" value="6.75" />
-            </div>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="cAmort">Amortization (yrs)</label>
-              <input type="text" id="cAmort" inputmode="numeric" value="30" />
-            </div>
-            <div class="field">
-              <label for="cClosing">Closing costs %</label>
-              <input type="text" id="cClosing" inputmode="decimal" value="3" />
-            </div>
-          </div>
-
-          <hr class="divider" />
-          <h3 class="card__title">🤝 Seller Financing</h3>
-          <div class="grid2">
-            <div class="field">
-              <label for="sDown">Down payment %</label>
-              <input type="text" id="sDown" inputmode="decimal" value="15" />
-            </div>
-            <div class="field">
-              <label for="sRate">Interest rate %</label>
-              <input type="text" id="sRate" inputmode="decimal" value="6" />
-            </div>
-          </div>
-          <div class="grid2">
-            <div class="field">
-              <label for="sAmort">Amortization (yrs)</label>
-              <input type="text" id="sAmort" inputmode="numeric" value="30" />
-            </div>
-            <div class="field">
-              <label for="sBalloon">Balloon (yrs)</label>
-              <input type="text" id="sBalloon" inputmode="numeric" value="5" />
-            </div>
-          </div>
-
-          <div class="analyzer__actions">
-            <button type="button" id="saveDeal" class="btn btn--primary">＋ Save to Pipeline</button>
-            <button type="button" id="resetDeal" class="btn btn--ghost">Reset</button>
-          </div>
-        </div>
-
-        <!-- RESULTS -->
-        <div class="analyzer__results">
-          <!-- Score -->
-          <div class="card score-card">
-            <div class="score-card__ring">
-              <svg viewBox="0 0 120 120" class="ring" aria-hidden="true">
-                <circle class="ring__bg" cx="60" cy="60" r="52"></circle>
-                <circle class="ring__fg" id="scoreArc" cx="60" cy="60" r="52"></circle>
-              </svg>
-              <div class="score-card__num">
-                <span id="scoreValue">0</span>
-                <small>/100</small>
-              </div>
-            </div>
-            <div class="score-card__meta">
-              <span class="score-card__grade" id="scoreGrade">—</span>
-              <p id="scoreBlurb" class="muted">Enter deal numbers to see how strong it is.</p>
-              <ul class="score-card__factors" id="scoreFactors"></ul>
-            </div>
-          </div>
-
-          <!-- Key metrics -->
-          <div class="metrics">
-            <div class="metric"><span class="metric__label">Cap rate</span><strong id="mCap">—</strong></div>
-            <div class="metric"><span class="metric__label">NOI /yr</span><strong id="mNoi">—</strong></div>
-            <div class="metric"><span class="metric__label">Price / unit</span><strong id="mPpu">—</strong></div>
-            <div class="metric"><span class="metric__label">GRM</span><strong id="mGrm">—</strong></div>
-          </div>
-
-          <!-- Financing scenarios -->
-          <div class="scenarios">
-            <div class="card scenario">
-              <h3 class="card__title">🏦 Conventional</h3>
-              <table class="kv">
-                <tbody>
-                  <tr><td>Down payment</td><td id="cvDown">—</td></tr>
-                  <tr><td>Loan amount</td><td id="cvLoan">—</td></tr>
-                  <tr><td>Monthly P&amp;I</td><td id="cvPI">—</td></tr>
-                  <tr><td>Annual debt service</td><td id="cvDS">—</td></tr>
-                  <tr class="kv__hl"><td>Annual cash flow</td><td id="cvCF">—</td></tr>
-                  <tr class="kv__hl"><td>Cash-on-cash</td><td id="cvCoC">—</td></tr>
-                  <tr><td>DSCR</td><td id="cvDSCR">—</td></tr>
-                  <tr><td>Total cash needed</td><td id="cvCash">—</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="card scenario">
-              <h3 class="card__title">🤝 Seller Financing</h3>
-              <table class="kv">
-                <tbody>
-                  <tr><td>Down payment</td><td id="slDown">—</td></tr>
-                  <tr><td>Seller carry note</td><td id="slLoan">—</td></tr>
-                  <tr><td>Monthly P&amp;I</td><td id="slPI">—</td></tr>
-                  <tr><td>Annual debt service</td><td id="slDS">—</td></tr>
-                  <tr class="kv__hl"><td>Annual cash flow</td><td id="slCF">—</td></tr>
-                  <tr class="kv__hl"><td>Cash-on-cash</td><td id="slCoC">—</td></tr>
-                  <tr><td>DSCR</td><td id="slDSCR">—</td></tr>
-                  <tr><td>Balloon balance</td><td id="slBalloon">—</td></tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="ctrl"><label for="fMax">Max price</label><input id="fMax" inputmode="numeric" placeholder="e.g. 3,000,000" /></div>
+          <div class="ctrl"><label for="fMinScore">Min score</label>
+            <select id="fMinScore">
+              <option value="0">Any</option><option value="50">50+ (C)</option>
+              <option value="65">65+ (B)</option><option value="80">80+ (A)</option>
+            </select>
           </div>
         </div>
       </div>
+
+      <div class="toolbar">
+        <div class="count" id="count"></div>
+        <span style="font-size:13px;color:var(--muted);font-weight:600">Sort</span>
+        <div class="seg" id="sortSeg">
+          <button data-sort="score" class="is-active">Score</button>
+          <button data-sort="cap">Cap rate</button>
+          <button data-sort="cf">Cash flow</button>
+          <button data-sort="price">Price</button>
+        </div>
+      </div>
+
+      <div class="list" id="list"></div>
     </section>
 
     <!-- ============ PIPELINE ============ -->
-    <section id="pipeline" class="section">
-      <div class="section__head">
-        <h2>3 · Deal Pipeline</h2>
-        <p>Every saved deal, tracked from prospect to close. Stored in your browser — move cards as deals progress.</p>
+    <section class="view" id="view-pipeline">
+      <div class="pagehead">
+        <h1>Deal pipeline</h1>
+        <p>Deals you've saved, tracked prospect → close. Drag cards between stages. Saved in your browser.</p>
       </div>
-
-      <div class="pipeline__stats" id="pipelineStats"></div>
-
+      <div class="stats" id="pipeStats"></div>
       <div class="board" id="board"></div>
-
-      <div class="pipeline__tools">
-        <button type="button" id="exportBtn" class="btn btn--ghost btn--sm">⭳ Export JSON</button>
+      <div class="pipe-tools">
+        <button class="btn btn--ghost btn--sm" id="exportBtn">⭳ Export JSON</button>
         <label class="btn btn--ghost btn--sm" for="importFile">⭱ Import JSON</label>
         <input type="file" id="importFile" accept="application/json" hidden />
-        <button type="button" id="clearBtn" class="btn btn--ghost btn--sm btn--danger">Clear all</button>
+        <button class="btn btn--ghost btn--sm btn--danger" id="clearBtn">Clear all</button>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <p><strong>DealScout</strong> — a free underwriting &amp; pipeline tool. Live listing links go directly to third-party marketplaces (LoopNet, Crexi, CommercialCafe, Auction.com, Realtor.com, Zillow), which own that data.</p>
-    <p class="muted">Estimates are for screening only and are not financial advice. Always verify actuals (rent roll, T-12, taxes, insurance) before making an offer.</p>
+  <footer class="foot">
+    <p><b>DealScout</b> — screening tool, not financial advice. Property data are unverified leads sourced from public marketplaces; verify rent roll, T-12, taxes & insurance before making an offer.</p>
+    <p>Scores use your financing assumptions above. Where a listing didn't publish a cap rate, NOI is estimated from price using your op-ex % and is marked <i>est.</i></p>
   </footer>
 
-  <div id="toast" class="toast" hidden></div>
-
+  <div class="toast" id="toast" hidden></div>
   <script src="app.js"></script>
 </body>
 </html>

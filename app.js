@@ -273,25 +273,44 @@
     };
   }
 
-  function underwrite(d, a) {
-    const noi = d.price * (d.cap / 100);
-    const down = d.price * (a.down / 100);
-    const loan = d.price - down;
+  // Core underwriting: works from an explicit NOI so it serves both the
+  // listed-cap board deals and real income-statement analysis.
+  function computeAll(price, units, noi, a) {
+    const cap = price > 0 ? (noi / price) * 100 : 0;
+    const down = price * (a.down / 100);
+    const loan = price - down;
     const ds = pmt(loan, a.rate, a.amort) * 12;
     const cf = noi - ds;
-    const invested = down + d.price * (a.closing / 100);
-    const coc = invested > 0 ? cf / invested * 100 : 0;
+    const invested = down + price * (a.closing / 100);
+    const coc = invested > 0 ? (cf / invested) * 100 : 0;
     const dscr = ds > 0 ? noi / ds : Infinity;
-    const cfPU = d.units > 0 ? cf / d.units / 12 : 0;
+    const cfPU = units > 0 ? cf / units / 12 : 0;
     // seller-financing scenario (15% down, 0.75% below your rate, same amort, 5-yr balloon)
-    const sDown = d.price * 0.15, sLoan = d.price - sDown, sRate = Math.max(0, a.rate - 0.75);
+    const sDown = price * 0.15, sLoan = price - sDown, sRate = Math.max(0, a.rate - 0.75);
     const sDS = pmt(sLoan, sRate, a.amort) * 12, sCF = noi - sDS;
-    const sInv = sDown + d.price * (a.closing / 100);
+    const sInv = sDown + price * (a.closing / 100);
     const seller = { down: sDown, loan: sLoan, rate: sRate, ds: sDS, cf: sCF,
-      coc: sInv > 0 ? sCF / sInv * 100 : 0, dscr: sDS > 0 ? noi / sDS : Infinity,
+      coc: sInv > 0 ? (sCF / sInv) * 100 : 0, dscr: sDS > 0 ? noi / sDS : Infinity,
       balloon: remain(sLoan, sRate, a.amort, 60) };
-    const s = score(d.cap, coc, dscr === Infinity ? 2 : dscr, cfPU);
-    return { noi, down, loan, ds, cf, coc, dscr, cfPU, invested, ppu: d.price / d.units, seller, ...s };
+    const s = score(cap, coc, dscr === Infinity ? 2 : dscr, cfPU);
+    return { price, units, noi, cap, down, loan, ds, cf, coc, dscr, cfPU, invested, ppu: units > 0 ? price / units : 0, seller, ...s };
+  }
+  const underwrite = (d, a) => computeAll(d.price, d.units, d.price * (d.cap / 100), a);
+
+  // Annual mortgage constant per $1 of loan (for the reverse solver)
+  function mortgageConstant(a) {
+    const r = a.rate / 100 / 12, n = a.amort * 12;
+    if (n <= 0) return 0;
+    return r === 0 ? 12 / n : 12 * (r / (1 - Math.pow(1 + r, -n)));
+  }
+  // Max purchase price to still hit target cash-on-cash and DSCR at a given NOI
+  function maxOffer(noi, a, targetCoC, targetDSCR) {
+    const K = mortgageConstant(a), ltv = 1 - a.down / 100, invFrac = a.down / 100 + a.closing / 100;
+    const denomCoC = (targetCoC / 100) * invFrac + ltv * K;
+    const pCoC = denomCoC > 0 ? noi / denomCoC : Infinity;
+    const denomD = targetDSCR * ltv * K;
+    const pD = denomD > 0 ? noi / denomD : Infinity;
+    return { coc: pCoC, dscr: pD, max: Math.min(pCoC, pD) };
   }
 
   function score(cap, coc, dscr, cfPU) {
@@ -419,6 +438,27 @@
       </div>`;
   }
 
+  const moneyOr = (n) => (isFinite(n) && n > 0 ? money(n) : "—");
+  function maxOfferCard(noi, a, ask) {
+    if (noi <= 0) return `<div class="dcard wide maxoffer"><h4>🎯 Max offer <span class="h4sub">to hit your return targets</span></h4><p class="mo-note">NOI is zero or negative at these numbers — no purchase price hits a positive return. Re-check income/expenses.</p></div>`;
+    const mo = maxOffer(noi, a, 8, 1.25);
+    const bind = mo.max === mo.coc ? "8% cash-on-cash" : "1.25× DSCR";
+    const delta = ask > 0 ? (mo.max - ask) / ask * 100 : 0;
+    const rel = !ask ? "" : mo.max >= ask
+      ? ` At the ${money(ask)} ask, that's <b class="pos">${pct(Math.abs(delta), 0)} above list</b> — it already clears your targets.`
+      : ` At the ${money(ask)} ask, offer <b class="neg">${pct(Math.abs(delta), 0)} below list</b> to hit them.`;
+    return `
+      <div class="dcard wide maxoffer">
+        <h4>🎯 Max offer <span class="h4sub">to hit your return targets</span></h4>
+        <div class="mo-grid">
+          <div class="mo"><span class="mo-k">For 8% cash-on-cash</span><strong class="tnum">${moneyOr(mo.coc)}</strong></div>
+          <div class="mo"><span class="mo-k">For 1.25× DSCR</span><strong class="tnum">${moneyOr(mo.dscr)}</strong></div>
+          <div class="mo mo--hl"><span class="mo-k">Recommended max (both)</span><strong class="tnum">${moneyOr(mo.max)}</strong></div>
+        </div>
+        <p class="mo-note">Binding target: <b>${bind}</b>.${rel}</p>
+      </div>`;
+  }
+
   function detail(d, u) {
     const a = assumptions();
     const factor = (label, pts, max) => { const r = pts / max; const c = r >= 0.66 ? "good" : r >= 0.33 ? "mid" : "bad"; return `<span class="factor ${c}">${label}</span>`; };
@@ -448,6 +488,7 @@
         </div>
         ${plTable("🏦 Conventional", "your assumptions", conv, a.amort, "conv")}
         ${plTable("🤝 Seller financing", "15% down · 30-yr · 5-yr balloon", sell, a.amort, "seller")}
+        ${maxOfferCard(u.noi, a, d.price)}
         <div class="dcard wide verify">
           <h4>✅ Before you offer, verify</h4>
           <ul>
@@ -475,6 +516,77 @@
     document.querySelectorAll("[data-add]").forEach((btn) => {
       btn.addEventListener("click", (e) => { e.stopPropagation(); addToPipeline(btn.dataset.add); });
     });
+  }
+
+  /* ---- Analyze Any Deal ---- */
+  let anMode = "income", anExpMode = "pct";
+  const scoreBlurb = (s) => s >= 80 ? "Strong — investable at these numbers; verify the actuals." : s >= 65 ? "Good — worth pursuing; tighten price or terms." : s >= 50 ? "Fair — negotiate the price or the financing." : "Weak — likely a pass at this price.";
+
+  function anCompute() {
+    const price = num($("anPrice").value), units = num($("anUnits").value);
+    const a = { down: num($("anDown").value), rate: num($("anRate").value), amort: num($("anAmort").value), closing: num($("anClosing").value), exp: 0 };
+    let noi;
+    if (anMode === "cap") {
+      noi = price * (num($("anCap").value) / 100);
+    } else {
+      const gsi = (num($("anRent").value) + num($("anOther").value)) * 12;
+      const egi = gsi * (1 - num($("anVac").value) / 100);
+      const ev = num($("anExpVal").value);
+      const opex = anExpMode === "dollar" ? ev : egi * (ev / 100);
+      noi = egi - opex;
+    }
+    return { price, units, a, u: computeAll(price, units, noi, a) };
+  }
+
+  function renderAnalyze() {
+    const { price, a, u } = anCompute();
+    const g = gradeOf(u.total);
+    const conv = { down: u.down, downPct: a.down, loan: u.loan, rate: a.rate, ds: u.ds, cf: u.cf, coc: u.coc, dscr: u.dscr, invested: u.invested };
+    const sell = { ...u.seller, downPct: 15 };
+    const cfNeg = u.cf < 0 ? "val--neg" : "";
+    $("anResults").innerHTML = `
+      <div class="an-score ${g.c}">
+        <div class="gauge gauge--lg" style="--p:${u.total}"><span class="tnum">${u.total}</span></div>
+        <div class="an-score__meta"><div class="an-grade">${g.l} · ${g.t}</div><div class="an-blurb">${scoreBlurb(u.total)}</div></div>
+      </div>
+      <div class="metrics an-metrics">
+        <div class="metric"><span class="metric__label">Cap rate</span><strong class="tnum">${pct(u.cap)}</strong></div>
+        <div class="metric"><span class="metric__label">NOI / yr</span><strong class="tnum">${money(u.noi)}</strong></div>
+        <div class="metric"><span class="metric__label">Price / unit</span><strong class="tnum">${money(u.ppu)}</strong></div>
+        <div class="metric"><span class="metric__label">Cash flow / yr</span><strong class="tnum ${cfNeg}">${money(u.cf)}</strong></div>
+      </div>
+      <div class="detail__grid">
+        ${plTable("🏦 Conventional", "your terms", conv, a.amort, "conv")}
+        ${plTable("🤝 Seller financing", "15% down · 5-yr balloon", sell, a.amort, "seller")}
+        ${maxOfferCard(u.noi, a, price)}
+      </div>`;
+  }
+
+  function anSave() {
+    const { price, units, u } = anCompute();
+    const name = $("anName").value.trim() || `${units || "?"}-unit — ${money(price)}`;
+    const url = $("anUrl").value.trim() || ("https://www.google.com/search?q=" + encodeURIComponent(name + " apartment for sale"));
+    pipeline.unshift({ id: "d" + Date.now(), srcId: null, name, url, price, units, cap: +u.cap.toFixed(2), cf: Math.round(u.cf), score: u.total, stage: "prospect" });
+    savePipe(); renderBoard(); toast(`Saved “${name}” to pipeline`);
+  }
+
+  function initAnalyze() {
+    document.querySelectorAll("#anModeSeg button").forEach((b) => b.addEventListener("click", () => {
+      document.querySelectorAll("#anModeSeg button").forEach((x) => x.classList.remove("is-active"));
+      b.classList.add("is-active"); anMode = b.dataset.mode;
+      $("anIncomeBlock").hidden = anMode !== "income";
+      $("anCapBlock").hidden = anMode !== "cap";
+      renderAnalyze();
+    }));
+    document.querySelectorAll("#anExpSeg button").forEach((b) => b.addEventListener("click", () => {
+      document.querySelectorAll("#anExpSeg button").forEach((x) => x.classList.remove("is-active"));
+      b.classList.add("is-active"); anExpMode = b.dataset.x; renderAnalyze();
+    }));
+    ["anPrice", "anUnits", "anRent", "anOther", "anVac", "anExpVal", "anCap", "anDown", "anRate", "anAmort", "anClosing"]
+      .forEach((id) => $(id).addEventListener("input", renderAnalyze));
+    $("anSave").addEventListener("click", anSave);
+    $("anReset").addEventListener("click", () => { $("anName").value = ""; $("anUrl").value = ""; renderAnalyze(); });
+    renderAnalyze();
   }
 
   /* ---- pipeline ---- */
@@ -517,14 +629,17 @@
   }
   function renderPipeStats() {
     const active = pipeline.filter((p) => p.stage !== "passed");
+    const owned = pipeline.filter((p) => p.stage === "closed");
     const val = active.reduce((s, p) => s + (p.price || 0), 0);
+    const units = active.reduce((s, p) => s + (p.units || 0), 0);
+    const cfYr = active.reduce((s, p) => s + (p.cf || 0), 0);
     const avg = active.length ? active.reduce((s, p) => s + (p.cap || 0), 0) / active.length : 0;
-    const strong = pipeline.filter((p) => p.score >= 65).length;
+    const cfCls = cfYr < 0 ? "val--neg" : "";
     $("pipeStats").innerHTML =
       `<div class="stat"><span>Active deals</span><strong class="tnum">${active.length}</strong></div>
+       <div class="stat"><span>Total units</span><strong class="tnum">${units}${owned.length ? ` · ${owned.reduce((s, p) => s + (p.units || 0), 0)} owned` : ""}</strong></div>
        <div class="stat"><span>Pipeline value</span><strong class="tnum">${money(val)}</strong></div>
-       <div class="stat"><span>Avg cap rate</span><strong class="tnum">${avg ? pct(avg) : "—"}</strong></div>
-       <div class="stat"><span>Strong (B+)</span><strong class="tnum">${strong}</strong></div>`;
+       <div class="stat"><span>Projected cash flow</span><strong class="tnum ${cfCls}">${money(cfYr)}<small style="font-size:12px;color:var(--muted);font-weight:600">/yr</small></strong></div>`;
   }
   let dragId = null;
   function wireDnD() {
@@ -570,9 +685,19 @@
     ["lvCity", "lvMax"].forEach((id) => $(id).addEventListener("keydown", (e) => { if (e.key === "Enter") renderLive(); }));
     renderMetros();
 
-    // re-score on assumption/filter change
-    ["gDown", "gRate", "gAmort", "gClosing", "gExp", "fState", "fUnits", "fMax", "fMinScore"].forEach((id) => {
-      const el = $(id); el.addEventListener("input", renderList); el.addEventListener("change", renderList);
+    // restore saved financing assumptions
+    try {
+      const saved = JSON.parse(localStorage.getItem("dealscout2.assume") || "{}");
+      Object.entries(saved).forEach(([k, v]) => { if ($(k)) $(k).value = v; });
+    } catch { /* ignore */ }
+
+    // re-score on assumption/filter change (+ persist assumptions)
+    const ASSUME_IDS = ["gDown", "gRate", "gAmort", "gClosing", "gExp"];
+    const saveAssume = () => localStorage.setItem("dealscout2.assume", JSON.stringify(Object.fromEntries(ASSUME_IDS.map((id) => [id, $(id).value]))));
+    [...ASSUME_IDS, "fState", "fUnits", "fMax", "fMinScore"].forEach((id) => {
+      const el = $(id);
+      el.addEventListener("input", () => { renderList(); if (ASSUME_IDS.includes(id)) saveAssume(); });
+      el.addEventListener("change", () => { renderList(); if (ASSUME_IDS.includes(id)) saveAssume(); });
     });
     // sort
     document.querySelectorAll("#sortSeg button").forEach((b) => b.addEventListener("click", () => {
@@ -598,6 +723,7 @@
     $("clearBtn").addEventListener("click", () => { if (pipeline.length && confirm("Clear the entire pipeline?")) { pipeline = []; savePipe(); renderBoard(); toast("Cleared"); } });
 
     initTheme();
+    initAnalyze();
     loadPipe();
     renderList();
     renderBoard();

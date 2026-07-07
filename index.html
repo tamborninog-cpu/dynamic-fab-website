@@ -15,6 +15,7 @@
       <div class="top__tabs">
         <button class="tab is-active" data-view="live">Live Listings</button>
         <button class="tab" data-view="deals">Deal Board</button>
+        <button class="tab" data-view="analyze">Analyze</button>
         <button class="tab" data-view="pipeline">Pipeline</button>
       </div>
       <div class="top__sp"></div>
@@ -137,6 +138,69 @@
       <div class="list" id="list"></div>
     </section>
 
+    <!-- ============ ANALYZE ANY DEAL ============ -->
+    <section class="view" id="view-analyze">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Underwrite any property · your numbers</span>
+          <h1>Analyze any deal</h1>
+          <p>Bring a property from anywhere — a LoopNet link, a broker's email, an off-market lead — and underwrite it with <strong>real income</strong>, not just a listed cap rate. Get the deal score, both financing plans, and your <strong>max offer</strong>, then save it to your pipeline.</p>
+        </div>
+      </div>
+
+      <div class="an-wrap">
+        <div class="assume an-form">
+          <div class="assume__row">
+            <div class="assume__title">Property</div>
+            <div class="ctrl" style="flex:1 1 100%"><label for="anName">Deal name / address</label><input id="anName" placeholder="e.g. 16-unit — 500 Oak St, Columbus OH" /></div>
+            <div class="ctrl" style="flex:1 1 100%"><label for="anUrl">Listing URL <span class="muted">(optional)</span></label><input id="anUrl" placeholder="https://www.loopnet.com/Listing/..." /></div>
+            <div class="ctrl"><label for="anPrice">Price</label><input id="anPrice" inputmode="numeric" value="1,600,000" /></div>
+            <div class="ctrl"><label for="anUnits">Units</label><input id="anUnits" inputmode="numeric" value="16" /></div>
+          </div>
+
+          <div class="assume__row" style="margin-top:14px">
+            <div class="assume__title">Income</div>
+            <div class="seg an-seg" id="anModeSeg" style="flex:1 1 100%;max-width:320px">
+              <button data-mode="income" class="is-active">Enter real income</button>
+              <button data-mode="cap">Use a cap rate</button>
+            </div>
+          </div>
+
+          <div class="assume__row an-income" id="anIncomeBlock" style="margin-top:12px">
+            <div class="ctrl"><label for="anRent">Gross rent <span class="muted">/mo</span></label><input id="anRent" inputmode="numeric" value="14,000" /></div>
+            <div class="ctrl"><label for="anOther">Other income <span class="muted">/mo</span></label><input id="anOther" inputmode="numeric" value="500" /></div>
+            <div class="ctrl"><label for="anVac">Vacancy %</label><input id="anVac" inputmode="decimal" value="5" /></div>
+            <div class="ctrl"><label for="anExp">Operating expenses</label>
+              <div class="ctrl-row">
+                <input id="anExpVal" inputmode="decimal" value="45" style="min-width:70px" />
+                <div class="seg seg--mini" id="anExpSeg"><button data-x="pct" class="is-active">%</button><button data-x="dollar">$/yr</button></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="assume__row an-cap" id="anCapBlock" style="margin-top:12px" hidden>
+            <div class="ctrl"><label for="anCap">Cap rate %</label><input id="anCap" inputmode="decimal" value="7.0" /></div>
+          </div>
+
+          <hr class="an-hr" />
+          <div class="assume__row">
+            <div class="assume__title">Financing</div>
+            <div class="ctrl"><label for="anDown">Down %</label><input id="anDown" inputmode="decimal" value="25" /></div>
+            <div class="ctrl"><label for="anRate">Rate %</label><input id="anRate" inputmode="decimal" value="6.75" /></div>
+            <div class="ctrl"><label for="anAmort">Amort (yrs)</label><input id="anAmort" inputmode="numeric" value="30" /></div>
+            <div class="ctrl"><label for="anClosing">Closing %</label><input id="anClosing" inputmode="decimal" value="3" /></div>
+          </div>
+
+          <div class="an-actions">
+            <button class="btn btn--brand" id="anSave">＋ Save to Pipeline</button>
+            <button class="btn btn--ghost" id="anReset">Reset</button>
+          </div>
+        </div>
+
+        <div class="an-results" id="anResults"></div>
+      </div>
+    </section>
+
     <!-- ============ PIPELINE ============ -->
     <section class="view" id="view-pipeline">
       <div class="pagehead">
@@ -155,8 +219,20 @@
   </main>
 
   <footer class="foot">
-    <p><b>DealScout</b> — screening tool, not financial advice. Property data are unverified leads sourced from public marketplaces; verify rent roll, T-12, taxes & insurance before making an offer.</p>
-    <p>Scores use your financing assumptions above. Where a listing didn't publish a cap rate, NOI is estimated from price using your op-ex % and is marked <i>est.</i></p>
+    <details class="method">
+      <summary>How the deal score works</summary>
+      <div class="method__body">
+        <p>Each deal gets a <b>0–100 score</b> from four weighted factors, computed on <b>your</b> financing assumptions:</p>
+        <ul>
+          <li><b>Cap rate (35 pts)</b> — 0 pts at 4%, full marks at 9%+.</li>
+          <li><b>Cash-on-cash (25 pts)</b> — 0 at 0%, full at 12%+.</li>
+          <li><b>DSCR (25 pts)</b> — 0 at 1.0×, full at 1.5×+.</li>
+          <li><b>Cash flow per unit (15 pts)</b> — 0 at $0/mo, full at $150/unit/mo.</li>
+        </ul>
+        <p>Grades: <b>A</b> 80+, <b>B</b> 65–79, <b>C</b> 50–64, <b>D</b> under 50. NOI comes from the listed cap rate on the board, or from the income you enter in <b>Analyze</b>. Max offer solves the price that still clears an 8% cash-on-cash and 1.25× DSCR at your terms.</p>
+      </div>
+    </details>
+    <p><b>DealScout</b> — a screening &amp; underwriting tool, not financial advice. Deal Board entries are <b>unverified leads</b> gathered from public marketplaces and can go stale; use <b>Live Listings</b> for current active inventory with broker contact, and verify rent roll, T‑12, taxes &amp; insurance before making an offer.</p>
   </footer>
 
   <div class="toast" id="toast" hidden></div>

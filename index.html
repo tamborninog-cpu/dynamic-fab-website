@@ -3,701 +3,257 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dynamic Fab & Finishing | Metal Fabrication & Industrial Finishing</title>
-  <meta name="description" content="35+ years of precision metal fabrication, powder coating, sandblasting, and welding for industrial and manufacturing clients. Get a free quote today." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <title>DealScout — Ranked Multifamily Deals</title>
+  <meta name="description" content="Browse scored & ranked 5/10/20+ unit multifamily properties in-app, underwrite each, and track your pipeline." />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8F%A2%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
-
-  <!-- Navigation -->
-  <nav class="nav" id="nav">
-    <div class="nav__inner">
-      <a href="#" class="nav__logo">
-        <span class="nav__logo-icon">
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="#f97316" opacity="0.15" stroke="#f97316" stroke-width="1.5"/>
-            <path d="M8 16 L14 10 L20 16 L14 22 Z" fill="#f97316"/>
-            <path d="M18 12 L24 12 L24 20 L18 20" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <div>
-          <span class="nav__logo-name">Dynamic Fab</span>
-          <span class="nav__logo-sub">&amp; Finishing</span>
-        </div>
-      </a>
-      <ul class="nav__links" id="navLinks">
-        <li><a href="#services" class="nav__link">Services</a></li>
-        <li><a href="#about" class="nav__link">About</a></li>
-        <li><a href="#process" class="nav__link">Process</a></li>
-        <li><a href="#gallery" class="nav__link">Work</a></li>
-        <li><a href="#testimonials" class="nav__link">Reviews</a></li>
-        <li><a href="#quote" class="nav__link nav__link--cta">Get a Quote</a></li>
-      </ul>
-      <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
+  <header class="top">
+    <div class="top__in">
+      <div class="logo"><span class="logo__m">🏢</span> Deal<b>Scout</b></div>
+      <div class="top__tabs">
+        <button class="tab is-active" data-view="live">Live Listings</button>
+        <button class="tab" data-view="deals">Deal Board</button>
+        <button class="tab" data-view="markets">Markets</button>
+        <button class="tab" data-view="analyze">Analyze</button>
+        <button class="tab" data-view="pipeline">Pipeline</button>
+      </div>
+      <div class="top__sp"></div>
+      <button class="icon-btn" id="themeBtn" title="Toggle light / dark">◐</button>
     </div>
-  </nav>
+  </header>
 
-  <!-- Hero -->
-  <section class="hero" id="hero">
-    <div class="hero__bg">
-      <div class="hero__overlay"></div>
-      <div class="hero__grid"></div>
-    </div>
-    <div class="hero__content">
-      <div class="hero__badge">
-        <span class="hero__badge-dot"></span>
-        Trusted Industrial Partner Since 1989
-      </div>
-      <h1 class="hero__headline">
-        Precision Fabrication.<br />
-        <span class="hero__headline--accent">Built to Last.</span>
-      </h1>
-      <p class="hero__sub">
-        Over 35 years delivering industrial-grade metal fabrication, powder coating, sandblasting, and welding for manufacturers and industrial clients who demand uncompromising quality.
-      </p>
-      <div class="hero__actions">
-        <a href="#quote" class="btn btn--primary btn--lg">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          Request a Quote
-        </a>
-        <a href="#services" class="btn btn--ghost btn--lg">
-          View Our Services
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6,9 12,15 18,9"/></svg>
-        </a>
-      </div>
-      <div class="hero__trust">
-        <div class="hero__trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
-          <span>No obligation estimates</span>
-        </div>
-        <div class="hero__trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
-          <span>Fast turnaround</span>
-        </div>
-        <div class="hero__trust-item">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20,6 9,17 4,12"/></svg>
-          <span>Industrial-grade quality</span>
+  <!-- ============ DEALS ============ -->
+  <main class="wrap">
+    <!-- ============ LIVE LISTINGS ============ -->
+    <section class="view is-active" id="view-live">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Live inventory · active listings · broker contact</span>
+          <h1>Search live listings</h1>
+          <p>Set your buy box and open the current for-sale results on Crexi &amp; LoopNet. Everything shown there is <strong>actively listed</strong>, and each listing page names the <strong>listing broker with a phone number and contact form</strong> — reach out directly.</p>
         </div>
       </div>
-    </div>
-    <div class="hero__scroll">
-      <div class="hero__scroll-line"></div>
-      <span>Scroll</span>
-    </div>
-  </section>
 
-  <!-- Stats Bar -->
-  <section class="stats">
-    <div class="container">
-      <div class="stats__grid">
-        <div class="stats__item">
-          <span class="stats__number" data-target="35">0</span><span class="stats__suffix">+</span>
-          <span class="stats__label">Years in Business</span>
-        </div>
-        <div class="stats__divider"></div>
-        <div class="stats__item">
-          <span class="stats__number" data-target="5000">0</span><span class="stats__suffix">+</span>
-          <span class="stats__label">Projects Completed</span>
-        </div>
-        <div class="stats__divider"></div>
-        <div class="stats__item">
-          <span class="stats__number" data-target="500">0</span><span class="stats__suffix">+</span>
-          <span class="stats__label">Industrial Clients</span>
-        </div>
-        <div class="stats__divider"></div>
-        <div class="stats__item">
-          <span class="stats__number" data-target="4">0</span><span class="stats__suffix"></span>
-          <span class="stats__label">Core Specialties</span>
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Your buy box</div>
+          <div class="ctrl"><label for="lvCity">City <span class="muted">(optional)</span></label><input id="lvCity" placeholder="e.g. Houston" autocomplete="off" /></div>
+          <div class="ctrl"><label for="lvState">State</label><select id="lvState"></select></div>
+          <div class="ctrl"><label for="lvUnits">Min units</label>
+            <select id="lvUnits">
+              <option value="0">Any</option><option value="5" selected>5+</option>
+              <option value="10">10+</option><option value="20">20+</option><option value="50">50+</option>
+            </select>
+          </div>
+          <div class="ctrl"><label for="lvMax">Max price <span class="muted">(optional)</span></label><input id="lvMax" inputmode="numeric" placeholder="$3,000,000" /></div>
+          <div class="ctrl"><label>&nbsp;</label><button class="btn btn--brand" id="lvGo">Open live searches →</button></div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Services -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">What We Do</span>
-        <h2 class="section-title">Industrial Services <span class="text-accent">Done Right</span></h2>
-        <p class="section-sub">From raw steel to finished product, we handle every stage of your fabrication and finishing needs with precision and care.</p>
+      <div id="lvResults" hidden>
+        <div class="lv-summary" id="lvSummary"></div>
+        <div class="src-grid" id="lvSrc"></div>
+        <p class="notice" style="margin-top:16px">
+          <span class="notice__i">✓</span>
+          <span>These open the marketplace's <b>live, active</b> inventory in a new tab. On any listing you like, scroll to the broker card for their <b>name, phone, and email</b> — or use the "Contact" button. Refine units/price on the site's own filters.</span>
+        </p>
       </div>
-      <div class="services__grid">
 
-        <div class="service-card" data-index="0">
-          <div class="service-card__icon">
-            <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="4" y="20" width="40" height="8" rx="2" stroke="#f97316" stroke-width="2.5" fill="none"/>
-              <rect x="10" y="12" width="28" height="8" rx="1" stroke="#f97316" stroke-width="2" fill="none"/>
-              <rect x="16" y="28" width="16" height="8" rx="1" stroke="#f97316" stroke-width="2" fill="none"/>
-              <line x1="24" y1="36" x2="24" y2="42" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="24" cy="44" r="2" fill="#f97316"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Metal Fabrication</h3>
-          <p class="service-card__desc">Custom metal cutting, forming, and assembly to exact specifications. We work with steel, aluminum, stainless, and specialty alloys for complex industrial applications.</p>
-          <ul class="service-card__list">
-            <li>CNC cutting &amp; plasma cutting</li>
-            <li>Press brake forming &amp; bending</li>
-            <li>Custom structural assemblies</li>
-            <li>Precision tolerances</li>
-          </ul>
-          <a href="#quote" class="service-card__link">Get a Quote →</a>
+      <h3 class="mk-h">Jump straight into a top market</h3>
+      <p class="mk-sub">One click opens that metro's live multifamily inventory. 40 markets — thousands of active listings, each with broker contact.</p>
+      <div class="metro-grid" id="metroGrid"></div>
+    </section>
+
+    <!-- ============ DEAL BOARD ============ -->
+    <section class="view" id="view-deals">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Multifamily acquisitions · 185+ listings · 33 states</span>
+          <h1>Ranked deal board</h1>
+          <p>Every property is scored by one underwriting engine and ranked strongest-first. Tune your financing once and the whole board re-scores live. Click a row to underwrite it.</p>
         </div>
-
-        <div class="service-card" data-index="1">
-          <div class="service-card__icon">
-            <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M8 36 Q24 10 40 36" stroke="#f97316" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-              <circle cx="24" cy="24" r="8" stroke="#f97316" stroke-width="2.5" fill="none"/>
-              <circle cx="24" cy="24" r="3" fill="#f97316"/>
-              <line x1="24" y1="6" x2="24" y2="10" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
-              <line x1="38" y1="12" x2="35" y2="15" stroke="#f97316" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Powder Coating</h3>
-          <p class="service-card__desc">Durable, corrosion-resistant powder coat finishes in hundreds of colors and textures. Superior to paint — scratch, chip, and fade resistant for long-lasting protection.</p>
-          <ul class="service-card__list">
-            <li>Hundreds of colors &amp; textures</li>
-            <li>Superior corrosion resistance</li>
-            <li>Environmentally friendly process</li>
-            <li>Industrial &amp; commercial applications</li>
-          </ul>
-          <a href="#quote" class="service-card__link">Get a Quote →</a>
-        </div>
-
-        <div class="service-card" data-index="2">
-          <div class="service-card__icon">
-            <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="28" width="36" height="12" rx="2" stroke="#f97316" stroke-width="2.5" fill="none"/>
-              <path d="M12 28 L16 16 L32 16 L36 28" stroke="#f97316" stroke-width="2" fill="none"/>
-              <line x1="24" y1="16" x2="24" y2="8" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M20 8 Q24 4 28 8" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <circle cx="14" cy="34" r="3" fill="#f97316" opacity="0.4"/>
-              <circle cx="24" cy="34" r="3" fill="#f97316" opacity="0.4"/>
-              <circle cx="34" cy="34" r="3" fill="#f97316" opacity="0.4"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Sandblasting &amp; Media Blasting</h3>
-          <p class="service-card__desc">Professional surface preparation and cleaning that creates the ideal base for coatings and finishes. We remove rust, scale, old coatings, and contaminants efficiently.</p>
-          <ul class="service-card__list">
-            <li>Steel &amp; aluminum surface prep</li>
-            <li>Rust &amp; scale removal</li>
-            <li>Multiple media options</li>
-            <li>Coating prep &amp; surface profiling</li>
-          </ul>
-          <a href="#quote" class="service-card__link">Get a Quote →</a>
-        </div>
-
-        <div class="service-card" data-index="3">
-          <div class="service-card__icon">
-            <svg width="40" height="40" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 36 L18 24 L26 32 L36 18" stroke="#f97316" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-              <circle cx="36" cy="18" r="4" fill="#f97316"/>
-              <path d="M30 38 L38 38" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M34 34 L34 42" stroke="#f97316" stroke-width="2.5" stroke-linecap="round"/>
-              <path d="M8 14 Q12 8 18 12" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/>
-              <circle cx="10" cy="16" r="2" fill="#f97316" opacity="0.6"/>
-            </svg>
-          </div>
-          <h3 class="service-card__title">Welding &amp; Repairs</h3>
-          <p class="service-card__desc">Structural and precision welding using MIG, TIG, and stick processes. We handle new construction, modifications, and repair work for industrial equipment and components.</p>
-          <ul class="service-card__list">
-            <li>MIG, TIG &amp; stick welding</li>
-            <li>Structural welding &amp; repairs</li>
-            <li>Aluminum &amp; stainless welding</li>
-            <li>Field &amp; shop welding available</li>
-          </ul>
-          <a href="#quote" class="service-card__link">Get a Quote →</a>
-        </div>
-
+        <div class="kpis" id="kpis"></div>
       </div>
-    </div>
-  </section>
 
-  <!-- About / Trust -->
-  <section class="about" id="about">
-    <div class="container">
-      <div class="about__grid">
-        <div class="about__visual">
-          <div class="about__img-wrap">
-            <div class="about__img-placeholder">
-              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="80" height="80" rx="4" fill="#1f2937"/>
-                <path d="M20 60 L20 30 L40 20 L60 30 L60 60 Z" stroke="#f97316" stroke-width="2" fill="none"/>
-                <rect x="32" y="44" width="16" height="16" stroke="#f97316" stroke-width="2" fill="none"/>
-                <rect x="24" y="34" width="12" height="10" stroke="#f97316" stroke-width="2" fill="none"/>
-                <rect x="44" y="34" width="12" height="10" stroke="#f97316" stroke-width="2" fill="none"/>
-              </svg>
-              <span>Shop Photo</span>
-            </div>
-            <div class="about__badge-float">
-              <span class="about__badge-year">1989</span>
-              <span class="about__badge-text">Est.</span>
-            </div>
-          </div>
-          <div class="about__cert-strip">
-            <div class="about__cert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M8.56 14.52L8 22l4-2 4 2-.56-7.48"/></svg>
-              <span>Certified Welders</span>
-            </div>
-            <div class="about__cert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>Quality Guaranteed</span>
-            </div>
-            <div class="about__cert">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
-              <span>On-Time Delivery</span>
-            </div>
-          </div>
-        </div>
-        <div class="about__content">
-          <span class="section-tag">About Us</span>
-          <h2 class="section-title">35+ Years of Industrial <span class="text-accent">Excellence</span></h2>
-          <p class="about__text">Dynamic Fab &amp; Finishing has been the trusted fabrication and finishing partner for industrial manufacturers since 1989. Our reputation is built on one principle: delivering exactly what our clients need, on time, to spec, every time.</p>
-          <p class="about__text">We've invested in modern equipment and skilled craftspeople who take pride in their work. Whether it's a one-off custom piece or a high-volume production run, we apply the same level of expertise and attention to detail.</p>
-          <div class="about__pillars">
-            <div class="about__pillar">
-              <div class="about__pillar-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
-              </div>
-              <div>
-                <h4>Precision Quality</h4>
-                <p>Every job is inspected to ensure it meets your specifications before it leaves our shop.</p>
-              </div>
-            </div>
-            <div class="about__pillar">
-              <div class="about__pillar-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-              </div>
-              <div>
-                <h4>Fast Turnaround</h4>
-                <p>We understand production schedules. Our team works efficiently to keep your timelines on track.</p>
-              </div>
-            </div>
-            <div class="about__pillar">
-              <div class="about__pillar-icon">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-              </div>
-              <div>
-                <h4>Long-Term Partnerships</h4>
-                <p>Our clients stay with us for decades because we invest in understanding their business needs.</p>
-              </div>
-            </div>
-          </div>
-          <a href="#quote" class="btn btn--primary">Start a Project</a>
+      <div class="notice">
+        <span class="notice__i">ℹ</span>
+        <div><b>Real leads gathered from live marketplaces</b> (LoopNet, Crexi, CityFeet, Showcase) — unverified snapshots. Confirm price, units &amp; cap at the source before acting. Want auto-updating verified data? A RentCast API key turns on a live feed.</div>
+      </div>
+
+      <!-- Financing assumptions (re-scores everything) -->
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Your financing assumptions — applied to every deal</div>
+          <div class="ctrl"><label for="gDown">Down %</label><input id="gDown" inputmode="decimal" value="25" /></div>
+          <div class="ctrl"><label for="gRate">Rate %</label><input id="gRate" inputmode="decimal" value="6.75" /></div>
+          <div class="ctrl"><label for="gAmort">Amort (yrs)</label><input id="gAmort" inputmode="numeric" value="30" /></div>
+          <div class="ctrl"><label for="gClosing">Closing %</label><input id="gClosing" inputmode="decimal" value="3" /></div>
+          <div class="ctrl"><label for="gExp">Op-ex % (for unlisted cap)</label><input id="gExp" inputmode="decimal" value="45" /></div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Process -->
-  <section class="process" id="process">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">How It Works</span>
-        <h2 class="section-title">Simple. Straightforward. <span class="text-accent">Reliable.</span></h2>
-        <p class="section-sub">Getting started is easy. Here's what to expect when you work with us.</p>
-      </div>
-      <div class="process__steps">
-        <div class="process__step">
-          <div class="process__step-num">01</div>
-          <div class="process__step-content">
-            <div class="process__step-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
-            </div>
-            <h3>Submit Your Request</h3>
-            <p>Fill out our quick quote form with your project details — what you need, materials, quantities, and timeline. Upload drawings or specs if you have them.</p>
+      <!-- Filters -->
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Filters</div>
+          <div class="ctrl"><label for="fState">State</label><select id="fState"></select></div>
+          <div class="ctrl"><label for="fUnits">Min units</label>
+            <select id="fUnits">
+              <option value="0">Any</option><option value="5">5+</option>
+              <option value="10">10+</option><option value="20">20+</option><option value="40">40+</option>
+            </select>
           </div>
-        </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">02</div>
-          <div class="process__step-content">
-            <div class="process__step-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-            </div>
-            <h3>We Review &amp; Quote</h3>
-            <p>Our team reviews your request and gets back to you quickly with a detailed, no-obligation quote. We'll ask any clarifying questions upfront to avoid surprises.</p>
-          </div>
-        </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">03</div>
-          <div class="process__step-content">
-            <div class="process__step-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"/><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"/><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"/><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"/><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"/><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"/><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"/></svg>
-            </div>
-            <h3>We Build It</h3>
-            <p>Once approved, our team gets to work. We keep you updated throughout production and quality-check everything before it ships or is ready for pickup.</p>
-          </div>
-        </div>
-        <div class="process__connector"></div>
-        <div class="process__step">
-          <div class="process__step-num">04</div>
-          <div class="process__step-content">
-            <div class="process__step-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-            </div>
-            <h3>Delivered On Time</h3>
-            <p>Your finished parts arrive on schedule, built to spec, and ready to put to work. We stand behind everything we produce.</p>
+          <div class="ctrl"><label for="fMax">Max price</label><input id="fMax" inputmode="numeric" placeholder="e.g. 3,000,000" /></div>
+          <div class="ctrl"><label for="fMinScore">Min score</label>
+            <select id="fMinScore">
+              <option value="0">Any</option><option value="50">50+ (C)</option>
+              <option value="65">65+ (B)</option><option value="80">80+ (A)</option>
+            </select>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Gallery -->
-  <section class="gallery" id="gallery">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Our Work</span>
-        <h2 class="section-title">Built by <span class="text-accent">Our Hands</span></h2>
-        <p class="section-sub">A sample of the fabrication, finishing, and welding projects we've completed for industrial clients.</p>
+      <div class="toolbar">
+        <input id="boardSearch" class="board-search" type="search" placeholder="🔎 Search address or city…" aria-label="Search deals" />
+        <div class="count" id="count"></div>
+        <span class="sort-lbl">Sort</span>
+        <div class="seg" id="sortSeg">
+          <button data-sort="score" class="is-active">Score</button>
+          <button data-sort="cap">Cap rate</button>
+          <button data-sort="cf">Cash flow</button>
+          <button data-sort="price">Price</button>
+        </div>
+        <button class="btn btn--ghost btn--sm" id="csvBtn" title="Export current view to CSV">⭳ CSV</button>
       </div>
-      <div class="gallery__grid">
-        <div class="gallery__item gallery__item--featured">
-          <div class="gallery__placeholder">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="4" fill="#1f2937"/><path d="M8 36L18 20l8 12 6-8 8 12H8Z" fill="#374151"/><circle cx="34" cy="14" r="5" fill="#374151"/></svg>
-            <span>Featured Project</span>
-          </div>
-          <div class="gallery__overlay">
-            <span class="gallery__tag">Metal Fabrication</span>
-            <h4>Custom Structural Assembly</h4>
-          </div>
-        </div>
-        <div class="gallery__item">
-          <div class="gallery__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="4" fill="#1f2937"/><path d="M8 36L18 20l8 12 6-8 8 12H8Z" fill="#374151"/></svg>
-            <span>Project Photo</span>
-          </div>
-          <div class="gallery__overlay">
-            <span class="gallery__tag">Powder Coating</span>
-            <h4>Industrial Equipment Finish</h4>
-          </div>
-        </div>
-        <div class="gallery__item">
-          <div class="gallery__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="4" fill="#1f2937"/><path d="M8 36L18 20l8 12 6-8 8 12H8Z" fill="#374151"/></svg>
-            <span>Project Photo</span>
-          </div>
-          <div class="gallery__overlay">
-            <span class="gallery__tag">Welding</span>
-            <h4>Structural Repair &amp; Reinforcement</h4>
-          </div>
-        </div>
-        <div class="gallery__item">
-          <div class="gallery__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="4" fill="#1f2937"/><path d="M8 36L18 20l8 12 6-8 8 12H8Z" fill="#374151"/></svg>
-            <span>Project Photo</span>
-          </div>
-          <div class="gallery__overlay">
-            <span class="gallery__tag">Sandblasting</span>
-            <h4>Heavy Equipment Surface Prep</h4>
-          </div>
-        </div>
-        <div class="gallery__item">
-          <div class="gallery__placeholder">
-            <svg width="36" height="36" viewBox="0 0 48 48" fill="none"><rect width="48" height="48" rx="4" fill="#1f2937"/><path d="M8 36L18 20l8 12 6-8 8 12H8Z" fill="#374151"/></svg>
-            <span>Project Photo</span>
-          </div>
-          <div class="gallery__overlay">
-            <span class="gallery__tag">Fabrication</span>
-            <h4>Precision Cut Components</h4>
-          </div>
-        </div>
-      </div>
-      <div class="gallery__note">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        Photo placeholders — replace with your actual project photos
-      </div>
-    </div>
-  </section>
 
-  <!-- Testimonials -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <div class="section-header">
-        <span class="section-tag">Client Reviews</span>
-        <h2 class="section-title">What Our Clients <span class="text-accent">Say</span></h2>
+      <div class="list-head">
+        <span></span>
+        <span>Property</span>
+        <span class="lh-r">Price</span>
+        <span class="lh-r">Cap</span>
+        <span class="lh-r">$/unit</span>
+        <span class="lh-r">Cash flow/yr</span>
+        <span>Deal score</span>
+        <span></span>
       </div>
-      <div class="testimonials__grid">
+      <div class="list" id="list"></div>
+    </section>
 
-        <div class="testimonial-card">
-          <div class="testimonial-card__stars">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
+    <!-- ============ MARKETS ============ -->
+    <section class="view" id="view-markets">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Market intelligence · where the yield is</span>
+          <h1>Markets at a glance</h1>
+          <p>The whole board, aggregated. See which metros carry the most inventory, where cap rates actually land, and how the deals grade out at your financing — so you know where to hunt.</p>
+        </div>
+      </div>
+      <div class="mkt-stats" id="mktStats"></div>
+      <div class="charts" id="charts"></div>
+    </section>
+
+    <!-- ============ ANALYZE ANY DEAL ============ -->
+    <section class="view" id="view-analyze">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Underwrite any property · your numbers</span>
+          <h1>Analyze any deal</h1>
+          <p>Bring a property from anywhere — a LoopNet link, a broker's email, an off-market lead — and underwrite it with <strong>real income</strong>, not just a listed cap rate. Get the deal score, both financing plans, and your <strong>max offer</strong>, then save it to your pipeline.</p>
+        </div>
+      </div>
+
+      <div class="an-wrap">
+        <div class="assume an-form">
+          <div class="assume__row">
+            <div class="assume__title">Property</div>
+            <div class="ctrl" style="flex:1 1 100%"><label for="anName">Deal name / address</label><input id="anName" placeholder="e.g. 16-unit — 500 Oak St, Columbus OH" /></div>
+            <div class="ctrl" style="flex:1 1 100%"><label for="anUrl">Listing URL <span class="muted">(optional)</span></label><input id="anUrl" placeholder="https://www.loopnet.com/Listing/..." /></div>
+            <div class="ctrl"><label for="anPrice">Price</label><input id="anPrice" inputmode="numeric" value="1,600,000" /></div>
+            <div class="ctrl"><label for="anUnits">Units</label><input id="anUnits" inputmode="numeric" value="16" /></div>
           </div>
-          <blockquote class="testimonial-card__quote">"We've been using Dynamic Fab for over 12 years. They consistently deliver quality work on tight timelines. Their powder coating work is flawless — we've never had a field failure on coated parts."</blockquote>
-          <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">MR</div>
-            <div>
-              <strong>Mike R.</strong>
-              <span>Plant Manager, Industrial Manufacturer</span>
+
+          <div class="assume__row" style="margin-top:14px">
+            <div class="assume__title">Income</div>
+            <div class="seg an-seg" id="anModeSeg" style="flex:1 1 100%;max-width:320px">
+              <button data-mode="income" class="is-active">Enter real income</button>
+              <button data-mode="cap">Use a cap rate</button>
             </div>
           </div>
-        </div>
 
-        <div class="testimonial-card">
-          <div class="testimonial-card__stars">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-          </div>
-          <blockquote class="testimonial-card__quote">"Had a rush job on custom structural brackets — called Dynamic Fab and they had them fabricated, blasted, and coated within the week. The parts fit perfectly. These guys know what they're doing."</blockquote>
-          <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">JS</div>
-            <div>
-              <strong>Jason S.</strong>
-              <span>Operations Director, Equipment Co.</span>
+          <div class="assume__row an-income" id="anIncomeBlock" style="margin-top:12px">
+            <div class="ctrl"><label for="anRent">Gross rent <span class="muted">/mo</span></label><input id="anRent" inputmode="numeric" value="14,000" /></div>
+            <div class="ctrl"><label for="anOther">Other income <span class="muted">/mo</span></label><input id="anOther" inputmode="numeric" value="500" /></div>
+            <div class="ctrl"><label for="anVac">Vacancy %</label><input id="anVac" inputmode="decimal" value="5" /></div>
+            <div class="ctrl"><label for="anExp">Operating expenses</label>
+              <div class="ctrl-row">
+                <input id="anExpVal" inputmode="decimal" value="45" style="min-width:70px" />
+                <div class="seg seg--mini" id="anExpSeg"><button data-x="pct" class="is-active">%</button><button data-x="dollar">$/yr</button></div>
+              </div>
             </div>
+          </div>
+
+          <div class="assume__row an-cap" id="anCapBlock" style="margin-top:12px" hidden>
+            <div class="ctrl"><label for="anCap">Cap rate %</label><input id="anCap" inputmode="decimal" value="7.0" /></div>
+          </div>
+
+          <hr class="an-hr" />
+          <div class="assume__row">
+            <div class="assume__title">Financing</div>
+            <div class="ctrl"><label for="anDown">Down %</label><input id="anDown" inputmode="decimal" value="25" /></div>
+            <div class="ctrl"><label for="anRate">Rate %</label><input id="anRate" inputmode="decimal" value="6.75" /></div>
+            <div class="ctrl"><label for="anAmort">Amort (yrs)</label><input id="anAmort" inputmode="numeric" value="30" /></div>
+            <div class="ctrl"><label for="anClosing">Closing %</label><input id="anClosing" inputmode="decimal" value="3" /></div>
+          </div>
+
+          <div class="an-actions">
+            <button class="btn btn--brand" id="anSave">＋ Save to Pipeline</button>
+            <button class="btn btn--ghost" id="anSheet">🖨 One-pager</button>
+            <button class="btn btn--ghost" id="anReset">Reset</button>
           </div>
         </div>
 
-        <div class="testimonial-card">
-          <div class="testimonial-card__stars">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="#f97316"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-          </div>
-          <blockquote class="testimonial-card__quote">"The welding quality is second to none. I've used other shops and always come back to Dynamic Fab. They take the time to understand the application and weld it right the first time, every time."</blockquote>
-          <div class="testimonial-card__author">
-            <div class="testimonial-card__avatar">TC</div>
-            <div>
-              <strong>Tom C.</strong>
-              <span>Maintenance Supervisor, Manufacturing Plant</span>
-            </div>
-          </div>
-        </div>
+        <div class="an-results" id="anResults"></div>
+      </div>
+    </section>
 
+    <!-- ============ PIPELINE ============ -->
+    <section class="view" id="view-pipeline">
+      <div class="pagehead">
+        <h1>Deal pipeline</h1>
+        <p>Deals you've saved, tracked prospect → close. Drag cards between stages. Saved in your browser.</p>
       </div>
-    </div>
-  </section>
+      <div class="stats" id="pipeStats"></div>
+      <div class="board" id="board"></div>
+      <div class="pipe-tools">
+        <button class="btn btn--ghost btn--sm" id="exportBtn">⭳ Export JSON</button>
+        <label class="btn btn--ghost btn--sm" for="importFile">⭱ Import JSON</label>
+        <input type="file" id="importFile" accept="application/json" hidden />
+        <button class="btn btn--ghost btn--sm btn--danger" id="clearBtn">Clear all</button>
+      </div>
+    </section>
+  </main>
 
-  <!-- Quote Form -->
-  <section class="quote" id="quote">
-    <div class="container">
-      <div class="quote__grid">
-        <div class="quote__info">
-          <span class="section-tag">Get Started</span>
-          <h2 class="section-title">Request a <span class="text-accent">Free Quote</span></h2>
-          <p class="quote__sub">Tell us about your project and we'll get back to you with a detailed, no-obligation quote. Most requests are responded to within 1 business day.</p>
-          <div class="quote__benefits">
-            <div class="quote__benefit">
-              <div class="quote__benefit-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg>
-              </div>
-              <div>
-                <strong>No obligation</strong>
-                <p>Free estimates with no pressure or commitment required.</p>
-              </div>
-            </div>
-            <div class="quote__benefit">
-              <div class="quote__benefit-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-              </div>
-              <div>
-                <strong>Fast response</strong>
-                <p>We review every request and respond quickly with a real answer.</p>
-              </div>
-            </div>
-            <div class="quote__benefit">
-              <div class="quote__benefit-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div>
-                <strong>Transparent pricing</strong>
-                <p>Clear, itemized quotes so you know exactly what you're getting.</p>
-              </div>
-            </div>
-          </div>
-          <div class="quote__contact-alt">
-            <p>Prefer to talk first?</p>
-            <a href="tel:+17155524454" class="btn btn--ghost">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-              Call Us
-            </a>
-          </div>
-        </div>
-        <div class="quote__form-wrap">
-          <form class="quote__form" id="quoteForm" novalidate>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="firstName">First Name <span class="req">*</span></label>
-                <input type="text" id="firstName" name="firstName" placeholder="John" required />
-              </div>
-              <div class="form-group">
-                <label for="lastName">Last Name <span class="req">*</span></label>
-                <input type="text" id="lastName" name="lastName" placeholder="Smith" required />
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label for="company">Company Name <span class="req">*</span></label>
-                <input type="text" id="company" name="company" placeholder="Acme Manufacturing" required />
-              </div>
-              <div class="form-group">
-                <label for="phone">Phone Number <span class="req">*</span></label>
-                <input type="tel" id="phone" name="phone" placeholder="(715) 552-4454" required />
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address <span class="req">*</span></label>
-              <input type="email" id="email" name="email" placeholder="john@company.com" required />
-            </div>
-            <div class="form-group">
-              <label>Services Needed <span class="req">*</span></label>
-              <div class="form-checkboxes">
-                <label class="checkbox-label">
-                  <input type="checkbox" name="services" value="Metal Fabrication" />
-                  <span class="checkbox-box"></span>
-                  Metal Fabrication
-                </label>
-                <label class="checkbox-label">
-                  <input type="checkbox" name="services" value="Powder Coating" />
-                  <span class="checkbox-box"></span>
-                  Powder Coating
-                </label>
-                <label class="checkbox-label">
-                  <input type="checkbox" name="services" value="Sandblasting" />
-                  <span class="checkbox-box"></span>
-                  Sandblasting
-                </label>
-                <label class="checkbox-label">
-                  <input type="checkbox" name="services" value="Welding & Repairs" />
-                  <span class="checkbox-box"></span>
-                  Welding &amp; Repairs
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="timeline">Project Timeline</label>
-              <select id="timeline" name="timeline">
-                <option value="">Select timeline...</option>
-                <option value="asap">ASAP / Rush</option>
-                <option value="1-2weeks">1–2 Weeks</option>
-                <option value="2-4weeks">2–4 Weeks</option>
-                <option value="1-2months">1–2 Months</option>
-                <option value="flexible">Flexible</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="description">Project Description <span class="req">*</span></label>
-              <textarea id="description" name="description" rows="4" placeholder="Describe your project: materials, dimensions, quantities, finish requirements, and any other relevant details..." required></textarea>
-            </div>
-            <div class="form-group">
-              <label for="fileUpload">Attach Drawings / Specs (optional)</label>
-              <div class="file-upload" id="fileUploadArea">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><polyline points="16,16 12,12 8,16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
-                <p>Drop files here or <span class="file-upload__browse">browse</span></p>
-                <p class="file-upload__hint">PDF, DWG, DXF, PNG, JPG up to 20MB</p>
-                <input type="file" id="fileUpload" name="files" multiple accept=".pdf,.dwg,.dxf,.png,.jpg,.jpeg" />
-              </div>
-            </div>
-            <button type="submit" class="btn btn--primary btn--block btn--lg">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg>
-              Submit Quote Request
-            </button>
-            <p class="form-disclaimer">By submitting you agree to be contacted about your project. We never share your information.</p>
-          </form>
-          <div class="quote__success" id="quoteSuccess" style="display:none;">
-            <div class="quote__success-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg>
-            </div>
-            <h3>Quote Request Received!</h3>
-            <p>Thank you — we'll review your project details and get back to you within 1 business day with a detailed quote.</p>
-            <a href="#" class="btn btn--ghost" id="resetForm">Submit Another Request</a>
-          </div>
-        </div>
+  <footer class="foot">
+    <details class="method">
+      <summary>How the deal score works</summary>
+      <div class="method__body">
+        <p>Each deal gets a <b>0–100 score</b> from four weighted factors, computed on <b>your</b> financing assumptions:</p>
+        <ul>
+          <li><b>Cap rate (35 pts)</b> — 0 pts at 4%, full marks at 9%+.</li>
+          <li><b>Cash-on-cash (25 pts)</b> — 0 at 0%, full at 12%+.</li>
+          <li><b>DSCR (25 pts)</b> — 0 at 1.0×, full at 1.5×+.</li>
+          <li><b>Cash flow per unit (15 pts)</b> — 0 at $0/mo, full at $150/unit/mo.</li>
+        </ul>
+        <p>Grades: <b>A</b> 80+, <b>B</b> 65–79, <b>C</b> 50–64, <b>D</b> under 50. NOI comes from the listed cap rate on the board, or from the income you enter in <b>Analyze</b>. Max offer solves the price that still clears an 8% cash-on-cash and 1.25× DSCR at your terms.</p>
       </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <a href="#" class="nav__logo">
-            <span class="nav__logo-icon">
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-                <polygon points="16,2 30,10 30,22 16,30 2,22 2,10" fill="#f97316" opacity="0.15" stroke="#f97316" stroke-width="1.5"/>
-                <path d="M8 16 L14 10 L20 16 L14 22 Z" fill="#f97316"/>
-                <path d="M18 12 L24 12 L24 20 L18 20" stroke="#f97316" stroke-width="2" fill="none" stroke-linecap="round"/>
-              </svg>
-            </span>
-            <div>
-              <span class="nav__logo-name">Dynamic Fab</span>
-              <span class="nav__logo-sub">&amp; Finishing</span>
-            </div>
-          </a>
-          <p class="footer__tagline">Industrial fabrication and finishing done right. Serving manufacturers and industrial clients for over 35 years.</p>
-          <div class="footer__social">
-            <a href="#" class="footer__social-link" aria-label="Facebook">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-            </a>
-            <a href="#" class="footer__social-link" aria-label="LinkedIn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="footer__links">
-          <h4>Services</h4>
-          <ul>
-            <li><a href="#services">Metal Fabrication</a></li>
-            <li><a href="#services">Powder Coating</a></li>
-            <li><a href="#services">Sandblasting</a></li>
-            <li><a href="#services">Welding &amp; Repairs</a></li>
-          </ul>
-        </div>
-        <div class="footer__links">
-          <h4>Company</h4>
-          <ul>
-            <li><a href="#about">About Us</a></li>
-            <li><a href="#process">Our Process</a></li>
-            <li><a href="#gallery">Our Work</a></li>
-            <li><a href="#testimonials">Reviews</a></li>
-          </ul>
-        </div>
-        <div class="footer__contact">
-          <h4>Get In Touch</h4>
-          <div class="footer__contact-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
-            <a href="tel:+17155524454">(715) 552-4454</a>
-          </div>
-          <div class="footer__contact-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-            <a href="mailto:info@dynamicfabandfinishing.com">info@dynamicfabandfinishing.com</a>
-          </div>
-          <div class="footer__contact-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>2020 Prairie Lane, Eau Claire, WI 54703</span>
-          </div>
-          <div class="footer__contact-item">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg>
-            <span>Mon–Fri: 7AM–5PM</span>
-          </div>
-          <a href="#quote" class="btn btn--primary footer__cta">Get a Free Quote</a>
-        </div>
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 Dynamic Fab &amp; Finishing. All rights reserved.</p>
-        <p>Designed for industrial excellence.</p>
-      </div>
-    </div>
+    </details>
+    <p><b>DealScout</b> — a screening &amp; underwriting tool, not financial advice. Deal Board entries are <b>unverified leads</b> gathered from public marketplaces and can go stale; use <b>Live Listings</b> for current active inventory with broker contact, and verify rent roll, T‑12, taxes &amp; insurance before making an offer.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <div class="toast" id="toast" hidden></div>
+  <div id="printSheet" aria-hidden="true"></div>
+  <script src="app.js"></script>
 </body>
 </html>

@@ -592,7 +592,7 @@
   function barChart(title, sub, data) {
     const maxV = Math.max(1, ...data.map((d) => d.value));
     const bars = data.map((d) => `
-      <div class="bar-row" title="${esc(d.tip || "")}">
+      <div class="bar-row${d.city ? " bar-row--link" : ""}" title="${esc(d.tip || "")}"${d.city ? ` data-city="${esc(d.city)}"` : ""}>
         <span class="bar-label">${esc(d.label)}</span>
         <span class="bar-track"><span class="bar-fill" style="width:${Math.max(1.5, d.value / maxV * 100).toFixed(1)}%"></span></span>
         <span class="bar-val tnum">${esc(d.valLabel != null ? d.valLabel : d.value)}</span>
@@ -633,9 +633,21 @@
     rows.forEach((r) => gc[gradeOf(r.u.total).l]++);
 
     $("charts").innerHTML =
-      barChart("Inventory by market", "Top 12 metros — bar = listing count, number = count · avg cap", mkts.map((m) => ({ label: m.label, value: m.value, valLabel: m.value + " · " + pct(m.cap, 1), tip: `${m.label}: ${m.value} listings, avg cap ${pct(m.cap, 1)}` }))) +
+      barChart("Inventory by market", "Top 12 metros — click a bar to open it on the board", mkts.map((m) => ({ label: m.label, value: m.value, valLabel: m.value + " · " + pct(m.cap, 1), tip: `${m.label}: ${m.value} listings, avg cap ${pct(m.cap, 1)} — click to view`, city: m.label.split(",")[0] }))) +
       barChart("Cap-rate distribution", "Listed cap rate across every deal on the board", capDist.map((b) => ({ label: b.label, value: b.value, valLabel: String(b.value), tip: `${b.label}: ${b.value} listings` }))) +
       gradeMixChart(gc, n);
+
+    document.querySelectorAll("#charts .bar-row[data-city]").forEach((el) => el.addEventListener("click", () => {
+      switchTab("deals");
+      const s = $("boardSearch"); s.value = el.dataset.city; boardQuery = el.dataset.city.toLowerCase(); renderList();
+    }));
+  }
+
+  function switchTab(name) {
+    document.querySelectorAll(".tab").forEach((x) => x.classList.toggle("is-active", x.dataset.view === name));
+    document.querySelectorAll(".view").forEach((v) => v.classList.remove("is-active"));
+    $("view-" + name).classList.add("is-active");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   function exportCSV() {
@@ -847,11 +859,7 @@
       b.classList.add("is-active"); sortKey = b.dataset.sort; renderList();
     }));
     // tabs
-    document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => {
-      document.querySelectorAll(".tab").forEach((x) => x.classList.remove("is-active"));
-      document.querySelectorAll(".view").forEach((v) => v.classList.remove("is-active"));
-      t.classList.add("is-active"); $("view-" + t.dataset.view).classList.add("is-active");
-    }));
+    document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => switchTab(t.dataset.view)));
     // pipeline tools
     $("exportBtn").addEventListener("click", () => {
       const b = new Blob([JSON.stringify(pipeline, null, 2)], { type: "application/json" });

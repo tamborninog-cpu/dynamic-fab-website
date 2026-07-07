@@ -15,6 +15,7 @@
       <div class="top__tabs">
         <button class="tab is-active" data-view="live">Live Listings</button>
         <button class="tab" data-view="deals">Deal Board</button>
+        <button class="tab" data-view="markets">Markets</button>
         <button class="tab" data-view="analyze">Analyze</button>
         <button class="tab" data-view="pipeline">Pipeline</button>
       </div>
@@ -69,7 +70,7 @@
     <section class="view" id="view-deals">
       <div class="hero">
         <div class="hero__l">
-          <span class="eyebrow">Multifamily acquisitions · 160+ listings · 30 states</span>
+          <span class="eyebrow">Multifamily acquisitions · 180+ listings · 32 states</span>
           <h1>Ranked deal board</h1>
           <p>Every property is scored by one underwriting engine and ranked strongest-first. Tune your financing once and the whole board re-scores live. Click a row to underwrite it.</p>
         </div>
@@ -115,14 +116,16 @@
       </div>
 
       <div class="toolbar">
+        <input id="boardSearch" class="board-search" type="search" placeholder="🔎 Search address or city…" aria-label="Search deals" />
         <div class="count" id="count"></div>
-        <span style="font-size:13px;color:var(--muted);font-weight:600">Sort</span>
+        <span class="sort-lbl">Sort</span>
         <div class="seg" id="sortSeg">
           <button data-sort="score" class="is-active">Score</button>
           <button data-sort="cap">Cap rate</button>
           <button data-sort="cf">Cash flow</button>
           <button data-sort="price">Price</button>
         </div>
+        <button class="btn btn--ghost btn--sm" id="csvBtn" title="Export current view to CSV">⭳ CSV</button>
       </div>
 
       <div class="list-head">
@@ -136,6 +139,19 @@
         <span></span>
       </div>
       <div class="list" id="list"></div>
+    </section>
+
+    <!-- ============ MARKETS ============ -->
+    <section class="view" id="view-markets">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Market intelligence · where the yield is</span>
+          <h1>Markets at a glance</h1>
+          <p>The whole board, aggregated. See which metros carry the most inventory, where cap rates actually land, and how the deals grade out at your financing — so you know where to hunt.</p>
+        </div>
+      </div>
+      <div class="mkt-stats" id="mktStats"></div>
+      <div class="charts" id="charts"></div>
     </section>
 
     <!-- ============ ANALYZE ANY DEAL ============ -->

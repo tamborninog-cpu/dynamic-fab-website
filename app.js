@@ -173,7 +173,24 @@
     ["4019 S Puget Sound Ave","Tacoma",     "WA", 10,  2995000,  6.14, 0],
     ["2126 O St",            "Bakersfield", "CA", 24,  3245000,  6.88, 20760],
     ["330 Roberts Ln",       "Bakersfield", "CA", 18,  1975000,  6.00, 9785],
-    ["Springfield 65806 (15-unit)","Springfield","MO", 15, 649950, 7.40, 0]
+    ["Springfield 65806 (15-unit)","Springfield","MO", 15, 649950, 7.40, 0],
+    ["7774 Skolout St",      "San Antonio", "TX", 16,   725000,  7.00, 0],
+    ["Orlando 32805 (40-unit)","Orlando",   "FL", 40,  4150000,  7.42, 36664],
+    ["8105 W Colonial Dr",   "Orlando",     "FL", 21,  3500000,  5.35, 10600],
+    ["Charlotte 28215 (29-unit)","Charlotte","NC", 29, 4100000,  5.79, 0],
+    ["315 S Gardner Ave",    "Charlotte",   "NC", 17,  4250000,  5.58, 17478],
+    ["Portland 97202 (10-unit)","Portland", "OR", 10,   995000,  4.50, 0],
+    ["2926 SW 4th Ave",      "Portland",    "OR", 10,  2750000,  5.72, 9081],
+    ["Portland 97215 (10-unit)","Portland", "OR", 10,  2295000,  6.01, 0],
+    ["Portland 97227 (18-unit)","Portland", "OR", 18,  5150000,  5.60, 0],
+    ["Portland 97211 (21-unit)","Portland", "OR", 21,  5175000,  5.91, 0],
+    ["2341 SE 152nd Ave",    "Portland",    "OR", 30,  4000000,  6.13, 28839],
+    ["Norfolk 23510 (16-unit)","Norfolk",   "VA", 16,  1400000,  6.58, 0],
+    ["945 N El Dorado St",   "Stockton",    "CA", 10,  1200000,  7.21, 5800],
+    ["145 W Flora St",       "Stockton",    "CA", 45,  3995000,  6.80, 60434],
+    ["721 Erickson Ave",     "Modesto",     "CA", 17,  1860000,  5.70, 13000],
+    ["3212-3244 S Victoria St","Wichita",   "KS", 25,   735000,  7.32, 0],
+    ["Mobile 36604 (32-unit)","Mobile",     "AL", 32,  4200000,  7.90, 0]
   ];
   const DEALS = RAW.map((r, i) => ({
     id: "p" + i, addr: r[0], city: r[1], state: r[2], units: r[3], price: r[4], cap: r[5], sf: r[6],
@@ -324,6 +341,7 @@
 
   /* ---- state / filters ---- */
   let sortKey = "score";
+  let boardQuery = "";
 
   function currentRows() {
     const a = assumptions();
@@ -334,7 +352,8 @@
       (fState === "ALL" || d.state === fState) &&
       d.units >= fUnits &&
       (!fMax || d.price <= fMax) &&
-      u.total >= fMinScore);
+      u.total >= fMinScore &&
+      (!boardQuery || (d.addr + " " + d.city + " " + d.state).toLowerCase().includes(boardQuery)));
     const key = {
       score: (r) => r.u.total, cap: (r) => r.d.cap,
       cf: (r) => r.u.cf, price: (r) => -r.d.price
@@ -518,6 +537,69 @@
     });
   }
 
+  /* ---- Markets analytics ---- */
+  function barChart(title, sub, data) {
+    const maxV = Math.max(1, ...data.map((d) => d.value));
+    const bars = data.map((d) => `
+      <div class="bar-row" title="${esc(d.tip || "")}">
+        <span class="bar-label">${esc(d.label)}</span>
+        <span class="bar-track"><span class="bar-fill" style="width:${Math.max(1.5, d.value / maxV * 100).toFixed(1)}%"></span></span>
+        <span class="bar-val tnum">${esc(d.valLabel != null ? d.valLabel : d.value)}</span>
+      </div>`).join("");
+    return `<div class="chart"><div class="chart__h"><h3>${title}</h3><span>${sub}</span></div><div class="bars">${bars}</div></div>`;
+  }
+  function gradeMixChart(gc, total) {
+    const order = [["A", "Strong", "g-a"], ["B", "Good", "g-b"], ["C", "Fair", "g-c"], ["D", "Weak", "g-d"]];
+    const seg = order.map(([l, , c]) => { const w = total ? gc[l] / total * 100 : 0; return w > 0 ? `<span class="gm-seg ${c}" style="width:${w}%" title="${l}: ${gc[l]} (${Math.round(w)}%)"></span>` : ""; }).join("");
+    const legend = order.map(([l, t, c]) => `<span class="gm-key"><i class="${c}"></i>${l} · ${t} <b class="tnum">${gc[l]}</b></span>`).join("");
+    return `<div class="chart chart--wide"><div class="chart__h"><h3>Deal grades</h3><span>How the board scores at your financing assumptions</span></div><div class="gm-bar">${seg}</div><div class="gm-legend">${legend}</div></div>`;
+  }
+
+  function renderMarkets() {
+    const a = assumptions();
+    const rows = DEALS.map((d) => ({ d, u: underwrite(d, a) }));
+    const n = rows.length;
+    const states = new Set(rows.map((r) => r.d.state)).size;
+    const avgCap = rows.reduce((s, r) => s + r.d.cap, 0) / n;
+    const caps = rows.map((r) => r.d.cap).sort((x, y) => x - y);
+    const medCap = caps[Math.floor(caps.length / 2)];
+    const ppus = rows.map((r) => r.u.ppu).sort((x, y) => x - y);
+    const medPPU = ppus[Math.floor(ppus.length / 2)];
+    const strong = rows.filter((r) => r.u.total >= 65).length;
+    $("mktStats").innerHTML = [
+      ["Listings", n, `${states} states`],
+      ["Median cap", pct(medCap, 1), `avg ${pct(avgCap, 1)}`],
+      ["Median $/unit", money(medPPU), "across board"],
+      ["Strong (B+)", strong, `${Math.round(strong / n * 100)}% of board`]
+    ].map(([k, v, s]) => `<div class="mkt-stat"><span>${k}</span><strong class="tnum">${v}</strong><small>${s}</small></div>`).join("");
+
+    const byMkt = {};
+    rows.forEach((r) => { const key = r.d.city + ", " + r.d.state; (byMkt[key] = byMkt[key] || { n: 0, cap: 0 }); byMkt[key].n++; byMkt[key].cap += r.d.cap; });
+    const mkts = Object.entries(byMkt).map(([k, v]) => ({ label: k, value: v.n, cap: v.cap / v.n })).sort((x, y) => y.value - x.value).slice(0, 12);
+    const buckets = [["< 5%", (c) => c < 5], ["5–6%", (c) => c >= 5 && c < 6], ["6–7%", (c) => c >= 6 && c < 7], ["7–8%", (c) => c >= 7 && c < 8], ["8–9%", (c) => c >= 8 && c < 9], ["9–10%", (c) => c >= 9 && c < 10], ["10%+", (c) => c >= 10]];
+    const capDist = buckets.map(([lab, f]) => ({ label: lab, value: rows.filter((r) => f(r.d.cap)).length }));
+    const gc = { A: 0, B: 0, C: 0, D: 0 };
+    rows.forEach((r) => gc[gradeOf(r.u.total).l]++);
+
+    $("charts").innerHTML =
+      barChart("Inventory by market", "Top 12 metros — bar = listing count, number = count · avg cap", mkts.map((m) => ({ label: m.label, value: m.value, valLabel: m.value + " · " + pct(m.cap, 1), tip: `${m.label}: ${m.value} listings, avg cap ${pct(m.cap, 1)}` }))) +
+      barChart("Cap-rate distribution", "Listed cap rate across every deal on the board", capDist.map((b) => ({ label: b.label, value: b.value, valLabel: String(b.value), tip: `${b.label}: ${b.value} listings` }))) +
+      gradeMixChart(gc, n);
+  }
+
+  function exportCSV() {
+    const rows = currentRows();
+    const head = ["Rank", "Address", "City", "State", "Units", "Price", "Cap%", "PricePerUnit", "NOI", "CashFlowYr", "CoC%", "DSCR", "Score", "Grade", "ListingSearchURL"];
+    const q = (s) => `"${String(s).replace(/"/g, '""')}"`;
+    const lines = [head.join(",")];
+    rows.forEach((r, i) => {
+      const d = r.d, u = r.u;
+      lines.push([i + 1, q(d.addr), q(d.city), d.state, d.units, Math.round(d.price), d.cap, Math.round(u.ppu), Math.round(u.noi), Math.round(u.cf), u.coc.toFixed(1), u.dscr === Infinity ? "" : u.dscr.toFixed(2), u.total, gradeOf(u.total).l, q(d.src)].join(","));
+    });
+    const blob = new Blob([lines.join("\n")], { type: "text/csv" });
+    const el = document.createElement("a"); el.href = URL.createObjectURL(blob); el.download = "dealscout-deals.csv"; el.click(); URL.revokeObjectURL(el.href);
+  }
+
   /* ---- Analyze Any Deal ---- */
   let anMode = "income", anExpMode = "pct";
   const scoreBlurb = (s) => s >= 80 ? "Strong — investable at these numbers; verify the actuals." : s >= 65 ? "Good — worth pursuing; tighten price or terms." : s >= 50 ? "Fair — negotiate the price or the financing." : "Weak — likely a pass at this price.";
@@ -696,9 +778,13 @@
     const saveAssume = () => localStorage.setItem("dealscout2.assume", JSON.stringify(Object.fromEntries(ASSUME_IDS.map((id) => [id, $(id).value]))));
     [...ASSUME_IDS, "fState", "fUnits", "fMax", "fMinScore"].forEach((id) => {
       const el = $(id);
-      el.addEventListener("input", () => { renderList(); if (ASSUME_IDS.includes(id)) saveAssume(); });
-      el.addEventListener("change", () => { renderList(); if (ASSUME_IDS.includes(id)) saveAssume(); });
+      const handler = () => { renderList(); if (ASSUME_IDS.includes(id)) { saveAssume(); renderMarkets(); } };
+      el.addEventListener("input", handler);
+      el.addEventListener("change", handler);
     });
+    // board search + CSV export
+    $("boardSearch").addEventListener("input", (e) => { boardQuery = e.target.value.toLowerCase().trim(); renderList(); });
+    $("csvBtn").addEventListener("click", exportCSV);
     // sort
     document.querySelectorAll("#sortSeg button").forEach((b) => b.addEventListener("click", () => {
       document.querySelectorAll("#sortSeg button").forEach((x) => x.classList.remove("is-active"));
@@ -726,6 +812,7 @@
     initAnalyze();
     loadPipe();
     renderList();
+    renderMarkets();
     renderBoard();
   }
 

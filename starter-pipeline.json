@@ -1,0 +1,68 @@
+[
+  {
+    "id": "lead1",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 10-unit \u2014 8021 Birmingham St, Houston TX",
+    "url": "https://www.google.com/search?q=8021+Birmingham+St%2C+Houston+TX+apartment+for+sale",
+    "price": 825000,
+    "units": 10,
+    "cap": 8.48,
+    "cf": 21802,
+    "score": 89
+  },
+  {
+    "id": "lead2",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 15-unit \u2014 3815 Fannin St, Houston TX",
+    "url": "https://www.google.com/search?q=3815+Fannin+St%2C+Houston+TX+apartment+for+sale",
+    "price": 895000,
+    "units": 15,
+    "cap": 8.89,
+    "cf": 27321,
+    "score": 97
+  },
+  {
+    "id": "lead3",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 14-unit \u2014 14302 Laredo St, Houston TX",
+    "url": "https://www.google.com/search?q=14302+Laredo+St%2C+Houston+TX+apartment+for+sale",
+    "price": 1150000,
+    "units": 14,
+    "cap": 0,
+    "cf": 0,
+    "score": 0
+  },
+  {
+    "id": "lead4",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 49-unit \u2014 2524 Gregg St, Houston TX",
+    "url": "https://www.google.com/search?q=2524+Gregg+St%2C+Houston+TX+apartment+for+sale",
+    "price": 2150000,
+    "units": 49,
+    "cap": 0,
+    "cf": 0,
+    "score": 0
+  },
+  {
+    "id": "lead5",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 34-unit \u2014 100 Northpoint Dr, Houston TX",
+    "url": "https://www.google.com/search?q=100+Northpoint+Dr%2C+Houston+TX+apartment+for+sale",
+    "price": 10200000,
+    "units": 34,
+    "cap": 0,
+    "cf": 0,
+    "score": 0
+  },
+  {
+    "id": "lead6",
+    "stage": "prospect",
+    "name": "\u26a0 VERIFY \u2014 80-unit \u2014 8700 Gulf Fwy, Houston TX",
+    "url": "https://www.google.com/search?q=8700+Gulf+Fwy%2C+Houston+TX+apartment+for+sale",
+    "price": 4400000,
+    "units": 80,
+    "cap": 0,
+    "cf": 0,
+    "score": 0
+  }
+]

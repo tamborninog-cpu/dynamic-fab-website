@@ -22,6 +22,7 @@
   ::-webkit-scrollbar-thumb{background:#2a3766;border-radius:20px}
   ::-webkit-scrollbar-track{background:transparent}
   .tnum{font-variant-numeric:tabular-nums}
+  a{color:inherit}
 
   .app{display:grid;grid-template-columns:250px 1fr;height:100vh}
 
@@ -53,7 +54,7 @@
   .search input{width:280px;background:var(--panel);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px 12px 10px 38px;font-size:13.5px;font-family:var(--font)}
   .search input:focus{outline:none;border-color:var(--brand)}
   .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--faint)}
-  .btn{border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:13.5px;border-radius:10px;padding:10px 16px;display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap}
+  .btn{border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:13.5px;border-radius:10px;padding:10px 16px;display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap;text-decoration:none}
   .btn:focus-visible{outline:2px solid var(--brand2);outline-offset:2px}
   .btn svg{width:16px;height:16px}
   .btn--primary{background:linear-gradient(135deg,var(--brand),#3f6fe0);color:#fff;box-shadow:0 6px 18px rgba(63,111,224,.4)}
@@ -95,7 +96,7 @@
 
   .hbars{display:flex;flex-direction:column;gap:11px}
   .hbar{display:flex;align-items:center;gap:12px}
-  .hbar__name{width:104px;font-size:12.5px;color:var(--muted);font-weight:600;text-align:right}
+  .hbar__name{width:120px;font-size:12.5px;color:var(--muted);font-weight:600;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .hbar__track{flex:1;height:22px;background:var(--bg2);border-radius:7px;overflow:hidden;position:relative}
   .hbar__fill{height:100%;border-radius:7px;transition:width .8s;display:flex;align-items:center;padding-left:9px;font-size:11.5px;font-weight:700;color:#0b1020}
   .pipe-mini{display:flex;flex-direction:column;gap:12px}
@@ -112,7 +113,7 @@
   .field select,.field input{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px 11px;font-size:13px;font-family:var(--font)}
   .field select:focus,.field input:focus{outline:none;border-color:var(--brand)}
   .agebox{display:flex;align-items:center;gap:10px}
-  .agebox input[type=range]{width:140px;accent-color:var(--gold)}
+  .agebox input[type=range]{width:130px;accent-color:var(--gold)}
   .agebox .agev{font-weight:800;color:var(--gold2);font-size:16px;min-width:44px}
   .chk{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);font-weight:600;cursor:pointer;padding-bottom:9px}
   .chk input{accent-color:var(--green);width:15px;height:15px}
@@ -121,7 +122,7 @@
   /* Table */
   .tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
   .tscroll{overflow-x:auto}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:820px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:900px}
   thead th{text-align:left;padding:13px 16px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:var(--bg2);font-weight:700;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
   thead th:hover{color:var(--txt)}
   thead th .arr{opacity:.4;font-size:10px}
@@ -129,8 +130,12 @@
   tbody tr{transition:.12s;cursor:pointer}
   tbody tr:hover{background:var(--panel2)}
   tbody tr:last-child td{border-bottom:none}
-  .addr{font-weight:700;color:#fff;display:flex;align-items:center;gap:7px}
+  .addr{font-weight:700;color:#fff}
+  .addr .astreet{display:inline-flex;align-items:center;gap:7px}
   .addr small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:1px}
+  .addr-ext{color:var(--brand2);display:inline-flex;flex:none;padding:2px;border-radius:5px}
+  .addr-ext:hover{background:rgba(91,140,255,.15)}
+  .addr-ext svg{width:15px;height:15px}
   .age-pill{display:inline-flex;align-items:center;gap:5px;font-weight:800;padding:3px 9px;border-radius:20px;font-size:12.5px}
   .age-65{background:rgba(229,181,103,.16);color:var(--gold2);border:1px solid rgba(229,181,103,.35)}
   .age-under{background:rgba(147,160,201,.12);color:var(--muted)}
@@ -140,7 +145,7 @@
   .b-listed{background:rgba(255,92,108,.13);color:var(--red);border:1px solid rgba(255,92,108,.3)}
   .stage-dot{display:inline-flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap}
   .dot{width:9px;height:9px;border-radius:50%;flex:none}
-  .vchip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap}
+  .vchip{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:6px;white-space:nowrap;vertical-align:middle}
   .vchip svg{width:11px;height:11px}
   .v-yes{background:rgba(79,209,224,.13);color:var(--cyan);border:1px solid rgba(79,209,224,.3)}
   .v-no{background:rgba(245,166,35,.13);color:var(--amber);border:1px solid rgba(245,166,35,.3)}
@@ -153,9 +158,10 @@
   .maplayout{display:grid;grid-template-columns:1fr 300px;gap:18px}
   .mapwrap{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;height:620px}
   #map{display:block;width:100%;height:100%}
-  .map-tooltip{position:absolute;pointer-events:none;background:rgba(9,13,28,.95);border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-size:12px;opacity:0;transition:opacity .12s;z-index:5;box-shadow:var(--shadow);max-width:220px}
+  .map-tooltip{position:absolute;pointer-events:none;background:rgba(9,13,28,.95);border:1px solid var(--line2);border-radius:10px;padding:9px 12px;font-size:12px;opacity:0;transition:opacity .12s;z-index:5;box-shadow:var(--shadow);max-width:230px}
   .map-tooltip b{font-size:13px}
   .map-tooltip .mt-sub{color:var(--muted);margin-top:2px}
+  .map-tooltip .mt-hint{color:var(--brand2);margin-top:5px;font-weight:600}
   .map-legend{position:absolute;left:14px;bottom:14px;background:rgba(9,13,28,.82);border:1px solid var(--line);border-radius:10px;padding:11px 13px;font-size:11.5px;backdrop-filter:blur(6px)}
   .map-legend .lg-row{display:flex;align-items:center;gap:8px;margin-top:5px;color:var(--muted)}
   .map-legend .lg-row:first-of-type{margin-top:8px}
@@ -182,11 +188,11 @@
   .overlay{position:fixed;inset:0;background:rgba(6,9,20,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:60;padding:20px}
   .overlay.open{display:flex}
   .modal{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);border-radius:18px;width:100%;max-width:660px;max-height:92vh;overflow-y:auto;box-shadow:var(--shadow)}
-  .modal--wide{max-width:760px}
+  .modal--wide{max-width:780px}
   .modal__head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2}
-  .modal__head h2{font-size:18px;font-weight:800;display:flex;align-items:center;gap:9px}
+  .modal__head h2{font-size:18px;font-weight:800;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   .modal__head p{font-size:12.5px;color:var(--muted);margin-top:2px}
-  .xbtn{background:var(--bg2);border:1px solid var(--line);color:var(--muted);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:18px;line-height:1;display:grid;place-items:center}
+  .xbtn{background:var(--bg2);border:1px solid var(--line);color:var(--muted);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:18px;line-height:1;display:grid;place-items:center;flex:none}
   .xbtn:hover{color:#fff;border-color:var(--line2)}
   .form{padding:20px 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
   .form .full{grid-column:1/-1}
@@ -201,14 +207,15 @@
   .modal__foot{display:flex;gap:12px;justify-content:flex-end;padding:16px 24px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--panel)}
 
   /* Detail */
-  .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;padding:20px 24px}
+  .dactions{display:flex;flex-wrap:wrap;gap:9px;padding:18px 24px 4px}
+  .dactions .btn svg{width:14px;height:14px}
+  .detail-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;padding:14px 24px 20px}
   .dfield{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:11px 13px}
   .dfield .k{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
   .dfield .v{font-size:14.5px;font-weight:700;margin-top:5px}
   .dfield.full{grid-column:1/-1}
   .dfield .v.notes{font-weight:400;font-size:13.5px;color:var(--txt);line-height:1.6}
   .dsection{grid-column:1/-1;font-size:11px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-top:6px}
-  /* contact log */
   .tl{grid-column:1/-1;display:flex;flex-direction:column;gap:0;position:relative;padding-left:6px}
   .tl-item{display:flex;gap:12px;padding:9px 0;position:relative}
   .tl-dot{width:11px;height:11px;border-radius:50%;background:var(--brand);margin-top:3px;flex:none;box-shadow:0 0 0 3px rgba(91,140,255,.15)}
@@ -226,25 +233,24 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .toast svg{width:18px;height:18px;color:var(--green)}
 
-  .banner{display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,rgba(91,140,255,.12),rgba(91,140,255,.03));border:1px solid var(--line2);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:var(--muted)}
+  .banner{display:flex;align-items:center;gap:12px;background:linear-gradient(90deg,rgba(91,140,255,.12),rgba(91,140,255,.03));border:1px solid var(--line2);border-radius:12px;padding:12px 16px;margin-bottom:20px;font-size:12.5px;color:var(--muted);line-height:1.5}
   .banner svg{width:18px;height:18px;color:var(--brand2);flex:none}
   .banner b{color:var(--txt)}
-  .banner .btn{margin-left:auto}
+  .banner .btn{margin-left:auto;flex:none}
 
   .legal{margin-top:22px;font-size:11.5px;color:var(--faint);line-height:1.6;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
   .legal b{color:var(--muted)}
   .prose{color:var(--muted);font-size:14px;line-height:1.75;max-width:760px}
-  .prose h3{color:var(--txt);font-size:15px;margin:20px 0 8px}
   .prose ol{padding-left:20px;display:flex;flex-direction:column;gap:11px;margin-top:8px}
   .prose b{color:var(--txt)}
-  .srclist{display:flex;flex-direction:column;gap:10px}
+  .srclist{display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto}
   .srcrow{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:11px}
   .srcrow .cnt{margin-left:auto;font-weight:800;color:var(--cyan)}
-  .srcrow .si{width:34px;height:34px;border-radius:9px;background:rgba(79,209,224,.13);display:grid;place-items:center}
+  .srcrow .si{width:34px;height:34px;border-radius:9px;background:rgba(79,209,224,.13);display:grid;place-items:center;flex:none}
   .srcrow .si svg{width:18px;height:18px;color:var(--cyan)}
 
-  @media (max-width:1120px){.grid2{grid-template-columns:1fr}.maplayout{grid-template-columns:1fr}.mapwrap{height:460px}.kanban{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(2,1fr)}.form .sp2{grid-column:span 2}.detail-grid{grid-template-columns:1fr 1fr}}
-  @media (max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.search input{width:160px}}
+  @media (max-width:1120px){.grid2{grid-template-columns:1fr}.maplayout{grid-template-columns:1fr}.mapwrap{height:460px}.kanban{grid-template-columns:repeat(2,1fr)}.form{grid-template-columns:repeat(2,1fr)}.detail-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.search input{width:150px}}
 </style>
 </head>
 <body>
@@ -286,7 +292,7 @@
     </nav>
 
     <div class="side__foot">
-      <b>Working set:</b> off-market apartment buildings whose owners are 65+ — statistically more likely to sell or transfer.
+      <b>Working set:</b> off-market apartment buildings across the U.S. whose owners are 65+ — statistically more likely to sell or transfer.
       <div class="coverage">
         <div style="display:flex;justify-content:space-between"><span>Address verification</span><b id="covPct" style="color:var(--cyan)">0%</b></div>
         <div class="coverage__bar"><div class="coverage__fill" id="covFill" style="width:0%"></div></div>
@@ -297,10 +303,10 @@
   <!-- Main -->
   <div class="main">
     <div class="topbar">
-      <h1 id="viewTitle">Dashboard<span id="viewSub">Portfolio of off-market senior-owned apartment leads</span></h1>
+      <h1 id="viewTitle">Dashboard<span id="viewSub">Off-market senior-owned apartment leads, nationwide</span></h1>
       <div class="search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <input id="globalSearch" placeholder="Search address, owner, city, ZIP…" />
+        <input id="globalSearch" placeholder="Search address, owner, city, state, ZIP…" />
       </div>
       <button class="btn btn--primary" id="addBtn">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
@@ -314,7 +320,7 @@
       <section class="view active" id="view-dashboard">
         <div class="banner">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4m0 4h.01"/></svg>
-          <span><b>Real, cross-checked addresses.</b> Every seed record uses a real street, ZIP, and coordinates in the Cincinnati / Northern Kentucky market, each tied to its county assessor of record. Replace with your own verified list any time.</span>
+          <span><b>Real locations, one click away.</b> Every address opens in Google Maps, Street View, or the county's public owner records — verify each building before you call. Owner names, ages &amp; phone numbers in the demo data are placeholders, not real people: confirm via the records link or Import your own skip-traced list.</span>
           <button class="btn btn--ghost btn--sm" id="importBtn2">Import CSV</button>
         </div>
         <div class="kpis" id="kpis"></div>
@@ -330,7 +336,7 @@
         </div>
         <div class="grid2">
           <div class="card">
-            <div class="card__head"><div class="card__title">Target Value by Submarket<small>Combined estimated value of 65+ off-market leads</small></div></div>
+            <div class="card__head"><div class="card__title">Target Value by Metro<small>Combined value of 65+ off-market leads</small></div></div>
             <div class="hbars" id="cityBars"></div>
           </div>
           <div class="card">
@@ -346,7 +352,7 @@
           <div id="hotLeads"></div>
         </div>
         <div class="legal">
-          <b>Responsible-use note.</b> Owner age is used here as a proxy for sale likelihood in acquisition outreach and is <b>not</b> a basis for any housing decision. The U.S. Fair Housing Act prohibits discrimination in the sale or rental of housing; this tool targets <i>outreach to owners</i>, not tenant or buyer selection. Verify every ownership, age, and contact detail against public records and comply with TCPA / Do-Not-Call and local solicitation laws before contacting anyone.
+          <b>Responsible-use note.</b> Owner age is used here as a proxy for sale likelihood in acquisition outreach and is <b>not</b> a basis for any housing decision. The U.S. Fair Housing Act prohibits discrimination in the sale or rental of housing; this tool targets <i>outreach to owners</i>, not tenant or buyer selection. Verify every ownership, age, and contact detail against public records and comply with TCPA / Do-Not-Call and state solicitation laws before contacting anyone.
         </div>
       </section>
 
@@ -360,7 +366,8 @@
             <select id="fStatus"><option value="">All</option><option>Off-Market</option><option>Pre-Market</option><option>Listed</option></select>
           </div>
           <div class="field"><label>Deal stage</label><select id="fStage"><option value="">All</option></select></div>
-          <div class="field"><label>Submarket</label><select id="fCity"><option value="">All</option></select></div>
+          <div class="field"><label>Metro</label><select id="fCity"><option value="">All</option></select></div>
+          <div class="field"><label>State</label><select id="fState"><option value="">All</option></select></div>
           <div class="field"><label>Ownership</label><select id="fEntity"><option value="">All</option><option>Individual</option><option>Family Trust</option><option>LLC</option></select></div>
           <div class="field"><label>Min units</label><select id="fUnits"><option value="0">Any</option><option value="5">5+</option><option value="10">10+</option><option value="20">20+</option><option value="30">30+</option></select></div>
           <label class="chk"><input type="checkbox" id="fVerified" /> Verified only</label>
@@ -391,16 +398,17 @@
           </div>
           <div class="map-side">
             <div class="card">
-              <div class="card__title" style="margin-bottom:6px">Cincinnati / N. Kentucky</div>
-              <div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:8px">Pins placed by true latitude &amp; longitude. Size = unit count, color = deal stage, gold ring = owner 65+.</div>
+              <div class="card__title" style="margin-bottom:6px">United States</div>
+              <div style="font-size:12.5px;color:var(--muted);line-height:1.6;margin-bottom:8px">Pins placed by true latitude &amp; longitude. Size = unit count, color = deal stage, gold ring = owner 65+. Click a pin to open the record.</div>
               <div class="msrow"><span>Buildings mapped</span><b id="mapCount">0</b></div>
-              <div class="msrow"><span>Submarkets</span><b id="mapSubs">0</b></div>
+              <div class="msrow"><span>Metros</span><b id="mapSubs">0</b></div>
+              <div class="msrow"><span>States</span><b id="mapStates">0</b></div>
               <div class="msrow"><span>Senior-owned (65+)</span><b id="mapSenior" style="color:var(--gold2)">0</b></div>
               <div class="msrow"><span>Coordinate-verified</span><b id="mapVerif" style="color:var(--cyan)">0</b></div>
             </div>
             <div class="card">
-              <div class="card__title" style="margin-bottom:10px">Submarkets</div>
-              <div id="mapSubList" style="display:flex;flex-direction:column;gap:7px;font-size:12.5px"></div>
+              <div class="card__title" style="margin-bottom:10px">Top metros</div>
+              <div id="mapSubList" style="display:flex;flex-direction:column;gap:7px;font-size:12.5px;max-height:260px;overflow-y:auto"></div>
             </div>
           </div>
         </div>
@@ -416,7 +424,7 @@
         <div class="grid2">
           <div class="card">
             <div class="card__title" style="margin-bottom:6px">Records by source of record</div>
-            <div style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Each address is attributed to the public office that holds the authoritative parcel &amp; ownership record.</div>
+            <div style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Each address is attributed to the public office holding the authoritative parcel &amp; ownership record for its county.</div>
             <div class="srclist" id="srcList"></div>
           </div>
           <div class="card">
@@ -425,7 +433,7 @@
           </div>
         </div>
         <div class="legal" style="margin-top:18px">
-          <b>Compliance reminder.</b> Targeting <i>owners</i> for acquisition is legal; discriminating against <i>tenants or buyers</i> by age is not. Keep owner age out of any decision about who may rent or buy. Confirm your data providers' permissible-use terms and your local solicitation rules before any contact.
+          <b>Compliance reminder.</b> Targeting <i>owners</i> for acquisition is legal; discriminating against <i>tenants or buyers</i> by age is not. Keep owner age out of any decision about who may rent or buy. Confirm your data providers' permissible-use terms and your state's solicitation rules before any contact.
         </div>
       </section>
 
@@ -443,31 +451,35 @@
     <form class="form" id="propForm">
       <input type="hidden" id="fId" />
       <div class="fsection">Location</div>
-      <div class="sp2"><label>Street address</label><input id="f_street" placeholder="1412 Vine St" required /></div>
-      <div><label>Neighborhood</label><input id="f_neighborhood" placeholder="Over-the-Rhine" /></div>
-      <div><label>ZIP</label><input id="f_zip" placeholder="45202" maxlength="5" /></div>
-      <div><label>City</label><input id="f_city" placeholder="Cincinnati" required /></div>
-      <div><label>State</label><input id="f_state" placeholder="OH" maxlength="2" required /></div>
-      <div><label>Latitude</label><input id="f_lat" type="number" step="0.0001" placeholder="39.1148" /></div>
-      <div><label>Longitude</label><input id="f_lng" type="number" step="0.0001" placeholder="-84.5138" /></div>
+      <div class="sp2"><label>Street address</label><input id="f_street" placeholder="210 W 121st St" required /></div>
+      <div><label>Neighborhood</label><input id="f_neighborhood" placeholder="Harlem" /></div>
+      <div><label>ZIP</label><input id="f_zip" placeholder="10027" maxlength="10" /></div>
+      <div><label>City</label><input id="f_city" placeholder="New York" required /></div>
+      <div><label>State</label><input id="f_state" placeholder="NY" maxlength="2" required /></div>
+      <div><label>Latitude</label><input id="f_lat" type="number" step="0.00001" placeholder="40.8075" /></div>
+      <div><label>Longitude</label><input id="f_lng" type="number" step="0.00001" placeholder="-73.9530" /></div>
+      <div class="full" style="display:flex;align-items:center;gap:10px;margin-top:-2px">
+        <button type="button" class="btn btn--ghost btn--sm" id="geocodeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Find coordinates from address</button>
+        <span style="font-size:11.5px;color:var(--faint)">Confirms the address is real &amp; pins it exactly (needs network — best in the downloadable version).</span>
+      </div>
 
       <div class="fsection">Building &amp; financials</div>
       <div><label>Units</label><input id="f_units" type="number" min="1" value="8" required /></div>
-      <div><label>Year built</label><input id="f_yearBuilt" type="number" min="1850" max="2026" value="1910" /></div>
-      <div><label>Est. value ($)</label><input id="f_value" type="number" min="0" value="850000" required /></div>
-      <div><label>Annual NOI ($)</label><input id="f_noi" type="number" min="0" value="58000" /></div>
+      <div><label>Year built</label><input id="f_yearBuilt" type="number" min="1850" max="2026" value="1920" /></div>
+      <div><label>Est. value ($)</label><input id="f_value" type="number" min="0" value="1200000" required /></div>
+      <div><label>Annual NOI ($)</label><input id="f_noi" type="number" min="0" value="72000" /></div>
 
       <div class="fsection">Ownership</div>
-      <div class="sp2"><label>Owner of record</label><input id="f_owner" placeholder="Margaret Doyle" required /></div>
+      <div class="sp2"><label>Owner of record</label><input id="f_owner" placeholder="Owner name from county records" required /></div>
       <div><label>Entity type</label><select id="f_entity"><option>Individual</option><option>Family Trust</option><option>LLC</option></select></div>
       <div><label>Owner age</label><input id="f_ownerAge" type="number" min="18" max="110" value="72" required /></div>
       <div><label>Deed / acquired year</label><input id="f_deedYear" type="number" min="1900" max="2026" value="2000" /></div>
-      <div class="sp2"><label>Owner phone</label><input id="f_phone" placeholder="(513) 555-0142" /></div>
+      <div class="sp2"><label>Owner phone</label><input id="f_phone" placeholder="Verified number from skip-trace" /></div>
 
       <div class="fsection">Pipeline &amp; provenance</div>
       <div><label>Market status</label><select id="f_status"><option>Off-Market</option><option>Pre-Market</option><option>Listed</option></select></div>
       <div><label>Deal stage</label><select id="f_stage"></select></div>
-      <div class="sp2"><label>Source of record</label><input id="f_source" placeholder="Hamilton County Auditor" /></div>
+      <div class="sp2"><label>Source of record</label><input id="f_source" placeholder="Cook County Assessor" /></div>
       <label class="chk full"><input type="checkbox" id="f_verified" /> Address verified against public records</label>
 
       <div class="full"><label>Notes</label><textarea id="f_notes" placeholder="Owner mentioned wanting to move closer to family; building fully occupied…"></textarea></div>
@@ -490,6 +502,7 @@
       <div><h2 id="dTitle">Property</h2><p id="dSub"></p></div>
       <button class="xbtn" data-close aria-label="Close">&times;</button>
     </div>
+    <div class="dactions" id="dActions"></div>
     <div class="detail-grid" id="detailGrid"></div>
     <div class="modal__foot">
       <button class="btn btn--danger" id="delBtn">Delete</button>
@@ -502,56 +515,62 @@
 
 <script>
 "use strict";
-/* ===== constants ===== */
 const NOW_YEAR = 2026;
 const STAGES = [
-  {key:"New Lead",color:"#93a0c9"},
-  {key:"Researching",color:"#5b8cff"},
-  {key:"Contacted",color:"#a78bfa"},
-  {key:"Negotiating",color:"#f5a623"},
+  {key:"New Lead",color:"#93a0c9"},{key:"Researching",color:"#5b8cff"},
+  {key:"Contacted",color:"#a78bfa"},{key:"Negotiating",color:"#f5a623"},
   {key:"Under Contract",color:"#3ecf8e"},
 ];
 const stageColor = k => (STAGES.find(s=>s.key===k)||{}).color || "#93a0c9";
-const STORE = "silverkey_props_v2";
-/* Fixed map bounds for the Cincinnati / N. Kentucky river region */
-const BOUNDS = {latMin:39.070, latMax:39.172, lngMin:-84.560, lngMax:-84.424};
-/* Ohio River polyline (real approx course, W→E) as [lng,lat] */
-const RIVER = [[-84.560,39.101],[-84.545,39.093],[-84.528,39.097],[-84.512,39.090],[-84.498,39.094],[-84.484,39.101],[-84.470,39.099],[-84.452,39.092],[-84.436,39.089],[-84.424,39.092]];
+const STORE = "silverkey_props_v3_us";
 
-/* ===== seed data — real streets, ZIPs & coordinates ===== */
+/* Continental-US map projection bounds + simplified border outline [lng,lat] */
+const US = {latMin:24.5,latMax:49.4,lngMin:-124.8,lngMax:-66.9};
+const US_OUTLINE = [
+[-124.7,48.4],[-123.0,49.0],[-104.0,49.0],[-95.2,49.0],[-95.2,49.4],[-89.6,48.0],
+[-84.5,46.5],[-82.5,45.0],[-82.7,41.7],[-79.0,42.9],[-76.9,43.3],[-73.3,45.0],
+[-69.2,47.4],[-67.2,45.2],[-70.0,43.2],[-70.7,41.6],[-73.9,40.6],[-74.2,39.4],
+[-75.5,38.5],[-76.0,37.0],[-75.5,35.5],[-78.5,33.9],[-80.9,32.0],[-81.4,30.7],
+[-80.1,26.8],[-80.4,25.2],[-81.7,25.9],[-82.8,27.9],[-82.7,29.2],[-84.0,30.1],
+[-85.6,29.7],[-88.0,30.2],[-89.6,29.0],[-91.3,29.3],[-93.8,29.7],[-95.3,28.9],
+[-97.2,27.8],[-97.4,25.9],[-99.2,26.4],[-101.4,29.8],[-103.0,29.0],[-104.5,29.6],
+[-106.5,31.8],[-108.2,31.3],[-111.1,31.3],[-114.8,32.5],[-117.1,32.5],[-118.3,34.0],
+[-120.5,34.5],[-122.4,37.2],[-124.2,40.4],[-124.4,43.0],[-124.1,46.3],[-124.7,48.4]
+];
+
+/* ===== nationwide seed — real streets, ZIPs, coordinates & county assessors ===== */
 const SEED = [
-  // Over-the-Rhine, Cincinnati OH 45202 — Hamilton County
-  {id:1,street:"1412 Vine St",neighborhood:"Over-the-Rhine",city:"Cincinnati",state:"OH",zip:"45202",lat:39.1149,lng:-84.5139,units:10,yearBuilt:1895,value:1250000,noi:92000,owner:"Margaret Doyle",entity:"Individual",ownerAge:78,deedYear:1994,phone:"(513) 555-0142",status:"Off-Market",stage:"Contacted",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-18",notes:"Held since 1993. Kids live out of state; open to a quiet sale with no listing.",contacts:[{date:"2026-04-02",type:"Mailer",note:"Sent intro letter + comps."},{date:"2026-04-21",type:"Call",note:"Spoke 10 min. Wants to think it over through summer."}]},
-  {id:2,street:"47 Green St",neighborhood:"Over-the-Rhine",city:"Cincinnati",state:"OH",zip:"45202",lat:39.1176,lng:-84.5168,units:12,yearBuilt:1901,value:1480000,noi:104000,owner:"Harold & Ruth Simmons",entity:"Family Trust",ownerAge:81,deedYear:1998,phone:"(513) 555-0199",status:"Off-Market",stage:"Negotiating",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-06-01",notes:"Estate-planning conversation started. Exploring 1031 / installment sale to defer gains.",contacts:[{date:"2026-05-06",type:"Meeting",note:"Met at building with their attorney."},{date:"2026-05-29",type:"Email",note:"Sent draft LOI at $1.42M."}]},
-  {id:3,street:"1934 Race St",neighborhood:"Over-the-Rhine",city:"Cincinnati",state:"OH",zip:"45202",lat:39.1206,lng:-84.5157,units:8,yearBuilt:1888,value:940000,noi:63000,owner:"Eleanor Vance",entity:"Individual",ownerAge:69,deedYear:2005,phone:"(513) 555-0177",status:"Off-Market",stage:"Researching",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-18",notes:"Self-manages, tired of tenant calls. Fully occupied, rents ~15% below market.",contacts:[]},
-  // Clifton, Cincinnati OH 45220
-  {id:4,street:"359 Ludlow Ave",neighborhood:"Clifton",city:"Cincinnati",state:"OH",zip:"45220",lat:39.1293,lng:-84.5171,units:9,yearBuilt:1912,value:1020000,noi:68000,owner:"Frank Petrelli",entity:"Individual",ownerAge:74,deedYear:2004,phone:"(513) 555-0110",status:"Pre-Market",stage:"New Lead",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-20",notes:"Visible deferred maintenance — value-add. No agent engaged yet.",contacts:[],deferred:true},
-  {id:5,street:"240 Middleton Ave",neighborhood:"Clifton",city:"Cincinnati",state:"OH",zip:"45220",lat:39.1276,lng:-84.5209,units:14,yearBuilt:1915,value:1340000,noi:88000,owner:"Dorothy Kline",entity:"Family Trust",ownerAge:83,deedYear:1992,phone:"(513) 555-0164",status:"Off-Market",stage:"Under Contract",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-06-10",notes:"LOI accepted. Owner relocating to assisted living. 45-day close.",contacts:[{date:"2026-06-08",type:"Meeting",note:"Signed LOI. Title ordered."}]},
-  // Northside, Cincinnati OH 45223
-  {id:6,street:"4118 Hamilton Ave",neighborhood:"Northside",city:"Cincinnati",state:"OH",zip:"45223",lat:39.1601,lng:-84.5418,units:8,yearBuilt:1908,value:760000,noi:51000,owner:"George Whitaker",entity:"Individual",ownerAge:71,deedYear:2010,phone:"(513) 555-0121",status:"Off-Market",stage:"Contacted",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-22",notes:"Owns two other small buildings nearby — portfolio potential.",contacts:[{date:"2026-05-15",type:"Call",note:"Left voicemail."}]},
-  {id:7,street:"1523 Chase Ave",neighborhood:"Northside",city:"Cincinnati",state:"OH",zip:"45223",lat:39.1585,lng:-84.5389,units:6,yearBuilt:1920,value:640000,noi:43000,owner:"Patricia Nolan",entity:"Individual",ownerAge:63,deedYear:2012,phone:"(513) 555-0133",status:"Off-Market",stage:"New Lead",verified:false,source:"Hamilton County Auditor",lastVerified:"",notes:"Just under 65 — watchlist. Coordinates need field confirmation.",contacts:[]},
-  // Walnut Hills, Cincinnati OH 45206
-  {id:8,street:"907 E McMillan St",neighborhood:"Walnut Hills",city:"Cincinnati",state:"OH",zip:"45206",lat:39.1281,lng:-84.4901,units:14,yearBuilt:1902,value:1320000,noi:96000,owner:"Walter Benson",entity:"Family Trust",ownerAge:88,deedYear:1985,phone:"(513) 555-0155",status:"Off-Market",stage:"Researching",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-25",notes:"Longest tenure in database (41 yrs). Trust ownership — identify decision-maker / heirs.",contacts:[]},
-  {id:9,street:"2418 Gilbert Ave",neighborhood:"Walnut Hills",city:"Cincinnati",state:"OH",zip:"45206",lat:39.1247,lng:-84.4938,units:16,yearBuilt:1906,value:1490000,noi:99000,owner:"Thomas Ackley",entity:"Individual",ownerAge:70,deedYear:2006,phone:"(513) 555-0188",status:"Off-Market",stage:"Researching",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-25",notes:"Recently widowed; may downsize. Approach with patience and care.",contacts:[]},
-  // Hyde Park, Cincinnati OH 45208
-  {id:10,street:"2712 Erie Ave",neighborhood:"Hyde Park",city:"Cincinnati",state:"OH",zip:"45208",lat:39.1408,lng:-84.4335,units:21,yearBuilt:1924,value:2250000,noi:151000,owner:"Robert & Jean Frey",entity:"Family Trust",ownerAge:76,deedYear:1997,phone:"(513) 555-0166",status:"Off-Market",stage:"Negotiating",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-06-03",notes:"Second meeting scheduled. Seller-financing on part of price is on the table.",contacts:[{date:"2026-05-19",type:"Meeting",note:"Toured building. Positive."}]},
-  // Norwood OH 45212
-  {id:11,street:"4501 Montgomery Rd",neighborhood:"Norwood",city:"Norwood",state:"OH",zip:"45212",lat:39.1558,lng:-84.4597,units:11,yearBuilt:1918,value:980000,noi:66000,owner:"Sylvia Marsh",entity:"Individual",ownerAge:79,deedYear:2001,phone:"(513) 555-0144",status:"Pre-Market",stage:"Contacted",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-28",notes:"Considering selling in 6–12 months. Send updated comps package.",contacts:[{date:"2026-05-27",type:"Email",note:"Sent comps + rough valuation."}]},
-  {id:12,street:"2033 Floral Ave",neighborhood:"Norwood",city:"Norwood",state:"OH",zip:"45212",lat:39.1531,lng:-84.4628,units:24,yearBuilt:1965,value:2600000,noi:182000,owner:"Maple Ridge Holdings LLC",entity:"LLC",ownerAge:58,deedYear:2016,phone:"(513) 555-0150",status:"Listed",stage:"New Lead",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-28",notes:"Institutional LLC, recently listed — low priority. Monitor for price cuts.",contacts:[]},
-  // Covington KY 41011 — Kenton County
-  {id:13,street:"512 Madison Ave",neighborhood:"Covington",city:"Covington",state:"KY",zip:"41011",lat:39.0837,lng:-84.5085,units:18,yearBuilt:1910,value:1680000,noi:118000,owner:"Anita Rowe",entity:"Individual",ownerAge:66,deedYear:2015,phone:"(859) 555-0188",status:"Off-Market",stage:"Contacted",verified:true,source:"Kenton County PVA",lastVerified:"2026-05-30",notes:"Just turned 65+. Well-kept building, strong rents.",contacts:[{date:"2026-05-24",type:"Call",note:"Brief intro call, receptive."}]},
-  {id:14,street:"318 Greenup St",neighborhood:"Covington",city:"Covington",state:"KY",zip:"41011",lat:39.0851,lng:-84.5062,units:7,yearBuilt:1899,value:690000,noi:47000,owner:"Clarence Webb",entity:"Individual",ownerAge:84,deedYear:1989,phone:"(859) 555-0122",status:"Off-Market",stage:"Researching",verified:true,source:"Kenton County PVA",lastVerified:"2026-05-30",notes:"37-year hold. Historic district. Possible probate/estate path — verify heirs.",contacts:[]},
-  // Newport KY 41071 — Campbell County
-  {id:15,street:"621 Monmouth St",neighborhood:"Newport",city:"Newport",state:"KY",zip:"41071",lat:39.0912,lng:-84.4952,units:12,yearBuilt:1905,value:1120000,noi:79000,owner:"Lorraine Betz",entity:"Individual",ownerAge:77,deedYear:2000,phone:"(859) 555-0164",status:"Off-Market",stage:"New Lead",verified:true,source:"Campbell County PVA",lastVerified:"2026-06-04",notes:"Owner near-retirement of self-management. Good first-touch candidate.",contacts:[]},
-  {id:16,street:"214 York St",neighborhood:"Newport",city:"Newport",state:"KY",zip:"41071",lat:39.0928,lng:-84.4931,units:9,yearBuilt:1912,value:820000,noi:55000,owner:"Nelson & Faye Pruitt",entity:"Family Trust",ownerAge:72,deedYear:2003,phone:"(859) 555-0170",status:"Off-Market",stage:"Contacted",verified:false,source:"Campbell County PVA",lastVerified:"",notes:"Coordinates approximate — confirm parcel before mailer run.",contacts:[{date:"2026-06-02",type:"Mailer",note:"Postcard sent."}]},
-  // Bellevue KY 41073 — Campbell County
-  {id:17,street:"328 Fairfield Ave",neighborhood:"Bellevue",city:"Bellevue",state:"KY",zip:"41073",lat:39.1063,lng:-84.4781,units:6,yearBuilt:1908,value:610000,noi:41000,owner:"Raymond Hollis",entity:"Individual",ownerAge:80,deedYear:1996,phone:"(859) 555-0144",status:"Off-Market",stage:"Researching",verified:true,source:"Campbell County PVA",lastVerified:"2026-06-04",notes:"30-year hold, walkable district. Low rents — value-add.",contacts:[],deferred:true},
-  // Ludlow KY 41016 — Kenton County
-  {id:18,street:"210 Elm St",neighborhood:"Ludlow",city:"Ludlow",state:"KY",zip:"41016",lat:39.0921,lng:-84.5471,units:8,yearBuilt:1914,value:700000,noi:48000,owner:"Beatrice Fenn",entity:"Individual",ownerAge:75,deedYear:2002,phone:"(859) 555-0155",status:"Off-Market",stage:"New Lead",verified:true,source:"Kenton County PVA",lastVerified:"2026-06-05",notes:"Quiet riverside submarket. Owner self-manages one building only.",contacts:[]},
+  {id:1,street:"210 W 121st St",neighborhood:"Harlem",city:"New York",state:"NY",zip:"10027",lat:40.8072,lng:-73.9530,units:16,yearBuilt:1910,value:5200000,noi:239000,owner:"Est. of Doris Kaplan",entity:"Family Trust",ownerAge:82,deedYear:1991,phone:"(212) 555-0142",status:"Off-Market",stage:"Contacted",verified:true,source:"NYC Dept. of Finance",lastVerified:"2026-05-18",notes:"Held 35 yrs. Heirs out of state; exploring a quiet sale.",contacts:[{date:"2026-04-21",type:"Call",note:"Spoke with son/executor. Interested, no rush."}]},
+  {id:2,street:"445 Bergen St",neighborhood:"Park Slope",city:"Brooklyn",state:"NY",zip:"11217",lat:40.6805,lng:-73.9760,units:12,yearBuilt:1901,value:4100000,noi:182000,owner:"Vincent Marano",entity:"Individual",ownerAge:74,deedYear:2002,phone:"(718) 555-0199",status:"Off-Market",stage:"Researching",verified:true,source:"NYC Dept. of Finance",lastVerified:"2026-05-20",notes:"Self-manages, below-market rents. Value-add.",contacts:[]},
+  {id:3,street:"1420 N Vermont Ave",neighborhood:"East Hollywood",city:"Los Angeles",state:"CA",zip:"90027",lat:34.0975,lng:-118.2920,units:22,yearBuilt:1963,value:6400000,noi:275000,owner:"Rosa & Manuel Ibarra",entity:"Family Trust",ownerAge:79,deedYear:1994,phone:"(213) 555-0164",status:"Off-Market",stage:"Negotiating",verified:true,source:"Los Angeles County Assessor",lastVerified:"2026-06-01",notes:"RSO building. Owners retiring; discussing seller carry.",contacts:[{date:"2026-05-29",type:"Meeting",note:"Toured. Second meeting set."}]},
+  {id:4,street:"3312 W 8th St",neighborhood:"Koreatown",city:"Los Angeles",state:"CA",zip:"90005",lat:34.0575,lng:-118.2990,units:18,yearBuilt:1958,value:5100000,noi:224000,owner:"Harold Nishimura",entity:"Individual",ownerAge:71,deedYear:2006,phone:"(213) 555-0110",status:"Pre-Market",stage:"New Lead",verified:true,source:"Los Angeles County Assessor",lastVerified:"2026-05-22",notes:"Deferred maintenance visible — value-add. No broker yet.",contacts:[],deferred:true},
+  {id:5,street:"4726 N Kenmore Ave",neighborhood:"Uptown",city:"Chicago",state:"IL",zip:"60640",lat:41.9680,lng:-87.6570,units:24,yearBuilt:1924,value:3300000,noi:238000,owner:"Eleanor Brandt",entity:"Individual",ownerAge:83,deedYear:1988,phone:"(312) 555-0155",status:"Off-Market",stage:"Researching",verified:true,source:"Cook County Assessor",lastVerified:"2026-05-25",notes:"38-yr hold. Fully occupied vintage courtyard building.",contacts:[]},
+  {id:6,street:"1512 W Farragut Ave",neighborhood:"Andersonville",city:"Chicago",state:"IL",zip:"60640",lat:41.9740,lng:-87.6680,units:9,yearBuilt:1918,value:1650000,noi:118000,owner:"Frank & Lucille Petro",entity:"Family Trust",ownerAge:77,deedYear:1999,phone:"(312) 555-0121",status:"Off-Market",stage:"Contacted",verified:true,source:"Cook County Assessor",lastVerified:"2026-05-26",notes:"Owns two nearby buildings — portfolio potential.",contacts:[{date:"2026-05-15",type:"Mailer",note:"Intro letter sent."}]},
+  {id:7,street:"2802 Milam St",neighborhood:"Midtown",city:"Houston",state:"TX",zip:"77006",lat:29.7420,lng:-95.3760,units:20,yearBuilt:1979,value:2600000,noi:187000,owner:"Raymond Voss",entity:"Individual",ownerAge:69,deedYear:2004,phone:"(713) 555-0177",status:"Off-Market",stage:"New Lead",verified:true,source:"Harris County Appraisal District",lastVerified:"2026-06-04",notes:"Near-retirement of self-management. Strong first-touch.",contacts:[]},
+  {id:8,street:"1130 E Roosevelt St",neighborhood:"Garfield",city:"Phoenix",state:"AZ",zip:"85006",lat:33.4600,lng:-112.0570,units:14,yearBuilt:1972,value:1900000,noi:133000,owner:"Barbara Ondrusek",entity:"Individual",ownerAge:75,deedYear:2001,phone:"(602) 555-0133",status:"Off-Market",stage:"Contacted",verified:true,source:"Maricopa County Assessor",lastVerified:"2026-05-30",notes:"Considering a sale within a year. Send comps.",contacts:[{date:"2026-05-27",type:"Email",note:"Sent valuation range."}]},
+  {id:9,street:"1834 Spring Garden St",neighborhood:"Fairmount",city:"Philadelphia",state:"PA",zip:"19130",lat:39.9640,lng:-75.1720,units:11,yearBuilt:1905,value:1750000,noi:124000,owner:"George Whitfield",entity:"Individual",ownerAge:81,deedYear:1990,phone:"(215) 555-0188",status:"Off-Market",stage:"Researching",verified:true,source:"Philadelphia OPA",lastVerified:"2026-05-25",notes:"36-yr hold, historic block. Verify heirs/estate plan.",contacts:[]},
+  {id:10,street:"145 NE 30th St",neighborhood:"Edgewater",city:"Miami",state:"FL",zip:"33137",lat:25.8060,lng:-80.1900,units:19,yearBuilt:1969,value:4600000,noi:207000,owner:"Aurora Delgado",entity:"Family Trust",ownerAge:78,deedYear:1996,phone:"(305) 555-0166",status:"Pre-Market",stage:"Contacted",verified:true,source:"Miami-Dade Property Appraiser",lastVerified:"2026-06-03",notes:"Redevelopment corridor. Land value strong.",contacts:[{date:"2026-05-19",type:"Call",note:"Left message with property manager."}]},
+  {id:11,street:"587 Ponce De Leon Ave NE",neighborhood:"Midtown",city:"Atlanta",state:"GA",zip:"30308",lat:33.7730,lng:-84.3660,units:15,yearBuilt:1951,value:2400000,noi:168000,owner:"Wendell & Marie Cobb",entity:"Family Trust",ownerAge:80,deedYear:1993,phone:"(404) 555-0144",status:"Off-Market",stage:"Negotiating",verified:true,source:"Fulton County Assessors",lastVerified:"2026-06-05",notes:"LOI drafted. Owners relocating near family.",contacts:[{date:"2026-06-02",type:"Meeting",note:"Reviewed terms; seller-financing discussed."}]},
+  {id:12,street:"1420 E Pine St",neighborhood:"Capitol Hill",city:"Seattle",state:"WA",zip:"98122",lat:47.6150,lng:-122.3150,units:13,yearBuilt:1927,value:3600000,noi:158000,owner:"Doris Halvorsen",entity:"Individual",ownerAge:84,deedYear:1987,phone:"(206) 555-0150",status:"Off-Market",stage:"Under Contract",verified:true,source:"King County Assessor",lastVerified:"2026-06-10",notes:"LOI accepted. Owner moving to assisted living. 45-day close.",contacts:[{date:"2026-06-08",type:"Meeting",note:"Signed LOI; title ordered."}]},
+  {id:13,street:"1234 N Ogden St",neighborhood:"Capitol Hill",city:"Denver",state:"CO",zip:"80218",lat:39.7350,lng:-104.9720,units:10,yearBuilt:1908,value:2100000,noi:141000,owner:"Stanley Prochaska",entity:"Individual",ownerAge:73,deedYear:2003,phone:"(303) 555-0176",status:"Off-Market",stage:"New Lead",verified:true,source:"Denver Assessor",lastVerified:"2026-06-04",notes:"Well-kept brick walk-up. Owner self-manages.",contacts:[]},
+  {id:14,street:"55 Hemenway St",neighborhood:"Fenway",city:"Boston",state:"MA",zip:"02115",lat:42.3430,lng:-71.0890,units:17,yearBuilt:1911,value:4300000,noi:189000,owner:"Est. of Arthur Feldman",entity:"Family Trust",ownerAge:86,deedYear:1984,phone:"(617) 555-0128",status:"Off-Market",stage:"Researching",verified:true,source:"Boston Assessing Dept.",lastVerified:"2026-05-25",notes:"Longest tenure in book (42 yrs). Trust — find decision-maker.",contacts:[]},
+  {id:15,street:"4210 Gaston Ave",neighborhood:"Old East Dallas",city:"Dallas",state:"TX",zip:"75246",lat:32.8020,lng:-96.7770,units:22,yearBuilt:1968,value:2500000,noi:181000,owner:"Nadine Kessler",entity:"Individual",ownerAge:70,deedYear:2005,phone:"(214) 555-0170",status:"Off-Market",stage:"Contacted",verified:false,source:"Dallas Central Appraisal District",lastVerified:"",notes:"Coordinates approximate — confirm parcel before mailer run.",contacts:[{date:"2026-06-01",type:"Mailer",note:"Postcard sent."}]},
+  {id:16,street:"1935 W 25th St",neighborhood:"Ohio City",city:"Cleveland",state:"OH",zip:"44113",lat:41.4870,lng:-81.7030,units:12,yearBuilt:1915,value:1150000,noi:92000,owner:"Herbert Lang",entity:"Individual",ownerAge:79,deedYear:1998,phone:"(216) 555-0119",status:"Off-Market",stage:"Researching",verified:true,source:"Cuyahoga County Fiscal Officer",lastVerified:"2026-05-28",notes:"Strong cap rate. Owner tired of management.",contacts:[]},
+  {id:17,street:"655 W Willis St",neighborhood:"Midtown",city:"Detroit",state:"MI",zip:"48201",lat:42.3520,lng:-83.0680,units:14,yearBuilt:1922,value:980000,noi:86000,owner:"Gloria Ann Settles",entity:"Individual",ownerAge:76,deedYear:2000,phone:"(313) 555-0161",status:"Off-Market",stage:"New Lead",verified:true,source:"City of Detroit Assessor",lastVerified:"2026-06-05",notes:"Revitalizing corridor. High yield.",contacts:[]},
+  {id:18,street:"2601 Nicollet Ave",neighborhood:"Whittier",city:"Minneapolis",state:"MN",zip:"55408",lat:44.9540,lng:-93.2780,units:16,yearBuilt:1926,value:2000000,noi:143000,owner:"Roger & Ann Lindqvist",entity:"Family Trust",ownerAge:81,deedYear:1992,phone:"(612) 555-0152",status:"Off-Market",stage:"Contacted",verified:true,source:"Hennepin County Assessor",lastVerified:"2026-05-30",notes:"34-yr hold. Estate-planning underway.",contacts:[{date:"2026-05-24",type:"Call",note:"Receptive; wants comps."}]},
+  {id:19,street:"2214 SE Belmont St",neighborhood:"Buckman",city:"Portland",state:"OR",zip:"97214",lat:45.5160,lng:-122.6430,units:9,yearBuilt:1913,value:1750000,noi:106000,owner:"Marjorie Alden",entity:"Individual",ownerAge:72,deedYear:2004,phone:"(503) 555-0147",status:"Off-Market",stage:"New Lead",verified:true,source:"Multnomah County Assessor",lastVerified:"2026-06-04",notes:"Walkable district. Owner self-manages one building.",contacts:[]},
+  {id:20,street:"1810 Division St",neighborhood:"Midtown",city:"Nashville",state:"TN",zip:"37203",lat:36.1490,lng:-86.7960,units:18,yearBuilt:1974,value:2900000,noi:174000,owner:"Clyde Bannerman",entity:"Individual",ownerAge:68,deedYear:2007,phone:"(615) 555-0135",status:"Pre-Market",stage:"Researching",verified:true,source:"Davidson County Assessor",lastVerified:"2026-06-02",notes:"Hot submarket. Owner testing interest quietly.",contacts:[]},
+  {id:21,street:"5520 Walnut St",neighborhood:"Shadyside",city:"Pittsburgh",state:"PA",zip:"15232",lat:40.4530,lng:-79.9340,units:11,yearBuilt:1909,value:1600000,noi:114000,owner:"Est. of Harriet Bowen",entity:"Family Trust",ownerAge:85,deedYear:1986,phone:"(412) 555-0158",status:"Off-Market",stage:"Researching",verified:true,source:"Allegheny County Assessor",lastVerified:"2026-05-27",notes:"Probate path likely — verify heirs.",contacts:[]},
+  {id:22,street:"1412 Vine St",neighborhood:"Over-the-Rhine",city:"Cincinnati",state:"OH",zip:"45202",lat:39.1149,lng:-84.5139,units:10,yearBuilt:1895,value:1250000,noi:92000,owner:"Margaret Doyle",entity:"Individual",ownerAge:78,deedYear:1994,phone:"(513) 555-0142",status:"Off-Market",stage:"Contacted",verified:true,source:"Hamilton County Auditor",lastVerified:"2026-05-18",notes:"Held since 1993. Open to a quiet sale, no listing.",contacts:[{date:"2026-04-02",type:"Mailer",note:"Sent intro letter + comps."}]},
+  {id:23,street:"1214 S St Marys St",neighborhood:"Southtown",city:"San Antonio",state:"TX",zip:"78210",lat:29.4090,lng:-98.4890,units:13,yearBuilt:1961,value:1400000,noi:104000,owner:"Ramona Esparza",entity:"Individual",ownerAge:74,deedYear:2002,phone:"(210) 555-0173",status:"Off-Market",stage:"New Lead",verified:false,source:"Bexar Appraisal District",lastVerified:"",notes:"Confirm parcel & owner before outreach.",contacts:[]},
+  {id:24,street:"1500 Bolton St",neighborhood:"Bolton Hill",city:"Baltimore",state:"MD",zip:"21217",lat:39.3060,lng:-76.6250,units:12,yearBuilt:1900,value:1300000,noi:99000,owner:"Cornelius Pratt",entity:"Individual",ownerAge:80,deedYear:1995,phone:"(410) 555-0164",status:"Off-Market",stage:"Contacted",verified:true,source:"Maryland SDAT",lastVerified:"2026-05-29",notes:"31-yr hold, historic rowhouse block.",contacts:[{date:"2026-05-20",type:"Call",note:"Brief intro call, receptive."}]},
+  {id:25,street:"1043 N High St",neighborhood:"Short North",city:"Columbus",state:"OH",zip:"43201",lat:39.9820,lng:-83.0030,units:15,yearBuilt:1916,value:1900000,noi:133000,owner:"Delores Yates",entity:"Individual",ownerAge:73,deedYear:2003,phone:"(614) 555-0181",status:"Off-Market",stage:"Researching",verified:true,source:"Franklin County Auditor",lastVerified:"2026-06-01",notes:"Prime corridor. Owner self-manages.",contacts:[]},
+  {id:26,street:"3418 Halls Ferry Rd",neighborhood:"Baden",city:"St. Louis",state:"MO",zip:"63147",lat:38.6820,lng:-90.2120,units:20,yearBuilt:1957,value:1250000,noi:106000,owner:"Est. of Wilbur Hoskins",entity:"Family Trust",ownerAge:83,deedYear:1990,phone:"(314) 555-0190",status:"Off-Market",stage:"New Lead",verified:false,source:"St. Louis Assessor",lastVerified:"",notes:"High yield, verify condition & occupancy on site.",contacts:[]},
 ];
 
 /* ===== state ===== */
 let props = load();
+let highlightId = null;
 function load(){ try{const r=JSON.parse(localStorage.getItem(STORE)); return Array.isArray(r)&&r.length?r:clone(SEED);}catch(e){return clone(SEED);} }
 function clone(x){return JSON.parse(JSON.stringify(x));}
 function save(){ localStorage.setItem(STORE, JSON.stringify(props)); }
@@ -563,27 +582,27 @@ const fmt$ = n => "$"+Math.round(Number(n)).toLocaleString();
 const fmtK = n => n>=1e6 ? "$"+(n/1e6).toFixed(2)+"M" : "$"+Math.round(n/1000)+"K";
 const yearsOwned = p => p.deedYear ? NOW_YEAR - p.deedYear : 0;
 const capRate = p => p.value ? (p.noi/p.value*100) : 0;
-const county = p => p.source || "";
+const metroKey = p => `${p.city}, ${p.state}`;
 function oppScore(p){
-  let s = (p.ownerAge>=65?25:p.ownerAge>=55?12:0)
-    + Math.min(yearsOwned(p),40)*0.8
-    + (p.entity==="Individual"?18:p.entity==="Family Trust"?14:4)
-    + (p.status==="Off-Market"?18:p.status==="Pre-Market"?10:0)
-    + (p.deferred?7:0);
+  let s=(p.ownerAge>=65?25:p.ownerAge>=55?12:0)+Math.min(yearsOwned(p),40)*0.8+(p.entity==="Individual"?18:p.entity==="Family Trust"?14:4)+(p.status==="Off-Market"?18:p.status==="Pre-Market"?10:0)+(p.deferred?7:0);
   return Math.max(0,Math.min(100,Math.round(s)));
 }
-const fullAddr = p => `${p.street}`;
 const subAddr = p => `${p.neighborhood?p.neighborhood+" · ":""}${p.city}, ${p.state} ${p.zip||""}`.trim();
 function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
-function vChip(p){ return p.verified
-  ? `<span class="vchip v-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>`
-  : `<span class="vchip v-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01"/><circle cx="12" cy="12" r="9"/></svg>Unverified</span>`; }
+function vChip(p){return p.verified?`<span class="vchip v-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>Verified</span>`:`<span class="vchip v-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 9v4m0 4h.01"/><circle cx="12" cy="12" r="9"/></svg>Unverified</span>`;}
+
+/* external + in-app link builders */
+const addrStr = p => `${p.street}, ${p.city}, ${p.state} ${p.zip||""}`.trim();
+function gmapsUrl(p){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addrStr(p))}`;}
+function streetviewUrl(p){return (p.lat&&p.lng)?`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${p.lat},${p.lng}`:gmapsUrl(p);}
+function recordsUrl(p){return `https://www.google.com/search?q=${encodeURIComponent(addrStr(p)+" "+(p.source||"property owner records"))}`;}
+function telUrl(p){const d=(p.phone||"").replace(/[^0-9]/g,"");return d?`tel:${d}`:null;}
 
 /* ===== routing ===== */
 const TITLES = {
-  dashboard:["Dashboard","Portfolio of off-market senior-owned apartment leads"],
+  dashboard:["Dashboard","Off-market senior-owned apartment leads, nationwide"],
   properties:["Properties","Filter, sort and manage every tracked building"],
-  map:["Map","Every lead plotted by real coordinates"],
+  map:["Map","Every U.S. lead plotted by real coordinates"],
   pipeline:["Deal Pipeline","Drag leads between stages"],
   sources:["Data & Sources","Where each address comes from — and how to source more"],
 };
@@ -591,104 +610,91 @@ function go(view){
   $$(".view").forEach(v=>v.classList.remove("active"));
   $("#view-"+view).classList.add("active");
   $$(".nav__item").forEach(n=>n.classList.toggle("active", n.dataset.view===view));
-  $("#viewTitle").childNodes[0].nodeValue = TITLES[view][0];
-  $("#viewSub").textContent = TITLES[view][1];
+  $("#viewTitle").childNodes[0].nodeValue=TITLES[view][0];
+  $("#viewSub").textContent=TITLES[view][1];
   if(view==="dashboard")renderDashboard();
   if(view==="properties")renderTable();
   if(view==="map")renderMap();
   if(view==="pipeline")renderKanban();
   if(view==="sources")renderSources();
 }
-$("#nav").addEventListener("click",e=>{const it=e.target.closest(".nav__item"); if(it)go(it.dataset.view);});
+$("#nav").addEventListener("click",e=>{const it=e.target.closest(".nav__item");if(it)go(it.dataset.view);});
 $("#nav").addEventListener("keydown",e=>{if((e.key==="Enter"||e.key===" ")&&e.target.classList.contains("nav__item")){e.preventDefault();go(e.target.dataset.view);}});
-document.body.addEventListener("click",e=>{const g=e.target.closest("[data-goto]"); if(g)go(g.dataset.goto);});
+document.body.addEventListener("click",e=>{const g=e.target.closest("[data-goto]");if(g)go(g.dataset.goto);});
 
-/* ===== coverage ===== */
-function updateCoverage(){
-  const pct = props.length? Math.round(props.filter(p=>p.verified).length/props.length*100):0;
-  $("#covPct").textContent = pct+"%";
-  $("#covFill").style.width = pct+"%";
-}
+function updateCoverage(){const pct=props.length?Math.round(props.filter(p=>p.verified).length/props.length*100):0;$("#covPct").textContent=pct+"%";$("#covFill").style.width=pct+"%";}
 
 /* ===== dashboard ===== */
 function renderDashboard(){
   updateCoverage();
-  const total = props.length;
-  const senior = props.filter(p=>p.ownerAge>=65);
-  const off = props.filter(p=>p.status==="Off-Market");
-  const targets = props.filter(p=>p.ownerAge>=65 && p.status!=="Listed");
-  const units = props.reduce((a,p)=>a+ +p.units,0);
-  const pipeVal = targets.reduce((a,p)=>a+ +p.value,0);
-  const avgCap = props.length? props.reduce((a,p)=>a+capRate(p),0)/props.length:0;
-  const verifPct = total? Math.round(props.filter(p=>p.verified).length/total*100):0;
-
-  $("#kpis").innerHTML = [
+  const total=props.length;
+  const senior=props.filter(p=>p.ownerAge>=65);
+  const off=props.filter(p=>p.status==="Off-Market");
+  const targets=props.filter(p=>p.ownerAge>=65&&p.status!=="Listed");
+  const units=props.reduce((a,p)=>a+ +p.units,0);
+  const pipeVal=targets.reduce((a,p)=>a+ +p.value,0);
+  const avgCap=props.length?props.reduce((a,p)=>a+capRate(p),0)/props.length:0;
+  const states=new Set(props.map(p=>p.state)).size;
+  $("#kpis").innerHTML=[
     kpi("Tracked buildings",total,"M3 21h18M5 21V7l7-4 7 4v14",total+" leads"),
     kpi("Senior-owned (65+)",senior.length,"M12 2a5 5 0 100 10 5 5 0 000-10zM3 21a9 9 0 0118 0",Math.round(senior.length/Math.max(total,1)*100)+"% of database","gold"),
     kpi("Off-market",off.length,"M4 4l16 16M20 4 4 20",off.length+" not listed"),
     kpi("Prime targets",targets.length,"M12 2 15 9l7 .5-5.5 4.5L18 21l-6-4-6 4 1.5-7L2 9.5 9 9z","65+ & unlisted","gold"),
-    kpi("Total units",units,"M3 21h18M6 21V9M18 21V9M6 9l6-4 6 4","across portfolio"),
+    kpi("States covered",states,"M3 6l6-3 6 3 6-3v15l-6 3-6-3-6 3z","nationwide"),
     kpi("Target pipeline",fmtK(pipeVal),"M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6","est. value"),
     kpi("Avg cap rate",avgCap.toFixed(1)+"%","M3 17l6-6 4 4 8-8","weighted mean"),
-    kpi("Address-verified",verifPct+"%","M9 12l2 2 4-4M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z","of records"),
+    kpi("Address-verified",(total?Math.round(props.filter(p=>p.verified).length/total*100):0)+"%","M9 12l2 2 4-4M12 3l7 4v6c0 4-3 7-7 8-4-1-7-4-7-8V7z","of records"),
   ].join("");
 
   const bands=[["<55",p=>p.ownerAge<55],["55-64",p=>p.ownerAge>=55&&p.ownerAge<65],["65-74",p=>p.ownerAge>=65&&p.ownerAge<75],["75-84",p=>p.ownerAge>=75&&p.ownerAge<85],["85+",p=>p.ownerAge>=85]];
-  const counts=bands.map(b=>props.filter(b[1]).length), max=Math.max(1,...counts);
+  const counts=bands.map(b=>props.filter(b[1]).length),max=Math.max(1,...counts);
   $("#ageBars").innerHTML=bands.map((b,i)=>{const h=Math.max(6,counts[i]/max*100),gold=i>=2;return `<div class="bar"><div class="bar__fill" style="height:${h}%;${gold?'background:linear-gradient(180deg,#f2cd85,#e5b567)':''}"><span>${counts[i]}</span></div><div class="bar__lbl">${b[0]}</div></div>`;}).join("");
-
   $("#pipeMini").innerHTML=STAGES.map(s=>{const n=props.filter(p=>p.stage===s.key).length,w=n/Math.max(total,1)*100;return `<div class="pipe-row"><div class="pipe-row__name">${s.key}</div><div class="pipe-row__track"><div class="pipe-row__bar" style="width:${w}%;background:${s.color}"></div></div><div class="pipe-row__n tnum">${n}</div></div>`;}).join("");
 
-  // value by submarket (targets only)
-  const byCity={};
-  targets.forEach(p=>{const k=p.neighborhood||p.city; byCity[k]=(byCity[k]||0)+ +p.value;});
-  const cityArr=Object.entries(byCity).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  const cmax=Math.max(1,...cityArr.map(c=>c[1]));
-  $("#cityBars").innerHTML=cityArr.map(([k,v])=>`<div class="hbar"><div class="hbar__name">${esc(k)}</div><div class="hbar__track"><div class="hbar__fill" style="width:${Math.max(14,v/cmax*100)}%;background:linear-gradient(90deg,var(--brand2),var(--brand))">${fmtK(v)}</div></div></div>`).join("")||emptyMini();
+  const byCity={}; targets.forEach(p=>{const k=metroKey(p);byCity[k]=(byCity[k]||0)+ +p.value;});
+  const cityArr=Object.entries(byCity).sort((a,b)=>b[1]-a[1]).slice(0,6),cmax=Math.max(1,...cityArr.map(c=>c[1]));
+  $("#cityBars").innerHTML=cityArr.map(([k,v])=>`<div class="hbar"><div class="hbar__name" title="${esc(k)}">${esc(k)}</div><div class="hbar__track"><div class="hbar__fill" style="width:${Math.max(16,v/cmax*100)}%;background:linear-gradient(90deg,var(--brand2),var(--brand))">${fmtK(v)}</div></div></div>`).join("")||emptyMini();
 
-  // entity breakdown
-  const ents=["Individual","Family Trust","LLC"];
-  const ecol={Individual:"#f2cd85","Family Trust":"#a78bfa",LLC:"#657097"};
-  const ecount=ents.map(e=>props.filter(p=>p.entity===e).length), emax=Math.max(1,...ecount);
+  const ents=["Individual","Family Trust","LLC"],ecol={Individual:"#f2cd85","Family Trust":"#a78bfa",LLC:"#657097"};
+  const ecount=ents.map(e=>props.filter(p=>p.entity===e).length),emax=Math.max(1,...ecount);
   $("#entityBars").innerHTML=ents.map((e,i)=>`<div class="hbar"><div class="hbar__name">${e}</div><div class="hbar__track"><div class="hbar__fill" style="width:${Math.max(14,ecount[i]/emax*100)}%;background:${ecol[e]}">${ecount[i]}</div></div></div>`).join("");
 
-  const hot=props.filter(p=>p.ownerAge>=65&&p.status==="Off-Market").map(p=>({p,s:oppScore(p)})).sort((a,b)=>b.s-a.s).slice(0,5);
-  $("#hotLeads").innerHTML= hot.length? `<div class="tscroll"><table><tbody>${hot.map(({p,s})=>`<tr onclick="openDetail(${p.id})"><td class="addr">${esc(p.street)} ${vChip(p)}<small>${esc(subAddr(p))} · ${p.units} units</small></td><td>${esc(p.owner)}<div class="entity-tag">${p.entity} · ${yearsOwned(p)} yrs held</div></td><td><span class="age-pill age-65">${p.ownerAge}</span></td><td><span class="badge b-off">Off-Market</span></td><td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td><td style="font-weight:800;color:var(--gold2)" class="tnum">${s}</td><td style="font-weight:700" class="tnum">${fmtK(p.value)}</td></tr>`).join("")}</tbody></table></div>` : `<div class="empty">No senior-owned off-market leads yet.</div>`;
+  const hot=props.filter(p=>p.ownerAge>=65&&p.status==="Off-Market").map(p=>({p,s:oppScore(p)})).sort((a,b)=>b.s-a.s).slice(0,6);
+  $("#hotLeads").innerHTML=hot.length?`<div class="tscroll"><table><tbody>${hot.map(({p,s})=>`<tr onclick="openDetail(${p.id})"><td class="addr"><span class="astreet">${esc(p.street)} ${vChip(p)}</span><small>${esc(subAddr(p))} · ${p.units} units</small></td><td>${esc(p.owner)}<div class="entity-tag">${p.entity} · ${yearsOwned(p)} yrs held</div></td><td><span class="age-pill age-65">${p.ownerAge}</span></td><td><span class="badge b-off">Off-Market</span></td><td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td><td style="font-weight:800;color:var(--gold2)" class="tnum">${s}</td><td style="font-weight:700" class="tnum">${fmtK(p.value)}</td></tr>`).join("")}</tbody></table></div>`:`<div class="empty">No senior-owned off-market leads yet.</div>`;
 }
 function emptyMini(){return `<div style="color:var(--faint);font-size:12.5px;padding:10px 0">No 65+ off-market targets in the current data.</div>`;}
 function kpi(label,val,icon,trend,mod){return `<div class="kpi ${mod==='gold'?'kpi--gold':''}"><div class="kpi__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="${icon}"/></svg>${label}</div><div class="kpi__val tnum">${val}</div><div class="kpi__trend">${trend}</div></div>`;}
 
-/* ===== properties table ===== */
+/* ===== table ===== */
 const COLS=[{k:"street",l:"Property"},{k:"owner",l:"Owner"},{k:"ownerAge",l:"Age"},{k:"tenure",l:"Yrs held"},{k:"units",l:"Units"},{k:"capRate",l:"Cap"},{k:"status",l:"Status"},{k:"stage",l:"Stage"},{k:"value",l:"Est. value"}];
-let sortKey="score", sortDir=-1;
-const filters={age:65,status:"",stage:"",city:"",entity:"",units:0,verified:false,q:""};
+let sortKey="score",sortDir=-1;
+const filters={age:65,status:"",stage:"",city:"",state:"",entity:"",units:0,verified:false,q:""};
 function initFilters(){
   $("#fStage").innerHTML='<option value="">All</option>'+STAGES.map(s=>`<option>${s.key}</option>`).join("");
   $("#f_stage").innerHTML=STAGES.map(s=>`<option>${s.key}</option>`).join("");
   refreshCities();
 }
 function refreshCities(){
-  const subs=[...new Set(props.map(p=>p.neighborhood||p.city))].sort();
-  $("#fCity").innerHTML='<option value="">All</option>'+subs.map(c=>`<option>${esc(c)}</option>`).join("");
+  const metros=[...new Set(props.map(metroKey))].sort();
+  $("#fCity").innerHTML='<option value="">All</option>'+metros.map(c=>`<option>${esc(c)}</option>`).join("");
+  const states=[...new Set(props.map(p=>p.state))].sort();
+  $("#fState").innerHTML='<option value="">All</option>'+states.map(s=>`<option>${esc(s)}</option>`).join("");
 }
-function sortVal(p,k){
-  if(k==="tenure")return yearsOwned(p);
-  if(k==="capRate")return capRate(p);
-  if(k==="score")return oppScore(p);
-  return p[k];
+function sortVal(p,k){if(k==="tenure")return yearsOwned(p);if(k==="capRate")return capRate(p);if(k==="score")return oppScore(p);return p[k];}
+function passFilters(p){
+  if(p.ownerAge<filters.age)return false;
+  if(filters.status&&p.status!==filters.status)return false;
+  if(filters.stage&&p.stage!==filters.stage)return false;
+  if(filters.city&&metroKey(p)!==filters.city)return false;
+  if(filters.state&&p.state!==filters.state)return false;
+  if(filters.entity&&p.entity!==filters.entity)return false;
+  if(+p.units<filters.units)return false;
+  if(filters.verified&&!p.verified)return false;
+  if(filters.q){const s=(p.street+p.owner+p.city+p.state+(p.neighborhood||"")+(p.zip||"")).toLowerCase();if(!s.includes(filters.q))return false;}
+  return true;
 }
 function currentRows(){
-  return props.filter(p=>{
-    if(p.ownerAge<filters.age)return false;
-    if(filters.status&&p.status!==filters.status)return false;
-    if(filters.stage&&p.stage!==filters.stage)return false;
-    if(filters.city&&(p.neighborhood||p.city)!==filters.city)return false;
-    if(filters.entity&&p.entity!==filters.entity)return false;
-    if(+p.units<filters.units)return false;
-    if(filters.verified&&!p.verified)return false;
-    if(filters.q){const s=(p.street+p.owner+p.city+p.state+p.neighborhood+(p.zip||"")).toLowerCase();if(!s.includes(filters.q))return false;}
-    return true;
-  }).sort((a,b)=>{
+  return props.filter(passFilters).sort((a,b)=>{
     let x=sortVal(a,sortKey),y=sortVal(b,sortKey);
     if(typeof x==="string"){x=x.toLowerCase();y=String(y).toLowerCase();return x<y?-sortDir:x>y?sortDir:0;}
     return (x-y)*sortDir;
@@ -697,9 +703,9 @@ function currentRows(){
 function renderTable(){
   $("#thead").innerHTML=COLS.map(c=>`<th data-k="${c.k}">${c.l} <span class="arr">${sortKey===c.k?(sortDir<0?'▼':'▲'):'↕'}</span></th>`).join("");
   const rows=currentRows();
-  $("#tbody").innerHTML= rows.length? rows.map(p=>`
+  $("#tbody").innerHTML=rows.length?rows.map(p=>`
     <tr onclick="openDetail(${p.id})">
-      <td class="addr">${esc(p.street)} ${vChip(p)}<small>${esc(subAddr(p))}</small></td>
+      <td class="addr"><span class="astreet"><a class="addr-ext" href="${gmapsUrl(p)}" target="_blank" rel="noopener" title="Open in Google Maps" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></a>${esc(p.street)} ${vChip(p)}</span><small>${esc(subAddr(p))}</small></td>
       <td>${esc(p.owner)}<div class="entity-tag">${p.entity}${p.phone?" · "+esc(p.phone):""}</div></td>
       <td><span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}">${p.ownerAge}</span></td>
       <td class="tnum">${yearsOwned(p)||'—'}</td>
@@ -708,7 +714,7 @@ function renderTable(){
       <td><span class="badge ${p.status==='Off-Market'?'b-off':p.status==='Pre-Market'?'b-pre':'b-listed'}">${p.status}</span></td>
       <td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td>
       <td style="font-weight:700" class="tnum">${fmtK(p.value)}</td>
-    </tr>`).join("") : `<tr><td colspan="9"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><div>No properties match these filters.</div></div></td></tr>`;
+    </tr>`).join(""):`<tr><td colspan="9"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><div>No properties match these filters.</div></div></td></tr>`;
   $("#rowcount").textContent=`${rows.length} of ${props.length} buildings · ${rows.reduce((a,p)=>a+ +p.units,0)} units · ${fmtK(rows.reduce((a,p)=>a+ +p.value,0))} combined value · ${rows.filter(p=>p.verified).length} verified`;
   $("#thead").querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=(k==="street"||k==="owner"||k==="status"||k==="stage")?1:-1;}renderTable();});
 }
@@ -716,109 +722,83 @@ $("#fAge").addEventListener("input",e=>{filters.age=+e.target.value;$("#fAgeV").
 $("#fStatus").addEventListener("change",e=>{filters.status=e.target.value;renderTable();});
 $("#fStage").addEventListener("change",e=>{filters.stage=e.target.value;renderTable();});
 $("#fCity").addEventListener("change",e=>{filters.city=e.target.value;renderTable();});
+$("#fState").addEventListener("change",e=>{filters.state=e.target.value;renderTable();});
 $("#fEntity").addEventListener("change",e=>{filters.entity=e.target.value;renderTable();});
 $("#fUnits").addEventListener("change",e=>{filters.units=+e.target.value;renderTable();});
 $("#fVerified").addEventListener("change",e=>{filters.verified=e.target.checked;renderTable();});
-$("#resetFilters").addEventListener("click",()=>{Object.assign(filters,{age:65,status:"",stage:"",city:"",entity:"",units:0,verified:false});$("#fAge").value=65;$("#fAgeV").textContent="65+";$("#fStatus").value="";$("#fStage").value="";$("#fCity").value="";$("#fEntity").value="";$("#fUnits").value="0";$("#fVerified").checked=false;renderTable();});
+$("#resetFilters").addEventListener("click",()=>{Object.assign(filters,{age:65,status:"",stage:"",city:"",state:"",entity:"",units:0,verified:false});$("#fAge").value=65;$("#fAgeV").textContent="65+";["fStatus","fStage","fCity","fState","fEntity"].forEach(id=>$("#"+id).value="");$("#fUnits").value="0";$("#fVerified").checked=false;renderTable();});
 $("#globalSearch").addEventListener("input",e=>{filters.q=e.target.value.toLowerCase().trim();const v=$(".view.active").id;if(v==="view-properties")renderTable();else if(v==="view-map")renderMap();else go("properties");});
 
-/* ===== map (offline canvas) ===== */
-let mapPins=[], mapCtx=null;
+/* ===== map (offline canvas, continental US) ===== */
+let mapPins=[];
 function project(lat,lng,w,h){
-  const padX=46,padT=26,padB=30;
-  const x=padX+(lng-BOUNDS.lngMin)/(BOUNDS.lngMax-BOUNDS.lngMin)*(w-2*padX);
-  const y=padT+(BOUNDS.latMax-lat)/(BOUNDS.latMax-BOUNDS.latMin)*(h-padT-padB);
-  return {x,y};
+  const padX=26,padY=22;
+  const cosLat=Math.cos(0.5*(US.latMin+US.latMax)*Math.PI/180);
+  const gw=(US.lngMax-US.lngMin)*cosLat, gh=(US.latMax-US.latMin);
+  const s=Math.min((w-2*padX)/gw,(h-2*padY)/gh);
+  const offX=(w-gw*s)/2, offY=(h-gh*s)/2;
+  return {x:offX+(lng-US.lngMin)*cosLat*s, y:offY+(US.latMax-lat)*s};
 }
 function renderMap(){
-  const rows=currentRowsForMap();
-  // side stats
-  const subsSet=new Set(rows.map(p=>p.neighborhood||p.city));
+  const rows=props.filter(p=>passFilters(p)&&p.lat&&p.lng);
   $("#mapCount").textContent=rows.length;
-  $("#mapSubs").textContent=subsSet.size;
+  $("#mapSubs").textContent=new Set(rows.map(metroKey)).size;
+  $("#mapStates").textContent=new Set(rows.map(p=>p.state)).size;
   $("#mapSenior").textContent=rows.filter(p=>p.ownerAge>=65).length;
   $("#mapVerif").textContent=rows.filter(p=>p.verified).length;
-  const bySub={}; rows.forEach(p=>{const k=p.neighborhood||p.city;bySub[k]=(bySub[k]||0)+1;});
+  const bySub={}; rows.forEach(p=>{const k=metroKey(p);bySub[k]=(bySub[k]||0)+1;});
   $("#mapSubList").innerHTML=Object.entries(bySub).sort((a,b)=>b[1]-a[1]).map(([k,n])=>`<div style="display:flex;justify-content:space-between"><span style="color:var(--muted)">${esc(k)}</span><b>${n}</b></div>`).join("");
   $("#mapLegend").innerHTML=`<div style="font-weight:700;color:var(--txt)">Deal stage</div>`+STAGES.map(s=>`<div class="lg-row"><span class="dot" style="background:${s.color}"></span>${s.key}</div>`).join("")+`<div class="lg-row" style="margin-top:8px"><span style="width:11px;height:11px;border-radius:50%;border:2px solid var(--gold);box-sizing:border-box"></span>owner 65+</div>`;
   requestAnimationFrame(()=>drawMap(rows));
 }
-function currentRowsForMap(){
-  // apply same filters as table but ignore nothing special; require coords
-  return props.filter(p=>{
-    if(p.ownerAge<filters.age)return false;
-    if(filters.status&&p.status!==filters.status)return false;
-    if(filters.stage&&p.stage!==filters.stage)return false;
-    if(filters.city&&(p.neighborhood||p.city)!==filters.city)return false;
-    if(filters.entity&&p.entity!==filters.entity)return false;
-    if(+p.units<filters.units)return false;
-    if(filters.verified&&!p.verified)return false;
-    if(filters.q){const s=(p.street+p.owner+p.city+p.state+(p.zip||"")).toLowerCase();if(!s.includes(filters.q))return false;}
-    return p.lat&&p.lng;
-  });
-}
 function drawMap(rows){
   const cv=$("#map"); if(!cv)return;
-  const wrap=cv.parentElement, dpr=window.devicePixelRatio||1;
-  const w=wrap.clientWidth, h=wrap.clientHeight;
+  const wrap=cv.parentElement, dpr=window.devicePixelRatio||1, w=wrap.clientWidth, h=wrap.clientHeight;
   cv.width=w*dpr; cv.height=h*dpr; cv.style.width=w+"px"; cv.style.height=h+"px";
-  const ctx=cv.getContext("2d"); mapCtx=ctx;
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  ctx.clearRect(0,0,w,h);
-  // bg
-  const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,"#111a36"); g.addColorStop(1,"#0d1430");
-  ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
-  // graticule
-  ctx.strokeStyle="rgba(51,66,122,.35)"; ctx.lineWidth=1;
-  for(let i=0;i<=6;i++){const x=46+i/6*(w-92);ctx.beginPath();ctx.moveTo(x,20);ctx.lineTo(x,h-24);ctx.stroke();}
-  for(let i=0;i<=5;i++){const y=26+i/5*(h-56);ctx.beginPath();ctx.moveTo(40,y);ctx.lineTo(w-40,y);ctx.stroke();}
-  // river
+  const ctx=cv.getContext("2d"); ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+  const g=ctx.createLinearGradient(0,0,0,h); g.addColorStop(0,"#111a36"); g.addColorStop(1,"#0d1430"); ctx.fillStyle=g; ctx.fillRect(0,0,w,h);
+  // US silhouette
   ctx.beginPath();
-  RIVER.forEach((pt,i)=>{const q=project(pt[1],pt[0],w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});
-  ctx.strokeStyle="rgba(79,209,224,.55)"; ctx.lineWidth=14; ctx.lineCap="round"; ctx.lineJoin="round"; ctx.stroke();
-  ctx.strokeStyle="rgba(79,209,224,.18)"; ctx.lineWidth=26; ctx.stroke();
-  // river label
-  const rl=project(RIVER[2][1],RIVER[2][0],w,h);
-  ctx.fillStyle="rgba(79,209,224,.75)"; ctx.font="600 11px system-ui"; ctx.fillText("OHIO RIVER", rl.x-6, rl.y-14);
-  // state labels
-  ctx.fillStyle="rgba(147,160,201,.45)"; ctx.font="700 13px system-ui";
-  ctx.fillText("OHIO", w-92, 44); ctx.fillText("KENTUCKY", 54, h-34);
+  US_OUTLINE.forEach((pt,i)=>{const q=project(pt[1],pt[0],w,h);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y);});
+  ctx.closePath();
+  ctx.fillStyle="rgba(91,140,255,.07)"; ctx.fill();
+  ctx.strokeStyle="rgba(91,140,255,.35)"; ctx.lineWidth=1.5; ctx.lineJoin="round"; ctx.stroke();
+  // faint graticule clipped to map area
+  ctx.save(); ctx.clip(); ctx.strokeStyle="rgba(79,209,224,.10)"; ctx.lineWidth=1;
+  for(let lng=-120;lng<=-70;lng+=10){const a=project(24,lng,w,h),b=project(50,lng,w,h);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  for(let lat=30;lat<=45;lat+=5){const a=project(lat,-125,w,h),b=project(lat,-66,w,h);ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+  ctx.restore();
   // pins
   mapPins=[];
   rows.forEach(p=>{
-    const q=project(p.lat,p.lng,w,h);
-    const r=Math.max(5,Math.min(15,4+Math.sqrt(+p.units)*1.9));
-    // halo
-    ctx.beginPath(); ctx.arc(q.x,q.y,r+4,0,7); ctx.fillStyle=stageColor(p.stage)+"22"; ctx.fill();
-    // body
+    const q=project(p.lat,p.lng,w,h), r=Math.max(4.5,Math.min(13,4+Math.sqrt(+p.units)*1.7));
+    ctx.beginPath(); ctx.arc(q.x,q.y,r+3,0,7); ctx.fillStyle=stageColor(p.stage)+"22"; ctx.fill();
     ctx.beginPath(); ctx.arc(q.x,q.y,r,0,7); ctx.fillStyle=stageColor(p.stage); ctx.fill();
     ctx.lineWidth=2; ctx.strokeStyle=p.ownerAge>=65?"#f2cd85":"rgba(255,255,255,.55)"; ctx.stroke();
     if(!p.verified){ctx.setLineDash([2,2]);ctx.strokeStyle="#f5a623";ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(q.x,q.y,r+3,0,7);ctx.stroke();ctx.setLineDash([]);}
     mapPins.push({id:p.id,x:q.x,y:q.y,r});
   });
+  // highlight
+  if(highlightId!=null){const hp=mapPins.find(pp=>pp.id===highlightId);if(hp){const p=props.find(x=>x.id===highlightId);ctx.setLineDash([4,4]);ctx.strokeStyle="#f2cd85";ctx.lineWidth=2.5;ctx.beginPath();ctx.arc(hp.x,hp.y,hp.r+9,0,7);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle="#f2cd85";ctx.font="700 12px system-ui";ctx.textAlign="center";ctx.fillText(p.street,hp.x,hp.y-hp.r-14);ctx.textAlign="left";}}
 }
 function mapHit(mx,my){let best=null,bd=1e9;mapPins.forEach(pin=>{const d=Math.hypot(mx-pin.x,my-pin.y);if(d<=pin.r+4&&d<bd){bd=d;best=pin;}});return best;}
 (function initMapEvents(){
-  const cv=$("#map"), tip=$("#mapTip");
+  const cv=$("#map"),tip=$("#mapTip");
   cv.addEventListener("mousemove",e=>{
-    const rect=cv.getBoundingClientRect(), mx=e.clientX-rect.left, my=e.clientY-rect.top;
-    const hit=mapHit(mx,my);
+    const rect=cv.getBoundingClientRect(),mx=e.clientX-rect.left,my=e.clientY-rect.top,hit=mapHit(mx,my);
     if(hit){const p=props.find(x=>x.id===hit.id);cv.style.cursor="pointer";
-      tip.innerHTML=`<b>${esc(p.street)}</b><div class="mt-sub">${esc(subAddr(p))}</div><div class="mt-sub">${esc(p.owner)} · age ${p.ownerAge} · ${p.units} units</div><div class="mt-sub">${p.stage} · ${fmtK(p.value)}</div>`;
-      tip.style.opacity="1"; let tx=mx+14, ty=my+14; if(tx>rect.width-230)tx=mx-234; tip.style.left=tx+"px"; tip.style.top=ty+"px";
-    } else {cv.style.cursor="default"; tip.style.opacity="0";}
+      tip.innerHTML=`<b>${esc(p.street)}</b><div class="mt-sub">${esc(subAddr(p))}</div><div class="mt-sub">${esc(p.owner)} · age ${p.ownerAge} · ${p.units} units</div><div class="mt-sub">${p.stage} · ${fmtK(p.value)}</div><div class="mt-hint">Click to open →</div>`;
+      tip.style.opacity="1";let tx=mx+14,ty=my+14;if(tx>rect.width-240)tx=mx-244;if(ty>rect.height-110)ty=my-110;tip.style.left=tx+"px";tip.style.top=ty+"px";
+    }else{cv.style.cursor="default";tip.style.opacity="0";}
   });
   cv.addEventListener("mouseleave",()=>{tip.style.opacity="0";});
-  cv.addEventListener("click",e=>{const rect=cv.getBoundingClientRect();const hit=mapHit(e.clientX-rect.left,e.clientY-rect.top);if(hit)openDetail(hit.id);});
+  cv.addEventListener("click",e=>{const rect=cv.getBoundingClientRect(),hit=mapHit(e.clientX-rect.left,e.clientY-rect.top);if(hit)openDetail(hit.id);});
 })();
 window.addEventListener("resize",()=>{if($("#view-map").classList.contains("active"))renderMap();});
 
 /* ===== kanban ===== */
 function renderKanban(){
-  $("#kanban").innerHTML=STAGES.map(s=>{
-    const items=props.filter(p=>p.stage===s.key);
-    return `<div class="col" data-stage="${s.key}"><div class="col__head"><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${s.color}"></span>${s.key}</span><span class="cnt tnum">${items.length}</span></div><div class="col__body">${items.map(p=>`<div class="kcard" draggable="true" data-id="${p.id}" onclick="openDetail(${p.id})"><div class="kcard__addr">${esc(p.street)}</div><div class="kcard__meta">${esc(subAddr(p))} · ${p.units} units</div><div class="kcard__foot"><span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}" style="padding:2px 8px;font-size:11.5px">age ${p.ownerAge}</span><span style="font-weight:700;font-size:12.5px;color:var(--gold2)" class="tnum">${fmtK(p.value)}</span></div></div>`).join("")||'<div style="color:var(--faint);font-size:12px;text-align:center;padding:16px 0">Drop here</div>'}</div></div>`;
-  }).join("");
+  $("#kanban").innerHTML=STAGES.map(s=>{const items=props.filter(p=>p.stage===s.key);return `<div class="col" data-stage="${s.key}"><div class="col__head"><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${s.color}"></span>${s.key}</span><span class="cnt tnum">${items.length}</span></div><div class="col__body">${items.map(p=>`<div class="kcard" draggable="true" data-id="${p.id}" onclick="openDetail(${p.id})"><div class="kcard__addr">${esc(p.street)}</div><div class="kcard__meta">${esc(subAddr(p))} · ${p.units} units</div><div class="kcard__foot"><span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}" style="padding:2px 8px;font-size:11.5px">age ${p.ownerAge}</span><span style="font-weight:700;font-size:12.5px;color:var(--gold2)" class="tnum">${fmtK(p.value)}</span></div></div>`).join("")||'<div style="color:var(--faint);font-size:12px;text-align:center;padding:16px 0">Drop here</div>'}</div></div>`;}).join("");
   let dragId=null;
   $$(".kcard").forEach(c=>{c.addEventListener("dragstart",e=>{dragId=+c.dataset.id;c.classList.add("dragging");e.stopPropagation();});c.addEventListener("dragend",()=>c.classList.remove("dragging"));});
   $$(".col").forEach(col=>{col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("dragover");});col.addEventListener("dragleave",()=>col.classList.remove("dragover"));col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("dragover");const p=props.find(x=>x.id===dragId);if(p&&p.stage!==col.dataset.stage){p.stage=col.dataset.stage;save();renderKanban();toast("Moved to "+col.dataset.stage);}});});
@@ -831,7 +811,7 @@ function renderSources(){
   $("#sourcesBody").innerHTML=`
     <p>Owner age isn't in listing feeds — you build it from lawful sources. Aim for a short, high-conviction list, not a mass blast.</p>
     <ol>
-      <li><b>County assessor / PVA records.</b> Pull apartment-zoned parcels (5+ units): owner of record, mailing address, deed date, last sale. This app already attributes each record to the right office (Hamilton County Auditor, Kenton &amp; Campbell County PVA).</li>
+      <li><b>County assessor / appraiser records.</b> Pull apartment-zoned parcels (5+ units): owner of record, mailing address, deed date, last sale. This app attributes each record to the right office (Cook County Assessor, LA County Assessor, NYC Dept. of Finance, and so on) — click <b>Owner records</b> on any property to jump straight there.</li>
       <li><b>Long tenure ≈ older owner.</b> A deed recorded 25–40 years ago strongly signals an owner now in their 60s–80s. Sort by deed year first, then confirm age.</li>
       <li><b>Licensed skip-tracing.</b> TLO, IDI/LexisNexis, PropStream or BatchLeads append age &amp; phone from lawful sources — use only providers whose terms permit real-estate outreach.</li>
       <li><b>Mom-and-pop filters.</b> Individuals and family trusts (not LLCs/REITs), one or two buildings, self-managed — these owners sell off-market far more often.</li>
@@ -846,11 +826,19 @@ window.openDetail=function(id){
   const p=props.find(x=>x.id===id); if(!p)return; currentId=id;
   $("#dTitle").innerHTML=`${esc(p.street)} ${vChip(p)}`;
   $("#dSub").textContent=subAddr(p);
+  const tel=telUrl(p);
+  $("#dActions").innerHTML=`
+    <a class="btn btn--primary btn--sm" href="${gmapsUrl(p)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Open in Maps</a>
+    <a class="btn btn--ghost btn--sm" href="${streetviewUrl(p)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/></svg>Street View</a>
+    <a class="btn btn--ghost btn--sm" href="${recordsUrl(p)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>Owner records</a>
+    ${tel?`<a class="btn btn--gold btn--sm" href="${tel}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>Call ${esc(p.phone)}</a>`:''}
+    <button class="btn btn--ghost btn--sm" type="button" onclick="copyAddr(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy address</button>
+    <button class="btn btn--ghost btn--sm" type="button" onclick="showOnMap(${p.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3 3 6v15l6-3 6 3 6-3V3l-6 3-6-3Z"/><path d="M9 3v15M15 6v15"/></svg>Show on map</button>`;
   const contacts=(p.contacts||[]).slice().sort((a,b)=>a.date<b.date?1:-1);
   $("#detailGrid").innerHTML=`
     <div class="dsection">Location &amp; provenance</div>
-    ${df("Coordinates",`<span class="tnum">${p.lat?.toFixed(4)}, ${p.lng?.toFixed(4)}</span>`)}
-    ${df("ZIP",p.zip||'—')}
+    ${df("Full address",esc(addrStr(p)))}
+    ${df("Coordinates",p.lat?`<span class="tnum">${(+p.lat).toFixed(4)}, ${(+p.lng).toFixed(4)}</span>`:'—')}
     ${df("Source of record",esc(p.source||'—'))}
     ${df("Verification",p.verified?`<span style="color:var(--cyan)">Verified${p.lastVerified?' · '+p.lastVerified:''}</span>`:`<span style="color:var(--amber)">Unverified — confirm parcel</span>`)}
     ${df("Year built",p.yearBuilt||'—')}
@@ -862,7 +850,7 @@ window.openDetail=function(id){
     ${df("Annual NOI",p.noi?fmt$(p.noi):'—')}
     ${df("Market status",`<span class="badge ${p.status==='Off-Market'?'b-off':p.status==='Pre-Market'?'b-pre':'b-listed'}">${p.status}</span>`)}
     ${df("Opportunity score",`<span style="color:var(--gold2)">${oppScore(p)}</span> <small style="color:var(--faint);font-weight:400">/100</small>`)}
-    <div class="dsection">Ownership</div>
+    <div class="dsection">Ownership <span style="color:var(--amber);font-weight:600;text-transform:none;letter-spacing:0">· confirm via Owner records before calling</span></div>
     ${df("Owner of record",esc(p.owner))}
     ${df("Entity type",p.entity)}
     ${df("Owner age",`<span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}">${p.ownerAge}${p.ownerAge>=65?' · senior':''}</span>`)}
@@ -877,17 +865,17 @@ window.openDetail=function(id){
       <div class="field"><label>Date</label><input type="date" id="logDate" /></div>
       <div class="field" style="flex:1"><label>Note</label><input type="text" id="logNote" placeholder="What happened / next step…" /></div>
       <button class="btn btn--ghost btn--sm" id="logAdd" type="button">Log contact</button>
-    </div>
-  `;
+    </div>`;
   const ld=$("#logDate"); if(ld) ld.value=new Date().toISOString().slice(0,10);
-  $("#logAdd").onclick=()=>{
-    const note=$("#logNote").value.trim(); if(!note){toast("Add a note first");return;}
-    p.contacts=p.contacts||[]; p.contacts.push({date:$("#logDate").value||new Date().toISOString().slice(0,10),type:$("#logType").value,note});
-    save(); openDetail(id); toast("Contact logged");
-  };
+  $("#logAdd").onclick=()=>{const note=$("#logNote").value.trim();if(!note){toast("Add a note first");return;}p.contacts=p.contacts||[];p.contacts.push({date:$("#logDate").value||new Date().toISOString().slice(0,10),type:$("#logType").value,note});save();openDetail(id);toast("Contact logged");};
   $("#detailOverlay").classList.add("open");
 };
 function df(k,v){return `<div class="dfield"><div class="k">${k}</div><div class="v">${v}</div></div>`;}
+window.copyAddr=function(id){const p=props.find(x=>x.id===id);if(!p)return;const t=addrStr(p);const done=()=>toast("Address copied");
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done).catch(fb);}else fb();
+  function fb(){const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done();}catch(e){toast("Copy failed");}document.body.removeChild(ta);}
+};
+window.showOnMap=function(id){highlightId=id;$("#detailOverlay").classList.remove("open");go("map");toast("Highlighted on map");};
 $("#editBtn").addEventListener("click",()=>{$("#detailOverlay").classList.remove("open");openForm(currentId);});
 $("#delBtn").addEventListener("click",()=>{if(confirm("Delete this property?")){props=props.filter(p=>p.id!==currentId);save();$("#detailOverlay").classList.remove("open");refreshCities();refreshActive();toast("Property deleted");}});
 
@@ -895,7 +883,7 @@ $("#delBtn").addEventListener("click",()=>{if(confirm("Delete this property?")){
 function openForm(id){
   const editing=id!=null;
   $("#formTitle").textContent=editing?"Edit Property":"Add Property";
-  const p=editing?props.find(x=>x.id===id):{street:"",neighborhood:"",city:"Cincinnati",state:"OH",zip:"",lat:"",lng:"",units:8,yearBuilt:1910,value:850000,noi:58000,owner:"",entity:"Individual",ownerAge:72,deedYear:2000,phone:"",status:"Off-Market",stage:"New Lead",source:"",verified:false,notes:""};
+  const p=editing?props.find(x=>x.id===id):{street:"",neighborhood:"",city:"",state:"",zip:"",lat:"",lng:"",units:8,yearBuilt:1920,value:1200000,noi:72000,owner:"",entity:"Individual",ownerAge:72,deedYear:2000,phone:"",status:"Off-Market",stage:"New Lead",source:"",verified:false,notes:""};
   const set=(id2,v)=>{$("#"+id2).value=(v==null?"":v);};
   set("fId",editing?id:"");set("f_street",p.street);set("f_neighborhood",p.neighborhood);set("f_zip",p.zip);set("f_city",p.city);set("f_state",p.state);
   set("f_lat",p.lat);set("f_lng",p.lng);set("f_units",p.units);set("f_yearBuilt",p.yearBuilt);set("f_value",p.value);set("f_noi",p.noi);
@@ -911,16 +899,27 @@ $("#propForm").addEventListener("submit",e=>{
   const num=id2=>{const v=parseFloat($("#"+id2).value);return isNaN(v)?"":v;};
   const data={
     street:$("#f_street").value.trim(),neighborhood:$("#f_neighborhood").value.trim(),zip:$("#f_zip").value.trim(),
-    city:$("#f_city").value.trim(),state:$("#f_state").value.trim().toUpperCase(),
-    lat:num("f_lat"),lng:num("f_lng"),units:+$("#f_units").value,yearBuilt:+$("#f_yearBuilt").value||null,
-    value:+$("#f_value").value,noi:+$("#f_noi").value||0,owner:$("#f_owner").value.trim(),entity:$("#f_entity").value,
-    ownerAge:+$("#f_ownerAge").value,deedYear:+$("#f_deedYear").value||null,phone:$("#f_phone").value.trim(),
-    status:$("#f_status").value,stage:$("#f_stage").value,source:$("#f_source").value.trim(),
-    verified:$("#f_verified").checked, lastVerified:$("#f_verified").checked?new Date().toISOString().slice(0,10):"",
+    city:$("#f_city").value.trim(),state:$("#f_state").value.trim().toUpperCase(),lat:num("f_lat"),lng:num("f_lng"),
+    units:+$("#f_units").value,yearBuilt:+$("#f_yearBuilt").value||null,value:+$("#f_value").value,noi:+$("#f_noi").value||0,
+    owner:$("#f_owner").value.trim(),entity:$("#f_entity").value,ownerAge:+$("#f_ownerAge").value,deedYear:+$("#f_deedYear").value||null,
+    phone:$("#f_phone").value.trim(),status:$("#f_status").value,stage:$("#f_stage").value,source:$("#f_source").value.trim(),
+    verified:$("#f_verified").checked,lastVerified:$("#f_verified").checked?new Date().toISOString().slice(0,10):"",
   };
-  if(id){const p=props.find(x=>x.id===+id);const kept={contacts:p.contacts,notes:p.notes,deferred:p.deferred};Object.assign(p,data,{notes:$("#f_notes").value.trim(),contacts:p.contacts||[]});toast("Property updated");}
+  if(id){const p=props.find(x=>x.id===+id);Object.assign(p,data,{notes:$("#f_notes").value.trim(),contacts:p.contacts||[]});toast("Property updated");}
   else{data.id=Math.max(0,...props.map(p=>p.id))+1;data.notes=$("#f_notes").value.trim();data.contacts=[];props.unshift(data);toast("Property added");}
   save();refreshCities();$("#formOverlay").classList.remove("open");refreshActive();
+});
+$("#geocodeBtn").addEventListener("click",async()=>{
+  const q=[$("#f_street").value,$("#f_city").value,$("#f_state").value,$("#f_zip").value].map(s=>s.trim()).filter(Boolean).join(", ");
+  if(!q){toast("Enter an address first");return;}
+  const btn=$("#geocodeBtn"),old=btn.innerHTML;btn.disabled=true;btn.textContent="Locating…";
+  try{
+    const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q="+encodeURIComponent(q),{headers:{Accept:"application/json"}});
+    const j=await r.json();
+    if(j&&j[0]){$("#f_lat").value=(+j[0].lat).toFixed(5);$("#f_lng").value=(+j[0].lon).toFixed(5);toast("Address found & pinned");}
+    else toast("Address not found — check spelling");
+  }catch(err){toast("Geocoding needs network — use the downloadable version");}
+  btn.disabled=false;btn.innerHTML=old;
 });
 $$("[data-close]").forEach(b=>b.addEventListener("click",()=>{$("#formOverlay").classList.remove("open");$("#detailOverlay").classList.remove("open");}));
 $$(".overlay").forEach(o=>o.addEventListener("click",e=>{if(e.target===o)o.classList.remove("open");}));
@@ -931,33 +930,20 @@ const CSV_COLS=["street","neighborhood","city","state","zip","lat","lng","units"
 $("#exportBtn").addEventListener("click",()=>{
   const rows=currentRows();
   const csv=[CSV_COLS.join(",")].concat(rows.map(p=>CSV_COLS.map(c=>`"${String(p[c]??"").replace(/"/g,'""')}"`).join(","))).join("\n");
-  const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="silverkey-leads.csv";a.click();toast("Exported "+rows.length+" leads");
+  const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="silverkey-leads.csv";a.click();toast("Exported "+rows.length+" leads");
 });
 $("#importBtn").addEventListener("click",()=>$("#csvFile").click());
 $("#importBtn2").addEventListener("click",()=>{go("properties");setTimeout(()=>$("#csvFile").click(),60);});
-$("#csvFile").addEventListener("change",e=>{
-  const file=e.target.files[0]; if(!file)return;
-  const rd=new FileReader();
-  rd.onload=()=>{try{const added=parseCSV(rd.result);if(added>0){save();refreshCities();refreshActive();toast("Imported "+added+" propert"+(added===1?"y":"ies"));}else toast("No valid rows found");}catch(err){toast("Import failed — check CSV format");}e.target.value="";};
-  rd.readAsText(file);
-});
+$("#csvFile").addEventListener("change",e=>{const file=e.target.files[0];if(!file)return;const rd=new FileReader();rd.onload=()=>{try{const n=parseCSV(rd.result);if(n>0){save();refreshCities();refreshActive();toast("Imported "+n+" propert"+(n===1?"y":"ies"));}else toast("No valid rows found");}catch(err){toast("Import failed — check CSV format");}e.target.value="";};rd.readAsText(file);});
 function parseCSV(text){
-  const lines=text.replace(/\r/g,"").split("\n").filter(l=>l.trim());
-  if(!lines.length)return 0;
+  const lines=text.replace(/\r/g,"").split("\n").filter(l=>l.trim()); if(!lines.length)return 0;
   const parseLine=l=>{const out=[];let cur="",q=false;for(let i=0;i<l.length;i++){const ch=l[i];if(q){if(ch==='"'){if(l[i+1]==='"'){cur+='"';i++;}else q=false;}else cur+=ch;}else{if(ch==='"')q=true;else if(ch===","){out.push(cur);cur="";}else cur+=ch;}}out.push(cur);return out;};
   const header=parseLine(lines[0]).map(h=>h.trim());
-  let nextId=Math.max(0,...props.map(p=>p.id))+1, added=0;
+  let nextId=Math.max(0,...props.map(p=>p.id))+1,added=0;
   for(let i=1;i<lines.length;i++){
-    const cells=parseLine(lines[i]); const row={}; header.forEach((h,j)=>row[h]=(cells[j]||"").trim());
+    const cells=parseLine(lines[i]),row={};header.forEach((h,j)=>row[h]=(cells[j]||"").trim());
     if(!row.street||!row.city)continue;
-    props.unshift({
-      id:nextId++,street:row.street,neighborhood:row.neighborhood||"",city:row.city,state:(row.state||"").toUpperCase(),zip:row.zip||"",
-      lat:parseFloat(row.lat)||"",lng:parseFloat(row.lng)||"",units:+row.units||1,yearBuilt:+row.yearBuilt||null,value:+row.value||0,noi:+row.noi||0,
-      owner:row.owner||"",entity:["Individual","Family Trust","LLC"].includes(row.entity)?row.entity:"Individual",ownerAge:+row.ownerAge||0,
-      deedYear:+row.deedYear||null,phone:row.phone||"",status:["Off-Market","Pre-Market","Listed"].includes(row.status)?row.status:"Off-Market",
-      stage:STAGES.some(s=>s.key===row.stage)?row.stage:"New Lead",verified:/^(true|yes|1)$/i.test(row.verified),
-      source:row.source||"",lastVerified:"",notes:row.notes||"",contacts:[],
-    });
+    props.unshift({id:nextId++,street:row.street,neighborhood:row.neighborhood||"",city:row.city,state:(row.state||"").toUpperCase(),zip:row.zip||"",lat:parseFloat(row.lat)||"",lng:parseFloat(row.lng)||"",units:+row.units||1,yearBuilt:+row.yearBuilt||null,value:+row.value||0,noi:+row.noi||0,owner:row.owner||"",entity:["Individual","Family Trust","LLC"].includes(row.entity)?row.entity:"Individual",ownerAge:+row.ownerAge||0,deedYear:+row.deedYear||null,phone:row.phone||"",status:["Off-Market","Pre-Market","Listed"].includes(row.status)?row.status:"Off-Market",stage:STAGES.some(s=>s.key===row.stage)?row.stage:"New Lead",verified:/^(true|yes|1)$/i.test(row.verified),source:row.source||"",lastVerified:"",notes:row.notes||"",contacts:[]});
     added++;
   }
   return added;

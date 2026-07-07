@@ -13,7 +13,8 @@
     <div class="top__in">
       <div class="logo"><span class="logo__m">🏢</span> Deal<b>Scout</b></div>
       <div class="top__tabs">
-        <button class="tab is-active" data-view="deals">Deals</button>
+        <button class="tab is-active" data-view="live">Live Listings</button>
+        <button class="tab" data-view="deals">Deal Board</button>
         <button class="tab" data-view="pipeline">Pipeline</button>
       </div>
       <div class="top__sp"></div>
@@ -23,7 +24,48 @@
 
   <!-- ============ DEALS ============ -->
   <main class="wrap">
-    <section class="view is-active" id="view-deals">
+    <!-- ============ LIVE LISTINGS ============ -->
+    <section class="view is-active" id="view-live">
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Live inventory · active listings · broker contact</span>
+          <h1>Search live listings</h1>
+          <p>Set your buy box and open the current for-sale results on Crexi &amp; LoopNet. Everything shown there is <strong>actively listed</strong>, and each listing page names the <strong>listing broker with a phone number and contact form</strong> — reach out directly.</p>
+        </div>
+      </div>
+
+      <div class="assume">
+        <div class="assume__row">
+          <div class="assume__title">Your buy box</div>
+          <div class="ctrl"><label for="lvCity">City <span class="muted">(optional)</span></label><input id="lvCity" placeholder="e.g. Houston" autocomplete="off" /></div>
+          <div class="ctrl"><label for="lvState">State</label><select id="lvState"></select></div>
+          <div class="ctrl"><label for="lvUnits">Min units</label>
+            <select id="lvUnits">
+              <option value="0">Any</option><option value="5" selected>5+</option>
+              <option value="10">10+</option><option value="20">20+</option><option value="50">50+</option>
+            </select>
+          </div>
+          <div class="ctrl"><label for="lvMax">Max price <span class="muted">(optional)</span></label><input id="lvMax" inputmode="numeric" placeholder="$3,000,000" /></div>
+          <div class="ctrl"><label>&nbsp;</label><button class="btn btn--brand" id="lvGo">Open live searches →</button></div>
+        </div>
+      </div>
+
+      <div id="lvResults" hidden>
+        <div class="lv-summary" id="lvSummary"></div>
+        <div class="src-grid" id="lvSrc"></div>
+        <p class="notice" style="margin-top:16px">
+          <span class="notice__i">✓</span>
+          <span>These open the marketplace's <b>live, active</b> inventory in a new tab. On any listing you like, scroll to the broker card for their <b>name, phone, and email</b> — or use the "Contact" button. Refine units/price on the site's own filters.</span>
+        </p>
+      </div>
+
+      <h3 class="mk-h">Jump straight into a top market</h3>
+      <p class="mk-sub">One click opens that metro's live multifamily inventory. 40 markets — thousands of active listings, each with broker contact.</p>
+      <div class="metro-grid" id="metroGrid"></div>
+    </section>
+
+    <!-- ============ DEAL BOARD ============ -->
+    <section class="view" id="view-deals">
       <div class="hero">
         <div class="hero__l">
           <span class="eyebrow">Multifamily acquisitions · 100+ listings · 23 states</span>

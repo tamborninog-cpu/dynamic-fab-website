@@ -130,6 +130,78 @@
   const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
+  /* ============ LIVE LISTINGS (Crexi / LoopNet / CityFeet / Showcase) ============ */
+  const STATES = [["AL","Alabama"],["AK","Alaska"],["AZ","Arizona"],["AR","Arkansas"],["CA","California"],["CO","Colorado"],["CT","Connecticut"],["DE","Delaware"],["FL","Florida"],["GA","Georgia"],["HI","Hawaii"],["ID","Idaho"],["IL","Illinois"],["IN","Indiana"],["IA","Iowa"],["KS","Kansas"],["KY","Kentucky"],["LA","Louisiana"],["ME","Maine"],["MD","Maryland"],["MA","Massachusetts"],["MI","Michigan"],["MN","Minnesota"],["MS","Mississippi"],["MO","Missouri"],["MT","Montana"],["NE","Nebraska"],["NV","Nevada"],["NH","New Hampshire"],["NJ","New Jersey"],["NM","New Mexico"],["NY","New York"],["NC","North Carolina"],["ND","North Dakota"],["OH","Ohio"],["OK","Oklahoma"],["OR","Oregon"],["PA","Pennsylvania"],["RI","Rhode Island"],["SC","South Carolina"],["SD","South Dakota"],["TN","Tennessee"],["TX","Texas"],["UT","Utah"],["VT","Vermont"],["VA","Virginia"],["WA","Washington"],["WV","West Virginia"],["WI","Wisconsin"],["WY","Wyoming"]];
+
+  // Top multifamily metros: [City, ST]
+  const METROS = [
+    ["Atlanta","GA"],["Austin","TX"],["Baltimore","MD"],["Birmingham","AL"],["Charlotte","NC"],
+    ["Chicago","IL"],["Cincinnati","OH"],["Cleveland","OH"],["Columbus","OH"],["Dallas","TX"],
+    ["Denver","CO"],["Detroit","MI"],["Fort Worth","TX"],["Houston","TX"],["Indianapolis","IN"],
+    ["Jacksonville","FL"],["Kansas City","MO"],["Las Vegas","NV"],["Los Angeles","CA"],["Louisville","KY"],
+    ["Memphis","TN"],["Miami","FL"],["Milwaukee","WI"],["Minneapolis","MN"],["Nashville","TN"],
+    ["New Orleans","LA"],["Oklahoma City","OK"],["Orlando","FL"],["Philadelphia","PA"],["Phoenix","AZ"],
+    ["Pittsburgh","PA"],["Portland","OR"],["Raleigh","NC"],["Sacramento","CA"],["San Antonio","TX"],
+    ["Seattle","WA"],["St. Louis","MO"],["Tampa","FL"],["Tucson","AZ"],["Tulsa","OK"]
+  ];
+
+  const hy = (s) => s.toLowerCase().replace(/\./g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""); // "St. Louis" -> "st-louis"
+  const us = (s) => s.replace(/\./g, "").trim().replace(/\s+/g, "_");                                     // "Kansas City" -> "Kansas_City"
+
+  function liveLinks(city, st, stateName) {
+    const c = (city || "").trim();
+    const stl = st.toLowerCase();
+    if (c) {
+      return [
+        ["Crexi",       "Largest CRE exchange — heavy multifamily, active only.", `https://www.crexi.com/properties/${st}/${us(c)}/Multifamily`],
+        ["LoopNet",     "The biggest CRE marketplace for apartment buildings.",   `https://www.loopnet.com/search/apartment-buildings/${hy(c)}-${stl}/for-sale/`],
+        ["CityFeet",    "Yardi-network apartment listings for sale.",             `https://www.cityfeet.com/cont/${hy(c)}-${stl}/apartment-buildings-for-sale`],
+        ["Showcase",    "CoStar's public marketplace — active listings.",         `https://www.showcase.com/${stl}/${hy(c)}/apartment-buildings/for-sale/`]
+      ];
+    }
+    return [
+      ["Crexi",     "Largest CRE exchange — heavy multifamily, active only.", `https://www.crexi.com/properties/${st}/Multifamily`],
+      ["LoopNet",   "The biggest CRE marketplace for apartment buildings.",   `https://www.loopnet.com/search/apartment-buildings/${stl}/for-sale/`],
+      ["CityFeet",  "Yardi-network apartment listings for sale.",             `https://www.cityfeet.com/cont/${hy(stateName)}/apartment-buildings-for-sale`],
+      ["Showcase",  "CoStar's public marketplace — active listings.",         `https://www.showcase.com/${stl}/apartment-buildings/for-sale/`]
+    ];
+  }
+
+  function renderLive() {
+    const city = $("lvCity").value.trim();
+    const st = $("lvState").value;
+    const stateName = (STATES.find((s) => s[0] === st) || [, ""])[1];
+    const units = $("lvUnits").value;
+    const max = num($("lvMax").value);
+    const links = liveLinks(city, st, stateName);
+    $("lvSrc").innerHTML = links.map(([name, desc, url]) => `
+      <a class="src" href="${esc(url)}" target="_blank" rel="noopener noreferrer">
+        <div class="src__top"><span class="src__name">${name}</span><span class="src__go">Open ↗</span></div>
+        <div class="src__desc">${desc}</div>
+        <div class="src__cta">Live active listings + broker contact</div>
+      </a>`).join("");
+    const where = city ? `${esc(city)}, ${st}` : stateName;
+    const bits = [`${units === "0" ? "any size" : units + "+ units"}`];
+    if (max) bits.push(`under ${money(max)}`);
+    $("lvSummary").innerHTML = `Live <b>multifamily for sale</b> in <b>${where}</b> · ${bits.join(" · ")}. Opens each marketplace's current inventory.`;
+    $("lvResults").hidden = false;
+  }
+
+  function renderMetros() {
+    const grid = $("metroGrid"); if (!grid) return;
+    grid.innerHTML = METROS.map(([city, st]) => {
+      const l = liveLinks(city, st, "");
+      const crexi = l[0][2], loop = l[1][2];
+      return `<div class="metro">
+        <div class="metro__name">${esc(city)}<span>${st}</span></div>
+        <div class="metro__links">
+          <a href="${esc(crexi)}" target="_blank" rel="noopener noreferrer">Crexi ↗</a>
+          <a href="${esc(loop)}" target="_blank" rel="noopener noreferrer">LoopNet ↗</a>
+        </div>
+      </div>`;
+    }).join("");
+  }
+
   /* ---- finance ---- */
   function pmt(P, ratePct, yrs) { const r = ratePct / 100 / 12, n = yrs * 12; if (n <= 0) return 0; return r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n)); }
   function remain(P, ratePct, yrs, months) { const r = ratePct / 100 / 12, n = yrs * 12, k = Math.min(months, n); if (r === 0) return Math.max(0, P - P / n * k); const m = pmt(P, ratePct, yrs); return Math.max(0, P * Math.pow(1 + r, k) - m * ((Math.pow(1 + r, k) - 1) / r)); }
@@ -427,9 +499,16 @@
 
   /* ---- init ---- */
   function init() {
-    // states present in data
+    // states present in data (Deal Board filter)
     const states = [...new Set(DEALS.map((d) => d.state))].sort();
     $("fState").innerHTML = `<option value="ALL">All states</option>` + states.map((s) => `<option value="${s}">${s}</option>`).join("");
+
+    // Live Listings: all 50 states + market browser
+    $("lvState").innerHTML = STATES.map(([a, n]) => `<option value="${a}">${n}</option>`).join("");
+    $("lvState").value = "TX";
+    $("lvGo").addEventListener("click", renderLive);
+    ["lvCity", "lvMax"].forEach((id) => $(id).addEventListener("keydown", (e) => { if (e.key === "Enter") renderLive(); }));
+    renderMetros();
 
     // re-score on assumption/filter change
     ["gDown", "gRate", "gAmort", "gClosing", "gExp", "fState", "fUnits", "fMax", "fMinScore"].forEach((id) => {

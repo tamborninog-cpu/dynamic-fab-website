@@ -488,7 +488,9 @@
           <span class="lb-label">Live active listings</span>
           <a class="btn btn--primary btn--sm" id="liveLoopnet" target="_blank" rel="noopener">LoopNet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
           <a class="btn btn--ghost btn--sm" id="liveCrexi" target="_blank" rel="noopener">Crexi <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
-          <a class="btn btn--ghost btn--sm" id="liveGoogle" target="_blank" rel="noopener">Web search <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn--ghost btn--sm" id="liveZillow" target="_blank" rel="noopener">Zillow <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn--ghost btn--sm" id="liveRedfin" target="_blank" rel="noopener">Redfin <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn--ghost btn--sm" id="liveRealtor" target="_blank" rel="noopener">Realtor <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
           <button class="btn btn--gold btn--sm" id="omAdd" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>Add listing</button>
         </div>
         <div class="filters">
@@ -1212,9 +1214,12 @@ function omRows(){
 function renderOnMarket(){
   // live marketplace search links (respect the state filter)
   const st=omFilters.state;
+  const siteSearch=site=>`https://www.google.com/search?q=`+encodeURIComponent(`site:${site} apartment building multifamily for sale ${st||"United States"}`);
   $("#liveLoopnet").href = st?`https://www.loopnet.com/search/apartment-buildings/${st.toLowerCase()}/for-sale/`:`https://www.loopnet.com/search/apartment-buildings/for-sale/`;
   $("#liveCrexi").href = `https://www.crexi.com/properties?types%5B%5D=Multifamily`+(st?`&placeName=${encodeURIComponent(st)}`:"");
-  $("#liveGoogle").href = `https://www.google.com/search?q=`+encodeURIComponent(`apartment building 10+ units for sale ${st||"United States"}`);
+  $("#liveZillow").href = siteSearch("zillow.com");
+  $("#liveRedfin").href = siteSearch("redfin.com");
+  $("#liveRealtor").href = siteSearch("realtor.com");
   $("#omThead").innerHTML=OM_COLS.map(c=>`<th>${c.l}</th>`).join("");
   const rows=omRows();
   $("#omTbody").innerHTML=rows.length?rows.map(l=>{

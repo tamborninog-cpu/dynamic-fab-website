@@ -24,14 +24,18 @@
   <!-- ============ DEALS ============ -->
   <main class="wrap">
     <section class="view is-active" id="view-deals">
-      <div class="pagehead">
-        <h1>Ranked multifamily deals</h1>
-        <p>Every property below is scored by the same underwriting engine and ranked strongest-first. Adjust your financing assumptions and the whole board re-scores instantly. Click any row to underwrite it.</p>
+      <div class="hero">
+        <div class="hero__l">
+          <span class="eyebrow">Multifamily acquisitions · 5–50 units</span>
+          <h1>Ranked deal board</h1>
+          <p>Every property is scored by one underwriting engine and ranked strongest-first. Tune your financing once and the whole board re-scores live. Click a row to underwrite it.</p>
+        </div>
+        <div class="kpis" id="kpis"></div>
       </div>
 
       <div class="notice">
-        <span>ℹ️</span>
-        <div><b>These are real leads gathered from live marketplaces</b> (LoopNet, Crexi, CityFeet, Showcase) — but they're unverified snapshots. Confirm price, units, and cap rate on the source before acting. Want auto-updating verified data? A RentCast API key turns on a live feed.</div>
+        <span class="notice__i">ℹ</span>
+        <div><b>Real leads gathered from live marketplaces</b> (LoopNet, Crexi, CityFeet, Showcase) — unverified snapshots. Confirm price, units &amp; cap at the source before acting. Want auto-updating verified data? A RentCast API key turns on a live feed.</div>
       </div>
 
       <!-- Financing assumptions (re-scores everything) -->
@@ -78,6 +82,16 @@
         </div>
       </div>
 
+      <div class="list-head">
+        <span></span>
+        <span>Property</span>
+        <span class="lh-r">Price</span>
+        <span class="lh-r">Cap</span>
+        <span class="lh-r">$/unit</span>
+        <span class="lh-r">Cash flow/yr</span>
+        <span>Deal score</span>
+        <span></span>
+      </div>
       <div class="list" id="list"></div>
     </section>
 

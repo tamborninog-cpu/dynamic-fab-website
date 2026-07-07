@@ -111,7 +111,24 @@
     $("count").innerHTML = `<b>${rows.length}</b> deal${rows.length === 1 ? "" : "s"} ranked`;
     $("list").innerHTML = rows.map((r, i) => propRow(r.d, r.u, i + 1)).join("") ||
       `<div class="empty" style="padding:40px 0">No deals match these filters.</div>`;
+    renderKPIs(rows);
     wireRows();
+  }
+
+  function renderKPIs(rows) {
+    const el = $("kpis"); if (!el) return;
+    if (!rows.length) { el.innerHTML = ""; return; }
+    const n = rows.length;
+    const avgCap = rows.reduce((s, r) => s + r.d.cap, 0) / n;
+    const avgScore = Math.round(rows.reduce((s, r) => s + r.u.total, 0) / n);
+    const totVal = rows.reduce((s, r) => s + r.d.price, 0);
+    const strong = rows.filter((r) => r.u.total >= 65).length;
+    const kpi = (label, val, sub) => `<div class="kpi"><span class="kpi__k">${label}</span><strong class="kpi__v tnum">${val}</strong><span class="kpi__s">${sub}</span></div>`;
+    el.innerHTML =
+      kpi("Deals", n, `${strong} strong`) +
+      kpi("Avg cap", pct(avgCap, 1), "on listed") +
+      kpi("Avg score", avgScore, gradeOf(avgScore).t) +
+      kpi("Total value", totVal >= 1e6 ? "$" + (totVal / 1e6).toFixed(1) + "M" : money(totVal), "combined");
   }
 
   function propRow(d, u, rank) {
@@ -120,7 +137,7 @@
     return `
       <div class="prop ${g.c}" data-id="${d.id}">
         <div class="prop__row">
-          <div class="rank ${rank <= 3 ? "top" : ""}">${rank}</div>
+          <div class="rank ${rank <= 3 ? "r" + rank : ""}">${rank}</div>
           <div class="prop__id">
             <div class="nm">${esc(d.addr)}</div>
             <div class="loc">${esc(d.city)}, ${d.state} · ${d.units} units</div>
@@ -130,13 +147,13 @@
           <div class="cell"><span class="k">$/unit</span><span class="v tnum">${money(u.ppu)}</span></div>
           <div class="cell"><span class="k">Cash flow/yr</span><span class="v tnum ${cfCls}">${money(u.cf)}</span></div>
           <div class="score">
-            <div class="score__num tnum">${u.total}</div>
+            <div class="gauge" style="--p:${u.total}"><span class="tnum">${u.total}</span></div>
             <div class="score__meta">
-              <span class="score__grade">${g.l} · ${g.t}</span>
-              <span class="score__bar"><i style="width:${u.total}%"></i></span>
+              <span class="score__grade">${g.l}</span>
+              <span class="score__sub">${g.t}</span>
             </div>
           </div>
-          <div class="chev">▶</div>
+          <div class="chev">›</div>
         </div>
         <div class="prop__detail">${detail(d, u)}</div>
       </div>`;

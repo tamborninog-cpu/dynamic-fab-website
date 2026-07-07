@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SilverKey — Off-Market Apartment &amp; Senior-Owner Lead Tracker</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#111832; --panel:#151d3b; --panel2:#1b2547;
+    --line:#26325e; --line2:#33427a;
+    --txt:#e8ecf8; --muted:#93a0c9; --faint:#657097;
+    --brand:#5b8cff; --brand2:#7aa2ff; --gold:#e5b567; --gold2:#f2cd85;
+    --green:#3ecf8e; --amber:#f5a623; --red:#ff5c6c; --purple:#a78bfa;
+    --radius:14px; --shadow:0 12px 40px rgba(0,0,0,.45);
+    --font:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--font); background:radial-gradient(1200px 700px at 80% -10%,#182247 0%,var(--bg) 55%);
+    color:var(--txt); -webkit-font-smoothing:antialiased; overflow:hidden;
+  }
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-thumb{background:#2a3766;border-radius:20px}
+  ::-webkit-scrollbar-track{background:transparent}
+
+  .app{display:grid;grid-template-columns:250px 1fr;height:100vh}
+
+  /* ---------- Sidebar ---------- */
+  .side{background:linear-gradient(180deg,#0e1530,#0b1020);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:22px 16px}
+  .brand{display:flex;align-items:center;gap:11px;padding:6px 8px 22px}
+  .brand__logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--gold),#b98529);display:grid;place-items:center;box-shadow:0 6px 18px rgba(229,181,103,.35)}
+  .brand__logo svg{width:22px;height:22px}
+  .brand__name{font-weight:800;font-size:17px;letter-spacing:.3px}
+  .brand__sub{font-size:10.5px;color:var(--muted);letter-spacing:1.4px;text-transform:uppercase;font-weight:600}
+  .nav{display:flex;flex-direction:column;gap:3px;margin-top:6px}
+  .nav__item{display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:10px;color:var(--muted);font-weight:600;font-size:14px;cursor:pointer;border:1px solid transparent;transition:.15s}
+  .nav__item svg{width:18px;height:18px;flex:none}
+  .nav__item:hover{background:var(--panel);color:var(--txt)}
+  .nav__item.active{background:linear-gradient(135deg,rgba(91,140,255,.18),rgba(122,162,255,.06));color:#fff;border-color:var(--line2)}
+  .nav__item.active svg{color:var(--brand2)}
+  .side__foot{margin-top:auto;padding:14px 12px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.6}
+  .side__foot b{color:var(--muted)}
+
+  /* ---------- Main ---------- */
+  .main{overflow:hidden;display:flex;flex-direction:column}
+  .topbar{display:flex;align-items:center;gap:16px;padding:16px 26px;border-bottom:1px solid var(--line);background:rgba(11,16,32,.6);backdrop-filter:blur(8px)}
+  .topbar h1{font-size:19px;font-weight:800;letter-spacing:.2px}
+  .topbar h1 span{color:var(--muted);font-weight:500;font-size:13px;display:block;margin-top:2px}
+  .search{margin-left:auto;position:relative}
+  .search input{width:300px;background:var(--panel);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:10px 12px 10px 38px;font-size:13.5px;font-family:var(--font)}
+  .search input:focus{outline:none;border-color:var(--brand)}
+  .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--faint)}
+  .btn{border:none;cursor:pointer;font-family:var(--font);font-weight:700;font-size:13.5px;border-radius:10px;padding:10px 16px;display:inline-flex;align-items:center;gap:8px;transition:.15s;white-space:nowrap}
+  .btn svg{width:16px;height:16px}
+  .btn--primary{background:linear-gradient(135deg,var(--brand),#3f6fe0);color:#fff;box-shadow:0 6px 18px rgba(63,111,224,.4)}
+  .btn--primary:hover{transform:translateY(-1px)}
+  .btn--gold{background:linear-gradient(135deg,var(--gold),#c8923a);color:#231a05}
+  .btn--ghost{background:var(--panel);color:var(--txt);border:1px solid var(--line)}
+  .btn--ghost:hover{border-color:var(--line2)}
+  .btn--sm{padding:7px 12px;font-size:12.5px}
+
+  .content{flex:1;overflow-y:auto;padding:24px 26px 60px}
+  .view{display:none;animation:fade .3s ease}
+  .view.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- KPI cards ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-bottom:24px}
+  .kpi{background:linear-gradient(160deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;position:relative;overflow:hidden}
+  .kpi::after{content:"";position:absolute;right:-30px;top:-30px;width:90px;height:90px;border-radius:50%;background:radial-gradient(circle,rgba(91,140,255,.18),transparent 70%)}
+  .kpi__label{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.4px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+  .kpi__label svg{width:15px;height:15px;color:var(--brand2)}
+  .kpi__val{font-size:30px;font-weight:800;margin-top:10px;letter-spacing:-.5px}
+  .kpi__val small{font-size:15px;color:var(--muted);font-weight:600}
+  .kpi__trend{font-size:12px;margin-top:6px;color:var(--green);font-weight:600}
+  .kpi--gold .kpi__val{color:var(--gold2)}
+  .kpi--gold::after{background:radial-gradient(circle,rgba(229,181,103,.2),transparent 70%)}
+
+  /* ---------- Panels ---------- */
+  .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:20px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .card__head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+  .card__title{font-size:15px;font-weight:700}
+  .card__title small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:2px}
+
+  /* bar chart */
+  .bars{display:flex;align-items:flex-end;gap:14px;height:180px;padding-top:10px}
+  .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+  .bar__fill{width:100%;max-width:46px;background:linear-gradient(180deg,var(--brand2),var(--brand));border-radius:8px 8px 4px 4px;position:relative;transition:height .8s cubic-bezier(.2,.8,.2,1)}
+  .bar__fill span{position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:700;color:var(--txt)}
+  .bar__lbl{font-size:11px;color:var(--muted);text-align:center;font-weight:600}
+
+  /* pipeline mini */
+  .pipe-mini{display:flex;flex-direction:column;gap:12px}
+  .pipe-row{display:flex;align-items:center;gap:12px}
+  .pipe-row__name{width:98px;font-size:12.5px;color:var(--muted);font-weight:600}
+  .pipe-row__track{flex:1;height:10px;background:var(--bg2);border-radius:20px;overflow:hidden}
+  .pipe-row__bar{height:100%;border-radius:20px;transition:width .8s}
+  .pipe-row__n{width:26px;text-align:right;font-weight:700;font-size:13px}
+
+  /* ---------- Filters ---------- */
+  .filters{display:flex;flex-wrap:wrap;align-items:flex-end;gap:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:18px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.4px;text-transform:uppercase}
+  .field select,.field input{background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:9px;padding:9px 11px;font-size:13px;font-family:var(--font)}
+  .field select:focus,.field input:focus{outline:none;border-color:var(--brand)}
+  .agebox{display:flex;align-items:center;gap:10px}
+  .agebox input[type=range]{width:150px;accent-color:var(--gold)}
+  .agebox .agev{font-weight:800;color:var(--gold2);font-size:16px;min-width:46px}
+  .filters__spacer{margin-left:auto;display:flex;gap:10px;align-items:flex-end}
+
+  /* ---------- Table ---------- */
+  .tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  thead th{text-align:left;padding:13px 16px;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);background:var(--bg2);font-weight:700;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
+  thead th:hover{color:var(--txt)}
+  thead th .arr{opacity:.4;font-size:10px}
+  tbody td{padding:13px 16px;border-bottom:1px solid rgba(38,50,94,.5);vertical-align:middle}
+  tbody tr{transition:.12s;cursor:pointer}
+  tbody tr:hover{background:var(--panel2)}
+  tbody tr:last-child td{border-bottom:none}
+  .addr{font-weight:700;color:#fff}
+  .addr small{display:block;color:var(--muted);font-weight:500;font-size:12px;margin-top:1px}
+  .age-pill{display:inline-flex;align-items:center;gap:5px;font-weight:800;padding:3px 9px;border-radius:20px;font-size:12.5px}
+  .age-65{background:rgba(229,181,103,.16);color:var(--gold2);border:1px solid rgba(229,181,103,.35)}
+  .age-under{background:rgba(147,160,201,.12);color:var(--muted)}
+  .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.2px}
+  .b-off{background:rgba(62,207,142,.15);color:var(--green);border:1px solid rgba(62,207,142,.3)}
+  .b-pre{background:rgba(245,166,35,.15);color:var(--amber);border:1px solid rgba(245,166,35,.3)}
+  .b-listed{background:rgba(255,92,108,.13);color:var(--red);border:1px solid rgba(255,92,108,.3)}
+  .stage-dot{display:inline-flex;align-items:center;gap:7px;font-weight:600}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .empty{padding:60px 20px;text-align:center;color:var(--muted)}
+  .empty svg{width:44px;height:44px;color:var(--faint);margin-bottom:12px}
+  .rowcount{padding:12px 16px;font-size:12.5px;color:var(--muted);background:var(--bg2);border-top:1px solid var(--line)}
+
+  /* ---------- Kanban ---------- */
+  .kanban{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;align-items:start}
+  .col{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:12px;min-height:200px}
+  .col__head{display:flex;align-items:center;justify-content:space-between;padding:4px 6px 12px;font-weight:700;font-size:13px;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .col__head .cnt{background:var(--bg2);color:var(--muted);padding:2px 8px;border-radius:20px;font-size:11.5px}
+  .col__body{display:flex;flex-direction:column;gap:10px;min-height:60px}
+  .kcard{background:linear-gradient(160deg,var(--panel2),var(--bg2));border:1px solid var(--line);border-radius:11px;padding:12px;cursor:grab;transition:.15s}
+  .kcard:hover{border-color:var(--line2);transform:translateY(-2px)}
+  .kcard.dragging{opacity:.4}
+  .kcard__addr{font-weight:700;font-size:13px}
+  .kcard__meta{font-size:11.5px;color:var(--muted);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .kcard__foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+  .col.dragover{outline:2px dashed var(--brand);outline-offset:-4px}
+  .mini-age{font-weight:800;font-size:11.5px}
+
+  /* ---------- Modal ---------- */
+  .overlay{position:fixed;inset:0;background:rgba(6,9,20,.72);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:60;padding:20px}
+  .overlay.open{display:flex}
+  .modal{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line2);border-radius:18px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow)}
+  .modal__head{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--panel);z-index:2}
+  .modal__head h2{font-size:18px;font-weight:800}
+  .modal__head p{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .xbtn{background:var(--bg2);border:1px solid var(--line);color:var(--muted);width:34px;height:34px;border-radius:9px;cursor:pointer;font-size:18px;line-height:1;display:grid;place-items:center}
+  .xbtn:hover{color:#fff;border-color:var(--line2)}
+  .form{padding:22px 24px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .form .full{grid-column:1/-1}
+  .form label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:6px;letter-spacing:.3px}
+  .form input,.form select,.form textarea{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--txt);border-radius:10px;padding:11px 12px;font-size:14px;font-family:var(--font)}
+  .form input:focus,.form select:focus,.form textarea:focus{outline:none;border-color:var(--brand)}
+  .form textarea{resize:vertical;min-height:70px}
+  .modal__foot{display:flex;gap:12px;justify-content:flex-end;padding:18px 24px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--panel)}
+  .hint{grid-column:1/-1;font-size:12px;color:var(--faint);background:rgba(229,181,103,.07);border:1px solid rgba(229,181,103,.2);border-radius:10px;padding:11px 13px;line-height:1.55;display:flex;gap:9px}
+  .hint svg{width:16px;height:16px;color:var(--gold);flex:none;margin-top:1px}
+
+  /* detail drawer */
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:22px 24px}
+  .dfield{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+  .dfield .k{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:700}
+  .dfield .v{font-size:15px;font-weight:700;margin-top:5px}
+  .dfield.full{grid-column:1/-1}
+  .dfield .v.notes{font-weight:400;font-size:13.5px;color:var(--txt);line-height:1.6}
+
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--panel2);border:1px solid var(--line2);color:#fff;padding:13px 20px;border-radius:12px;font-size:13.5px;font-weight:600;box-shadow:var(--shadow);opacity:0;transition:.3s;z-index:80;display:flex;align-items:center;gap:10px;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .toast svg{width:18px;height:18px;color:var(--green)}
+
+  .legal{margin-top:26px;font-size:11.5px;color:var(--faint);line-height:1.6;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .legal b{color:var(--muted)}
+
+  @media (max-width:1080px){.grid2{grid-template-columns:1fr}.kanban{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:860px){.app{grid-template-columns:1fr}.side{display:none}.search input{width:180px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="side">
+    <div class="brand">
+      <div class="brand__logo">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 21V9l9-6 9 6v12" stroke="#231a05" stroke-width="2" stroke-linejoin="round"/><rect x="8" y="13" width="3" height="3" fill="#231a05"/><rect x="13" y="13" width="3" height="3" fill="#231a05"/><path d="M10 21v-4h4v4" stroke="#231a05" stroke-width="2"/></svg>
+      </div>
+      <div>
+        <div class="brand__name">SilverKey</div>
+        <div class="brand__sub">Off-Market CRM</div>
+      </div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <div class="nav__item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+        Dashboard
+      </div>
+      <div class="nav__item" data-view="properties">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h1M9 13h1M14 9h1M14 13h1M9 21v-4h6v4"/></svg>
+        Properties
+      </div>
+      <div class="nav__item" data-view="pipeline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="4" height="16"/><rect x="10" y="4" width="4" height="10"/><rect x="17" y="4" width="4" height="13"/></svg>
+        Deal Pipeline
+      </div>
+      <div class="nav__item" data-view="targeting">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        Targeting Guide
+      </div>
+    </nav>
+
+    <div class="side__foot">
+      <b>Working set:</b> off-market apartment buildings with owners aged 65+ — a demographic statistically more likely to sell or transfer.
+      <br><br>Data stored locally in your browser.
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <div class="topbar">
+      <h1 id="viewTitle">Dashboard<span id="viewSub">Portfolio of off-market senior-owned apartment leads</span></h1>
+      <div class="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="globalSearch" placeholder="Search address, owner, city…" />
+      </div>
+      <button class="btn btn--primary" id="addBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+        Add Property
+      </button>
+    </div>
+
+    <div class="content">
+
+      <!-- ============ DASHBOARD ============ -->
+      <section class="view active" id="view-dashboard">
+        <div class="kpis" id="kpis"></div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card__head">
+              <div class="card__title">Owner Age Distribution<small>Count of tracked buildings by owner age band</small></div>
+            </div>
+            <div class="bars" id="ageBars"></div>
+          </div>
+          <div class="card">
+            <div class="card__head">
+              <div class="card__title">Deal Pipeline<small>Leads by stage</small></div>
+            </div>
+            <div class="pipe-mini" id="pipeMini"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__head">
+            <div class="card__title">Hot Leads<small>Senior-owned, off-market, longest-held — sorted by opportunity score</small></div>
+            <button class="btn btn--ghost btn--sm" data-goto="properties">View all →</button>
+          </div>
+          <div id="hotLeads"></div>
+        </div>
+        <div class="legal">
+          <b>Responsible-use note.</b> Owner age is used here as a proxy for sale likelihood in off-market outreach and is <b>not</b> a basis for any housing decision. In the U.S., the Fair Housing Act prohibits discrimination in the sale or rental of housing; this tool targets <i>acquisition outreach to owners</i>, not tenant selection. Verify all ownership, age, and contact data against public records and comply with TCPA/DNC rules and local solicitation laws before contacting anyone.
+        </div>
+      </section>
+
+      <!-- ============ PROPERTIES ============ -->
+      <section class="view" id="view-properties">
+        <div class="filters">
+          <div class="field">
+            <label>Min owner age</label>
+            <div class="agebox">
+              <input type="range" id="fAge" min="18" max="90" value="65" />
+              <span class="agev" id="fAgeV">65+</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Market status</label>
+            <select id="fStatus"><option value="">All</option><option value="Off-Market">Off-Market</option><option value="Pre-Market">Pre-Market</option><option value="Listed">Listed</option></select>
+          </div>
+          <div class="field">
+            <label>Deal stage</label>
+            <select id="fStage"><option value="">All</option></select>
+          </div>
+          <div class="field">
+            <label>City</label>
+            <select id="fCity"><option value="">All</option></select>
+          </div>
+          <div class="field">
+            <label>Min units</label>
+            <select id="fUnits"><option value="0">Any</option><option value="5">5+</option><option value="10">10+</option><option value="20">20+</option><option value="50">50+</option></select>
+          </div>
+          <div class="filters__spacer">
+            <button class="btn btn--ghost btn--sm" id="resetFilters">Reset</button>
+            <button class="btn btn--gold btn--sm" id="exportBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead><tr id="thead"></tr></thead>
+            <tbody id="tbody"></tbody>
+          </table>
+          <div class="rowcount" id="rowcount"></div>
+        </div>
+      </section>
+
+      <!-- ============ PIPELINE ============ -->
+      <section class="view" id="view-pipeline">
+        <div class="kanban" id="kanban"></div>
+      </section>
+
+      <!-- ============ TARGETING ============ -->
+      <section class="view" id="view-targeting">
+        <div class="card" style="max-width:900px">
+          <div class="card__title" style="margin-bottom:16px">How to source senior-owned, off-market apartment leads</div>
+          <div id="targetingBody" style="color:var(--muted);font-size:14px;line-height:1.75"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="overlay" id="formOverlay">
+  <div class="modal">
+    <div class="modal__head">
+      <div><h2 id="formTitle">Add Property</h2><p>Track an off-market apartment lead</p></div>
+      <button class="xbtn" data-close>&times;</button>
+    </div>
+    <form class="form" id="propForm">
+      <input type="hidden" id="fId" />
+      <div class="full"><label>Property address</label><input id="f_address" placeholder="1420 Elmwood Ave" required /></div>
+      <div><label>City</label><input id="f_city" placeholder="Cincinnati" required /></div>
+      <div><label>State</label><input id="f_state" placeholder="OH" maxlength="2" required /></div>
+      <div><label>Units</label><input id="f_units" type="number" min="1" value="8" required /></div>
+      <div><label>Est. value ($)</label><input id="f_value" type="number" min="0" value="850000" required /></div>
+      <div><label>Owner name</label><input id="f_owner" placeholder="Margaret Doyle" required /></div>
+      <div><label>Owner age</label><input id="f_ownerAge" type="number" min="18" max="110" value="72" required /></div>
+      <div><label>Years owned</label><input id="f_yearsOwned" type="number" min="0" value="24" /></div>
+      <div><label>Owner phone</label><input id="f_phone" placeholder="(513) 555-0142" /></div>
+      <div><label>Market status</label><select id="f_status"><option>Off-Market</option><option>Pre-Market</option><option>Listed</option></select></div>
+      <div><label>Deal stage</label><select id="f_stage"></select></div>
+      <div class="full"><label>Notes</label><textarea id="f_notes" placeholder="Owner mentioned wanting to move closer to family; building fully occupied…"></textarea></div>
+      <div class="hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+        Enter only lawfully-obtained data from public records or licensed providers. Owner age is used to prioritize outreach, never to make a housing decision.
+      </div>
+      <div class="modal__foot full" style="grid-column:1/-1;padding:0;border:none;position:static;background:none;margin-top:4px">
+        <button type="button" class="btn btn--ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Property</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Detail Modal -->
+<div class="overlay" id="detailOverlay">
+  <div class="modal">
+    <div class="modal__head">
+      <div><h2 id="dTitle">Property</h2><p id="dSub"></p></div>
+      <button class="xbtn" data-close>&times;</button>
+    </div>
+    <div class="detail-grid" id="detailGrid"></div>
+    <div class="modal__foot">
+      <button class="btn btn--ghost" id="delBtn">Delete</button>
+      <button class="btn btn--primary" id="editBtn">Edit</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span id="toastMsg">Saved</span></div>
+
+<script>
+/* ---------------- Data model ---------------- */
+const STAGES = [
+  {key:"New Lead", color:"#93a0c9"},
+  {key:"Researching", color:"#5b8cff"},
+  {key:"Contacted", color:"#a78bfa"},
+  {key:"Negotiating", color:"#f5a623"},
+  {key:"Under Contract", color:"#3ecf8e"},
+];
+const stageColor = k => (STAGES.find(s=>s.key===k)||{}).color || "#93a0c9";
+const STORE = "silverkey_props_v1";
+
+const SEED = [
+  {id:1,address:"1420 Elmwood Ave",city:"Cincinnati",state:"OH",units:12,value:1150000,owner:"Margaret Doyle",ownerAge:78,yearsOwned:31,phone:"(513) 555-0142",status:"Off-Market",stage:"Contacted",notes:"Owner has held since 1993. Mentioned kids live out of state; open to a quiet sale, no listing."},
+  {id:2,address:"88 Harrison St",city:"Cincinnati",state:"OH",units:24,value:2600000,owner:"Harold & Ruth Simmons",ownerAge:81,yearsOwned:27,phone:"(513) 555-0199",status:"Off-Market",stage:"Negotiating",notes:"Estate-planning conversation started. Wants to avoid capital gains — explore 1031/installment."},
+  {id:3,address:"305 Maple Court",city:"Covington",state:"KY",units:6,value:640000,owner:"Eleanor Vance",ownerAge:69,yearsOwned:19,phone:"(859) 555-0177",status:"Off-Market",stage:"Researching",notes:"Self-manages. Tired of tenant calls. Building fully occupied, below-market rents."},
+  {id:4,address:"7712 Ridge Rd",city:"Norwood",state:"OH",units:9,value:820000,owner:"Frank Petrelli",ownerAge:74,yearsOwned:22,phone:"(513) 555-0110",status:"Pre-Market",stage:"New Lead",notes:"Deferred maintenance visible. Possible value-add. No agent yet."},
+  {id:5,address:"210 Oak Terrace",city:"Newport",state:"KY",units:18,value:1980000,owner:"Dorothy Kline",ownerAge:83,yearsOwned:34,phone:"(859) 555-0164",status:"Off-Market",stage:"Under Contract",notes:"LOI accepted. Owner relocating to assisted living. 45-day close."},
+  {id:6,address:"455 Sycamore Ln",city:"Cincinnati",state:"OH",units:8,value:710000,owner:"George Whitaker",ownerAge:71,yearsOwned:16,phone:"(513) 555-0121",status:"Off-Market",stage:"Contacted",notes:"Left voicemail + mailer. Owns two other small buildings nearby — portfolio potential."},
+  {id:7,address:"12 Lincoln Blvd",city:"Covington",state:"KY",units:32,value:3400000,owner:"Anita Rowe",ownerAge:66,yearsOwned:11,phone:"(859) 555-0188",status:"Listed",stage:"New Lead",notes:"Just listed with a broker — monitor for price drops / expired listing."},
+  {id:8,address:"640 Vine St",city:"Cincinnati",state:"OH",units:14,value:1320000,owner:"Walter Benson",ownerAge:88,yearsOwned:41,phone:"(513) 555-0155",status:"Off-Market",stage:"Researching",notes:"Longest-held in database. Trust ownership — identify decision-maker/heirs."},
+  {id:9,address:"29 Church St",city:"Bellevue",state:"KY",units:5,value:520000,owner:"Patricia Nolan",ownerAge:63,yearsOwned:14,phone:"(859) 555-0133",status:"Off-Market",stage:"New Lead",notes:"Just under 65 — watchlist. Small, clean, self-managed."},
+  {id:10,address:"1801 Madison Rd",city:"Norwood",state:"OH",units:21,value:2250000,owner:"Robert & Jean Frey",ownerAge:76,yearsOwned:29,phone:"(513) 555-0166",status:"Off-Market",stage:"Negotiating",notes:"Second meeting scheduled. Seller-financing on the table for part of price."},
+  {id:11,address:"77 Highland Pl",city:"Newport",state:"KY",units:7,value:680000,owner:"Sylvia Marsh",ownerAge:79,yearsOwned:25,phone:"(859) 555-0144",status:"Pre-Market",stage:"Contacted",notes:"Considering selling within 6-12 months. Send comps package."},
+  {id:12,address:"334 Baxter Ave",city:"Cincinnati",state:"OH",units:16,value:1490000,owner:"Thomas Ackley",ownerAge:70,yearsOwned:20,phone:"(513) 555-0177",status:"Off-Market",stage:"Researching",notes:"Recently widowed; may downsize. Approach with care and patience."},
+];
+
+let props = load();
+function load(){ try{const r=JSON.parse(localStorage.getItem(STORE)); return Array.isArray(r)&&r.length?r:SEED.slice();}catch(e){return SEED.slice();} }
+function save(){ localStorage.setItem(STORE, JSON.stringify(props)); }
+
+const fmt$ = n => "$"+Number(n).toLocaleString();
+const fmtK = n => n>=1e6 ? "$"+(n/1e6).toFixed(2)+"M" : "$"+Math.round(n/1000)+"K";
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+/* ---------------- View routing ---------------- */
+const TITLES = {
+  dashboard:["Dashboard","Portfolio of off-market senior-owned apartment leads"],
+  properties:["Properties","Filter, sort and manage every tracked building"],
+  pipeline:["Deal Pipeline","Drag leads between stages"],
+  targeting:["Targeting Guide","Where to legally source these leads"],
+};
+function go(view){
+  $$(".view").forEach(v=>v.classList.remove("active"));
+  $("#view-"+view).classList.add("active");
+  $$(".nav__item").forEach(n=>n.classList.toggle("active", n.dataset.view===view));
+  $("#viewTitle").childNodes[0].nodeValue = TITLES[view][0];
+  $("#viewSub").textContent = TITLES[view][1];
+  if(view==="dashboard")renderDashboard();
+  if(view==="properties")renderTable();
+  if(view==="pipeline")renderKanban();
+}
+$("#nav").addEventListener("click",e=>{const it=e.target.closest(".nav__item"); if(it)go(it.dataset.view);});
+document.body.addEventListener("click",e=>{const g=e.target.closest("[data-goto]"); if(g)go(g.dataset.goto);});
+
+/* ---------------- Dashboard ---------------- */
+function renderDashboard(){
+  const total = props.length;
+  const senior = props.filter(p=>p.ownerAge>=65);
+  const off = props.filter(p=>p.status==="Off-Market");
+  const targets = props.filter(p=>p.ownerAge>=65 && p.status!=="Listed");
+  const units = props.reduce((a,p)=>a+Number(p.units),0);
+  const pipeVal = targets.reduce((a,p)=>a+Number(p.value),0);
+  const avgAge = total? Math.round(props.reduce((a,p)=>a+Number(p.ownerAge),0)/total):0;
+
+  $("#kpis").innerHTML = `
+    ${kpi("Tracked buildings", total, "M3 21h18M5 21V7l7-4 7 4v14", total+" total leads")}
+    ${kpi("Senior-owned (65+)", senior.length, "M12 2a5 5 0 100 10 5 5 0 000-10zM3 21a9 9 0 0118 0", Math.round(senior.length/Math.max(total,1)*100)+"% of database","gold")}
+    ${kpi("Off-market", off.length, "M18 6 6 18M6 6l12 12", off.length+" not publicly listed")}
+    ${kpi("Prime targets", targets.length, "M12 2 15 9l7 .5-5.5 4.5L18 21l-6-4-6 4 1.5-7L2 9.5 9 9z", "65+ &amp; unlisted","gold")}
+    ${kpi("Total units", units, "M3 21h18M6 21V9M18 21V9M6 9l6-4 6 4", "across portfolio")}
+    ${kpi("Target pipeline", fmtK(pipeVal), "M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6", "est. acquisition value")}
+  `;
+
+  // age bars
+  const bands = [["<55",p=>p.ownerAge<55],["55-64",p=>p.ownerAge>=55&&p.ownerAge<65],["65-74",p=>p.ownerAge>=65&&p.ownerAge<75],["75-84",p=>p.ownerAge>=75&&p.ownerAge<85],["85+",p=>p.ownerAge>=85]];
+  const counts = bands.map(b=>props.filter(b[1]).length);
+  const max = Math.max(1,...counts);
+  $("#ageBars").innerHTML = bands.map((b,i)=>{
+    const h = Math.max(6, counts[i]/max*100);
+    const gold = i>=2;
+    return `<div class="bar"><div class="bar__fill" style="height:${h}%;${gold?'background:linear-gradient(180deg,#f2cd85,#e5b567)':''}"><span>${counts[i]}</span></div><div class="bar__lbl">${b[0]}</div></div>`;
+  }).join("");
+
+  // pipe mini
+  $("#pipeMini").innerHTML = STAGES.map(s=>{
+    const n = props.filter(p=>p.stage===s.key).length;
+    const w = n/Math.max(total,1)*100;
+    return `<div class="pipe-row"><div class="pipe-row__name">${s.key}</div><div class="pipe-row__track"><div class="pipe-row__bar" style="width:${w}%;background:${s.color}"></div></div><div class="pipe-row__n">${n}</div></div>`;
+  }).join("");
+
+  // hot leads: senior + off-market, score by age*yearsOwned
+  const hot = props.filter(p=>p.ownerAge>=65 && p.status==="Off-Market")
+    .map(p=>({...p,score:p.ownerAge*0.6 + (p.yearsOwned||0)*0.8 + p.units*0.3}))
+    .sort((a,b)=>b.score-a.score).slice(0,5);
+  $("#hotLeads").innerHTML = hot.length ? `<div class="tablewrap" style="border:none"><table><tbody>${
+    hot.map(p=>`<tr onclick="openDetail(${p.id})"><td class="addr">${p.address}<small>${p.city}, ${p.state} · ${p.units} units</small></td>
+      <td>${p.owner}</td>
+      <td><span class="age-pill age-65">${p.ownerAge}</span></td>
+      <td><span class="badge b-off">Off-Market</span></td>
+      <td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td>
+      <td style="font-weight:700;color:var(--gold2)">${fmtK(p.value)}</td></tr>`).join("")
+  }</tbody></table></div>` : `<div class="empty">No senior-owned off-market leads yet.</div>`;
+}
+function kpi(label,val,icon,trend,mod){
+  return `<div class="kpi ${mod==='gold'?'kpi--gold':''}"><div class="kpi__label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${'<path d="'+icon+'"/>'}</svg>${label}</div><div class="kpi__val">${val}</div><div class="kpi__trend">${trend}</div></div>`;
+}
+
+/* ---------------- Properties table ---------------- */
+const COLS = [
+  {k:"address",l:"Property"},{k:"owner",l:"Owner"},{k:"ownerAge",l:"Age"},
+  {k:"yearsOwned",l:"Yrs held"},{k:"units",l:"Units"},{k:"status",l:"Status"},
+  {k:"stage",l:"Stage"},{k:"value",l:"Est. value"},
+];
+let sortKey="ownerAge", sortDir=-1;
+const filters = {age:65,status:"",stage:"",city:"",units:0,q:""};
+
+function initFilters(){
+  $("#fStage").innerHTML = '<option value="">All</option>'+STAGES.map(s=>`<option>${s.key}</option>`).join("");
+  $("#f_stage").innerHTML = STAGES.map(s=>`<option>${s.key}</option>`).join("");
+  refreshCities();
+}
+function refreshCities(){
+  const cities=[...new Set(props.map(p=>p.city))].sort();
+  $("#fCity").innerHTML='<option value="">All</option>'+cities.map(c=>`<option>${c}</option>`).join("");
+}
+function currentRows(){
+  return props.filter(p=>{
+    if(p.ownerAge<filters.age)return false;
+    if(filters.status&&p.status!==filters.status)return false;
+    if(filters.stage&&p.stage!==filters.stage)return false;
+    if(filters.city&&p.city!==filters.city)return false;
+    if(Number(p.units)<filters.units)return false;
+    if(filters.q){const s=(p.address+p.owner+p.city+p.state).toLowerCase();if(!s.includes(filters.q))return false;}
+    return true;
+  }).sort((a,b)=>{
+    let x=a[sortKey],y=b[sortKey];
+    if(typeof x==="string"){x=x.toLowerCase();y=y.toLowerCase();return x<y?-sortDir:x>y?sortDir:0;}
+    return (x-y)*sortDir;
+  });
+}
+function renderTable(){
+  $("#thead").innerHTML = COLS.map(c=>`<th data-k="${c.k}">${c.l} <span class="arr">${sortKey===c.k?(sortDir<0?'▼':'▲'):'↕'}</span></th>`).join("");
+  const rows = currentRows();
+  $("#tbody").innerHTML = rows.length ? rows.map(p=>`
+    <tr onclick="openDetail(${p.id})">
+      <td class="addr">${p.address}<small>${p.city}, ${p.state}</small></td>
+      <td>${p.owner}<small style="display:block;color:var(--muted);font-size:12px">${p.phone||''}</small></td>
+      <td><span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}">${p.ownerAge}</span></td>
+      <td>${p.yearsOwned||'—'}</td>
+      <td>${p.units}</td>
+      <td><span class="badge ${p.status==='Off-Market'?'b-off':p.status==='Pre-Market'?'b-pre':'b-listed'}">${p.status}</span></td>
+      <td><span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span></td>
+      <td style="font-weight:700">${fmtK(p.value)}</td>
+    </tr>`).join("") : `<tr><td colspan="8"><div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg><div>No properties match these filters.</div></div></td></tr>`;
+  $("#rowcount").textContent = `${rows.length} of ${props.length} building${props.length!==1?'s':''} · ${rows.reduce((a,p)=>a+Number(p.units),0)} units · ${fmtK(rows.reduce((a,p)=>a+Number(p.value),0))} combined value`;
+  $("#thead").querySelectorAll("th").forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(sortKey===k)sortDir*=-1;else{sortKey=k;sortDir=1;}renderTable();});
+}
+$("#fAge").addEventListener("input",e=>{filters.age=+e.target.value;$("#fAgeV").textContent=e.target.value+(e.target.value>=90?"":"+");renderTable();});
+$("#fStatus").addEventListener("change",e=>{filters.status=e.target.value;renderTable();});
+$("#fStage").addEventListener("change",e=>{filters.stage=e.target.value;renderTable();});
+$("#fCity").addEventListener("change",e=>{filters.city=e.target.value;renderTable();});
+$("#fUnits").addEventListener("change",e=>{filters.units=+e.target.value;renderTable();});
+$("#resetFilters").addEventListener("click",()=>{filters.age=65;filters.status="";filters.stage="";filters.city="";filters.units=0;$("#fAge").value=65;$("#fAgeV").textContent="65+";$("#fStatus").value="";$("#fStage").value="";$("#fCity").value="";$("#fUnits").value="0";renderTable();});
+$("#globalSearch").addEventListener("input",e=>{filters.q=e.target.value.toLowerCase().trim();const v=document.querySelector(".view.active").id;if(v==="view-properties")renderTable();else{go("properties");}});
+
+/* ---------------- Kanban ---------------- */
+function renderKanban(){
+  $("#kanban").innerHTML = STAGES.map(s=>{
+    const items = props.filter(p=>p.stage===s.key);
+    return `<div class="col" data-stage="${s.key}">
+      <div class="col__head"><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${s.color}"></span>${s.key}</span><span class="cnt">${items.length}</span></div>
+      <div class="col__body">${items.map(p=>`
+        <div class="kcard" draggable="true" data-id="${p.id}" onclick="openDetail(${p.id})">
+          <div class="kcard__addr">${p.address}</div>
+          <div class="kcard__meta">${p.city}, ${p.state} · ${p.units} units</div>
+          <div class="kcard__foot">
+            <span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}" style="padding:2px 8px;font-size:11.5px">age ${p.ownerAge}</span>
+            <span style="font-weight:700;font-size:12.5px;color:var(--gold2)">${fmtK(p.value)}</span>
+          </div>
+        </div>`).join("")||'<div style="color:var(--faint);font-size:12px;text-align:center;padding:16px 0">Drop here</div>'}</div>
+    </div>`;
+  }).join("");
+  let dragId=null;
+  $$(".kcard").forEach(c=>{
+    c.addEventListener("dragstart",e=>{dragId=+c.dataset.id;c.classList.add("dragging");e.stopPropagation();});
+    c.addEventListener("dragend",()=>c.classList.remove("dragging"));
+  });
+  $$(".col").forEach(col=>{
+    col.addEventListener("dragover",e=>{e.preventDefault();col.classList.add("dragover");});
+    col.addEventListener("dragleave",()=>col.classList.remove("dragover"));
+    col.addEventListener("drop",e=>{e.preventDefault();col.classList.remove("dragover");const p=props.find(x=>x.id===dragId);if(p){p.stage=col.dataset.stage;save();renderKanban();toast("Moved to "+col.dataset.stage);}});
+  });
+}
+
+/* ---------------- Detail ---------------- */
+let currentId=null;
+window.openDetail=function(id){
+  const p=props.find(x=>x.id===id); if(!p)return; currentId=id;
+  $("#dTitle").textContent=p.address;
+  $("#dSub").textContent=`${p.city}, ${p.state} · ${p.units} units`;
+  const oppScore=Math.round(p.ownerAge*0.6+(p.yearsOwned||0)*0.8+p.units*0.3);
+  $("#detailGrid").innerHTML=`
+    ${df("Owner",p.owner)}
+    ${df("Owner age",`<span class="age-pill ${p.ownerAge>=65?'age-65':'age-under'}">${p.ownerAge}${p.ownerAge>=65?' · senior':''}</span>`)}
+    ${df("Years owned",(p.yearsOwned||'—')+(p.yearsOwned?' yrs':''))}
+    ${df("Phone",p.phone||'—')}
+    ${df("Market status",`<span class="badge ${p.status==='Off-Market'?'b-off':p.status==='Pre-Market'?'b-pre':'b-listed'}">${p.status}</span>`)}
+    ${df("Deal stage",`<span class="stage-dot"><span class="dot" style="background:${stageColor(p.stage)}"></span>${p.stage}</span>`)}
+    ${df("Units",p.units)}
+    ${df("Est. value",fmt$(p.value))}
+    ${df("Opportunity score",`<span style="color:var(--gold2)">${oppScore}</span> <small style="color:var(--faint)">(age + tenure + size)</small>`)}
+    ${df("Per-unit value",fmt$(Math.round(p.value/p.units)))}
+    <div class="dfield full"><div class="k">Notes</div><div class="v notes">${p.notes||'—'}</div></div>
+  `;
+  $("#detailOverlay").classList.add("open");
+};
+function df(k,v){return `<div class="dfield"><div class="k">${k}</div><div class="v">${v}</div></div>`;}
+$("#editBtn").addEventListener("click",()=>{$("#detailOverlay").classList.remove("open");openForm(currentId);});
+$("#delBtn").addEventListener("click",()=>{if(confirm("Delete this property?")){props=props.filter(p=>p.id!==currentId);save();$("#detailOverlay").classList.remove("open");refreshCities();refreshActive();toast("Property deleted");}});
+
+/* ---------------- Form ---------------- */
+function openForm(id){
+  const editing = id!=null;
+  $("#formTitle").textContent = editing?"Edit Property":"Add Property";
+  const p = editing? props.find(x=>x.id===id):{address:"",city:"",state:"OH",units:8,value:850000,owner:"",ownerAge:72,yearsOwned:20,phone:"",status:"Off-Market",stage:"New Lead",notes:""};
+  $("#fId").value = editing?id:"";
+  $("#f_address").value=p.address;$("#f_city").value=p.city;$("#f_state").value=p.state;
+  $("#f_units").value=p.units;$("#f_value").value=p.value;$("#f_owner").value=p.owner;
+  $("#f_ownerAge").value=p.ownerAge;$("#f_yearsOwned").value=p.yearsOwned||"";$("#f_phone").value=p.phone||"";
+  $("#f_status").value=p.status;$("#f_stage").value=p.stage;$("#f_notes").value=p.notes||"";
+  $("#formOverlay").classList.add("open");
+}
+$("#addBtn").addEventListener("click",()=>openForm(null));
+$("#propForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=$("#fId").value;
+  const data={
+    address:$("#f_address").value.trim(),city:$("#f_city").value.trim(),state:$("#f_state").value.trim().toUpperCase(),
+    units:+$("#f_units").value,value:+$("#f_value").value,owner:$("#f_owner").value.trim(),
+    ownerAge:+$("#f_ownerAge").value,yearsOwned:+$("#f_yearsOwned").value||0,phone:$("#f_phone").value.trim(),
+    status:$("#f_status").value,stage:$("#f_stage").value,notes:$("#f_notes").value.trim(),
+  };
+  if(id){const p=props.find(x=>x.id===+id);Object.assign(p,data);toast("Property updated");}
+  else{data.id=Math.max(0,...props.map(p=>p.id))+1;props.unshift(data);toast("Property added");}
+  save();refreshCities();$("#formOverlay").classList.remove("open");refreshActive();
+});
+$$("[data-close]").forEach(b=>b.addEventListener("click",()=>{$("#formOverlay").classList.remove("open");$("#detailOverlay").classList.remove("open");}));
+$$(".overlay").forEach(o=>o.addEventListener("click",e=>{if(e.target===o)o.classList.remove("open");}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#formOverlay").classList.remove("open");$("#detailOverlay").classList.remove("open");}});
+
+/* ---------------- Export ---------------- */
+$("#exportBtn").addEventListener("click",()=>{
+  const rows=currentRows();
+  const cols=["address","city","state","units","value","owner","ownerAge","yearsOwned","phone","status","stage","notes"];
+  const csv=[cols.join(",")].concat(rows.map(p=>cols.map(c=>`"${String(p[c]??"").replace(/"/g,'""')}"`).join(","))).join("\n");
+  const blob=new Blob([csv],{type:"text/csv"});const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);a.download="silverkey-leads.csv";a.click();toast("Exported "+rows.length+" leads");
+});
+
+/* ---------------- Targeting guide ---------------- */
+$("#targetingBody").innerHTML=`
+  <p style="margin-bottom:14px">Owner age isn't published in most listing feeds — you build it from a few legitimate sources. The goal is a short, high-conviction list, not a mass blast.</p>
+  <ol style="padding-left:20px;display:flex;flex-direction:column;gap:12px">
+    <li><b style="color:var(--txt)">County assessor &amp; recorder records.</b> Pull apartment-zoned parcels (5+ units), the owner of record, mailing address, deed date and last sale date. Long ownership tenure is your strongest public signal.</li>
+    <li><b style="color:var(--txt)">Long tenure = likely older owner.</b> A deed recorded 25-40 years ago strongly correlates with an owner now in their 60s-80s. Sort your parcel pull by deed date first, then verify age.</li>
+    <li><b style="color:var(--txt)">Skip-tracing / licensed data providers.</b> Services like TLO, IDI/LexisNexis, BatchLeads or PropStream append age and phone from lawful sources. Only use providers whose terms permit real-estate outreach.</li>
+    <li><b style="color:var(--txt)">"Mom-and-pop" filters.</b> Individual or family-trust owners (not LLCs/REITs), one or two buildings, self-managed — these owners sell off-market far more often than institutions.</li>
+    <li><b style="color:var(--txt)">Life-event triggers.</b> Probate filings, obituaries, code-violation notices and tax delinquencies are public and often precede a quiet sale.</li>
+    <li><b style="color:var(--txt)">Then outreach — carefully.</b> Direct mail and courteous calls, respecting TCPA, Do-Not-Call, and state solicitation laws. Never pressure. Age informs <i>who you call first</i>, never the terms you offer.</li>
+  </ol>
+  <p style="margin-top:16px;padding:14px 16px;background:rgba(255,92,108,.08);border:1px solid rgba(255,92,108,.25);border-radius:10px;color:var(--muted)">
+    <b style="color:var(--red)">Compliance reminder.</b> Targeting <i>owners</i> for acquisition is legal; discriminating against <i>tenants/buyers</i> by age is not. Keep age out of any decision about who may rent or buy. Confirm your data providers' permissible-use terms and your local solicitation rules before contacting anyone.
+  </p>
+`;
+
+/* ---------------- misc ---------------- */
+let toastT;
+function toast(m){const t=$("#toast");$("#toastMsg").textContent=m;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2200);}
+function refreshActive(){const v=document.querySelector(".view.active").id.replace("view-","");go(v);}
+
+initFilters();
+renderDashboard();
+</script>
+</body>
+</html>

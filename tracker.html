@@ -274,6 +274,9 @@
   .sig-strong{background:rgba(62,207,142,.16);color:var(--green);border:1px solid rgba(62,207,142,.35)}
   .sig-fair{background:rgba(245,166,35,.14);color:var(--amber);border:1px solid rgba(245,166,35,.32)}
   .sig-thin{background:rgba(255,92,108,.13);color:var(--red);border:1px solid rgba(255,92,108,.3)}
+  .livebar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:12px 16px;margin-bottom:18px}
+  .livebar .lb-label{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-right:4px}
+  .livebar .btn svg{width:13px;height:13px}
   .om-actions{display:flex;gap:6px;white-space:nowrap}
   .om-actions .btn{padding:6px 10px;font-size:11.5px}
   .om-actions .icobtn{width:30px;height:30px;padding:0;justify-content:center}
@@ -478,8 +481,15 @@
       <!-- ON-MARKET -->
       <section class="view" id="view-onmarket">
         <div class="banner">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/></svg>
-          <span><b>On-market apartment deals, 10+ units.</b> Publicly listed buildings worth underwriting. Cap rate, price/unit and GRM are computed from the list price; the <b>signal</b> flags cap rate vs. a rough national bar. Click <b>Underwrite</b> or <b>Seller-finance</b> to drop any deal into a calculator, or <b>View</b> to find live listings on the platform.</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4m0 4h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span><b>Real, active listings — one click away.</b> Listing sites block direct import, so the deals below are illustrative <b>underwriting examples</b>. For inventory that's live right now, open the marketplace searches (they follow your <b>State</b> filter), then <b>Add listing</b> with the real URL, price and units to save and underwrite it.</span>
+        </div>
+        <div class="livebar">
+          <span class="lb-label">Live active listings</span>
+          <a class="btn btn--primary btn--sm" id="liveLoopnet" target="_blank" rel="noopener">LoopNet <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn--ghost btn--sm" id="liveCrexi" target="_blank" rel="noopener">Crexi <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <a class="btn btn--ghost btn--sm" id="liveGoogle" target="_blank" rel="noopener">Web search <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+          <button class="btn btn--gold btn--sm" id="omAdd" style="margin-left:auto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>Add listing</button>
         </div>
         <div class="filters">
           <div class="field"><label>Min units</label><select id="omUnits"><option value="10">10+</option><option value="15">15+</option><option value="20">20+</option><option value="30">30+</option></select></div>
@@ -637,6 +647,63 @@
   </div>
 </div>
 
+<!-- Listing Detail Modal -->
+<div class="overlay" id="listingOverlay">
+  <div class="modal modal--wide">
+    <div class="modal__head">
+      <div><h2 id="lTitle">Listing</h2><p id="lSub"></p></div>
+      <button class="xbtn" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="dactions" id="lActions"></div>
+    <div class="detail-grid" id="lGrid"></div>
+    <div class="modal__foot">
+      <button class="btn btn--danger" id="lDel">Delete</button>
+      <button class="btn btn--primary" id="lEdit">Edit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Listing Add/Edit Modal -->
+<div class="overlay" id="listingFormOverlay">
+  <div class="modal modal--wide">
+    <div class="modal__head">
+      <div><h2 id="lFormTitle">Add Listing</h2><p>Track an on-market deal (10+ units)</p></div>
+      <button class="xbtn" data-close aria-label="Close">&times;</button>
+    </div>
+    <form class="form" id="listingForm">
+      <input type="hidden" id="lf_id" />
+      <div class="fsection">Location</div>
+      <div class="sp2"><label>Street address</label><input id="lf_street" placeholder="1425 Bryant Ave" required /></div>
+      <div><label>Neighborhood</label><input id="lf_neighborhood" placeholder="West Farms" /></div>
+      <div><label>ZIP</label><input id="lf_zip" maxlength="10" placeholder="10460" /></div>
+      <div><label>City</label><input id="lf_city" placeholder="Bronx" required /></div>
+      <div><label>State</label><input id="lf_state" maxlength="2" placeholder="NY" required /></div>
+      <div><label>Latitude</label><input id="lf_lat" type="number" step="0.00001" /></div>
+      <div><label>Longitude</label><input id="lf_lng" type="number" step="0.00001" /></div>
+      <div class="full" style="display:flex;align-items:center;gap:10px;margin-top:-2px">
+        <button type="button" class="btn btn--ghost btn--sm" id="lf_geo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Find coordinates</button>
+        <span style="font-size:11.5px;color:var(--faint)">Pins it on the map (needs network).</span>
+      </div>
+      <div class="fsection">Deal &amp; financials</div>
+      <div><label>Units</label><input id="lf_units" type="number" min="1" value="12" required /></div>
+      <div><label>Year built</label><input id="lf_yearBuilt" type="number" min="1850" max="2026" placeholder="1928" /></div>
+      <div><label>List price ($)</label><input id="lf_listPrice" type="number" min="0" value="2600000" required /></div>
+      <div><label>Days on market</label><input id="lf_dom" type="number" min="0" value="0" /></div>
+      <div><label>Annual NOI ($)</label><input id="lf_noi" type="number" min="0" value="174000" /></div>
+      <div><label>Gross rent ($/yr)</label><input id="lf_grossRent" type="number" min="0" value="300000" /></div>
+      <div class="fsection">Listing</div>
+      <div class="sp2"><label>Broker / firm</label><input id="lf_broker" placeholder="Marcus &amp; Millichap" /></div>
+      <div><label>Platform</label><input id="lf_source" placeholder="Crexi / LoopNet" /></div>
+      <div class="full"><label>Listing URL</label><input id="lf_url" type="url" placeholder="https://www.crexi.com/properties/…  (paste the real listing link)" /></div>
+      <div class="full"><label>Notes</label><textarea id="lf_notes" placeholder="Broker's story, upside, condition, next step…"></textarea></div>
+      <div class="modal__foot full" style="grid-column:1/-1;padding:4px 0 0;border:none;position:static;background:none">
+        <button type="button" class="btn btn--ghost" data-close>Cancel</button>
+        <button type="submit" class="btn btn--primary">Save Listing</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="toast" id="toast"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg><span id="toastMsg">Saved</span></div>
 
 <script>
@@ -717,6 +784,14 @@ const LISTINGS_SEED = [
   {id:11,street:"1801 E Jefferson St",neighborhood:"Eastlake Park",city:"Phoenix",state:"AZ",zip:"85034",lat:33.4460,lng:-112.0450,units:30,yearBuilt:1974,listPrice:4800000,noi:336000,grossRent:576000,broker:"ABI Multifamily",source:"Crexi",dom:15,notes:"Larger asset, light-rail adjacent."},
   {id:12,street:"2409 Dryades St",neighborhood:"Central City",city:"New Orleans",state:"LA",zip:"70113",lat:29.9330,lng:-90.0830,units:11,yearBuilt:1910,listPrice:1320000,noi:105600,grossRent:186000,broker:"SVN",source:"LoopNet",dom:48,notes:"High cap, verify flood/insurance."},
 ];
+function slug(s){return String(s||"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+function platformSearch(l){
+  if(l.source==="LoopNet")return `https://www.loopnet.com/search/apartment-buildings/${slug(l.city)}-${(l.state||"").toLowerCase()}/for-sale/`;
+  if(l.source==="Crexi")return `https://www.crexi.com/properties?types%5B%5D=Multifamily&placeName=${encodeURIComponent((l.city||"")+", "+(l.state||""))}`;
+  return `https://www.google.com/search?q=${encodeURIComponent(l.units+" unit apartment building for sale "+l.city+" "+l.state)}`;
+}
+const listingUrl = l => (l.listingUrl&&l.listingUrl.trim())?l.listingUrl:platformSearch(l);
+LISTINGS_SEED.forEach(l=>{ if(!l.listingUrl) l.listingUrl=platformSearch(l); });
 let listings = loadListings();
 function loadListings(){ try{const r=JSON.parse(localStorage.getItem(LSTORE));return Array.isArray(r)&&r.length?r:clone(LISTINGS_SEED);}catch(e){return clone(LISTINGS_SEED);} }
 function saveListings(){ localStorage.setItem(LSTORE, JSON.stringify(listings)); }
@@ -1075,9 +1150,9 @@ $("#geocodeBtn").addEventListener("click",async()=>{
   }catch(err){toast("Geocoding needs network — use the downloadable version");}
   btn.disabled=false;btn.innerHTML=old;
 });
-$$("[data-close]").forEach(b=>b.addEventListener("click",()=>{$("#formOverlay").classList.remove("open");$("#detailOverlay").classList.remove("open");}));
+$$("[data-close]").forEach(b=>b.addEventListener("click",()=>$$(".overlay").forEach(o=>o.classList.remove("open"))));
 $$(".overlay").forEach(o=>o.addEventListener("click",e=>{if(e.target===o)o.classList.remove("open");}));
-document.addEventListener("keydown",e=>{if(e.key==="Escape"){$("#formOverlay").classList.remove("open");$("#detailOverlay").classList.remove("open");}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$$(".overlay").forEach(o=>o.classList.remove("open"));});
 
 /* ===== export / import ===== */
 const CSV_COLS=["street","neighborhood","city","state","zip","lat","lng","units","yearBuilt","value","noi","owner","entity","ownerAge","deedYear","phone","status","stage","verified","source","notes"];
@@ -1135,12 +1210,17 @@ function omRows(){
   return r;
 }
 function renderOnMarket(){
+  // live marketplace search links (respect the state filter)
+  const st=omFilters.state;
+  $("#liveLoopnet").href = st?`https://www.loopnet.com/search/apartment-buildings/${st.toLowerCase()}/for-sale/`:`https://www.loopnet.com/search/apartment-buildings/for-sale/`;
+  $("#liveCrexi").href = `https://www.crexi.com/properties?types%5B%5D=Multifamily`+(st?`&placeName=${encodeURIComponent(st)}`:"");
+  $("#liveGoogle").href = `https://www.google.com/search?q=`+encodeURIComponent(`apartment building 10+ units for sale ${st||"United States"}`);
   $("#omThead").innerHTML=OM_COLS.map(c=>`<th>${c.l}</th>`).join("");
   const rows=omRows();
   $("#omTbody").innerHTML=rows.length?rows.map(l=>{
     const cap=lcap(l),[sig,cls]=dealSignal(cap);
-    return `<tr>
-      <td class="addr"><span class="astreet"><a class="addr-ext" href="${gmapsUrl(l)}" target="_blank" rel="noopener" title="Open in Google Maps"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></a>${esc(l.street)}</span><small>${esc(subAddr(l))} · ${esc(l.broker)}</small></td>
+    return `<tr onclick="openListing(${l.id})">
+      <td class="addr"><span class="astreet"><a class="addr-ext" href="${gmapsUrl(l)}" target="_blank" rel="noopener" title="Open in Google Maps" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg></a>${esc(l.street)}</span><small>${esc(subAddr(l))} · ${esc(l.broker)}</small></td>
       <td class="tnum">${l.units}</td>
       <td class="tnum" style="font-weight:700">${fmtK(l.listPrice)}</td>
       <td class="tnum" style="font-weight:800;color:var(--gold2)">${cap.toFixed(1)}%</td>
@@ -1150,9 +1230,9 @@ function renderOnMarket(){
       <td>${esc(l.source)}</td>
       <td><span class="deal-signal ${cls}">${sig}</span></td>
       <td><div class="om-actions">
-        <button class="btn btn--primary btn--sm" onclick="underwriteDeal('listing',${l.id})">Underwrite</button>
-        <button class="btn btn--ghost btn--sm" onclick="sellerFinanceDeal('listing',${l.id})">Seller-fin</button>
-        <a class="btn btn--ghost btn--sm icobtn" href="${omListingSearchUrl(l)}" target="_blank" rel="noopener" title="Find live listings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
+        <button class="btn btn--primary btn--sm" onclick="event.stopPropagation();underwriteDeal('listing',${l.id})">Underwrite</button>
+        <button class="btn btn--ghost btn--sm" onclick="event.stopPropagation();sellerFinanceDeal('listing',${l.id})">Seller-fin</button>
+        <a class="btn btn--ghost btn--sm icobtn" href="${listingUrl(l)}" target="_blank" rel="noopener" title="View listing" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg></a>
       </div></td>
     </tr>`;
   }).join(""):`<tr><td colspan="10"><div class="empty">No on-market deals match these filters.</div></td></tr>`;
@@ -1170,6 +1250,76 @@ $("#omExport").addEventListener("click",()=>{
   const rows=omRows();
   const csv=[cols.join(",")].concat(rows.map(l=>{const o={...l,capRatePct:lcap(l).toFixed(2),pricePerUnit:Math.round(lppu(l)),grm:lgrm(l).toFixed(2)};return cols.map(c=>`"${String(o[c]??"").replace(/"/g,'""')}"`).join(",");})).join("\n");
   const blob=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="silverkey-onmarket.csv";a.click();toast("Exported "+rows.length+" listings");
+});
+
+/* ===== listing detail + add/edit ===== */
+function closeModals(){$$(".overlay").forEach(o=>o.classList.remove("open"));}
+function copyText(t){const done=()=>toast("Copied");if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(t).then(done).catch(fb);}else fb();function fb(){const ta=document.createElement("textarea");ta.value=t;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");done();}catch(e){toast("Copy failed");}document.body.removeChild(ta);}}
+window.copyListingAddr=function(id){const l=listings.find(x=>x.id===id);if(l)copyText(addrStr(l));};
+let currentListing=null;
+window.openListing=function(id){
+  const l=listings.find(x=>x.id===id); if(!l)return; currentListing=id;
+  const cap=lcap(l),sg=dealSignal(cap),sig=sg[0],cls=sg[1];
+  $("#lTitle").innerHTML=`${esc(l.street)} <span class="deal-signal ${cls}">${sig}</span>`;
+  $("#lSub").textContent=subAddr(l)+" · "+(l.broker||"—");
+  $("#lActions").innerHTML=`
+    <a class="btn btn--primary btn--sm" href="${listingUrl(l)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M7 7h10v10"/></svg>View listing</a>
+    <a class="btn btn--ghost btn--sm" href="${gmapsUrl(l)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-6.5 7-12A7 7 0 0 0 5 9c0 5.5 7 12 7 12Z"/><circle cx="12" cy="9" r="2.5"/></svg>Maps</a>
+    <a class="btn btn--ghost btn--sm" href="${streetviewUrl(l)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/></svg>Street View</a>
+    <button class="btn btn--gold btn--sm" onclick="underwriteDeal('listing',${l.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M8 14h.01M8 18h4"/></svg>Underwrite</button>
+    <button class="btn btn--ghost btn--sm" onclick="sellerFinanceDeal('listing',${l.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Seller-finance</button>
+    <button class="btn btn--ghost btn--sm" onclick="copyListingAddr(${l.id})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy address</button>`;
+  $("#lGrid").innerHTML=`
+    <div class="dsection">Deal</div>
+    ${df("List price",fmt$(l.listPrice))}
+    ${df("Cap rate",cap.toFixed(2)+"%")}
+    ${df("Price / unit",fmt$(lppu(l)))}
+    ${df("GRM",l.grossRent?lgrm(l).toFixed(1)+"x":'—')}
+    ${df("Units",l.units)}
+    ${df("Year built",l.yearBuilt||'—')}
+    ${df("Annual NOI",l.noi?fmt$(l.noi):'—')}
+    ${df("Gross rent",l.grossRent?fmt$(l.grossRent):'—')}
+    ${df("Days on market",(l.dom||0)+" days")}
+    <div class="dsection">Listing &amp; location</div>
+    ${df("Broker / firm",esc(l.broker||'—'))}
+    ${df("Platform",esc(l.source||'—'))}
+    ${df("Cap-rate signal",`<span class="deal-signal ${cls}">${sig}</span>`)}
+    ${df("Full address",esc(addrStr(l)))}
+    ${df("Coordinates",l.lat?`<span class="tnum">${(+l.lat).toFixed(4)}, ${(+l.lng).toFixed(4)}</span>`:'—')}
+    <div class="dfield"><div class="k">Days on market</div><div class="v">${(l.dom||0)}d</div></div>
+    <div class="dfield full"><div class="k">Listing URL</div><div class="v notes"><a href="${listingUrl(l)}" target="_blank" rel="noopener" style="color:var(--brand2);word-break:break-all">${esc(listingUrl(l))}</a></div></div>
+    <div class="dfield full"><div class="k">Notes</div><div class="v notes">${esc(l.notes||'—')}</div></div>`;
+  $("#listingOverlay").classList.add("open");
+};
+$("#lEdit").addEventListener("click",()=>{$("#listingOverlay").classList.remove("open");openListingForm(currentListing);});
+$("#lDel").addEventListener("click",()=>{if(confirm("Delete this listing?")){listings=listings.filter(l=>l.id!==currentListing);saveListings();$("#listingOverlay").classList.remove("open");initOnMarket();renderOnMarket();renderDashboard();toast("Listing deleted");}});
+function openListingForm(id){
+  const editing=id!=null;
+  $("#lFormTitle").textContent=editing?"Edit Listing":"Add Listing";
+  const l=editing?listings.find(x=>x.id===id):{street:"",neighborhood:"",city:"",state:"",zip:"",lat:"",lng:"",units:12,yearBuilt:"",listPrice:2600000,noi:174000,grossRent:300000,dom:0,broker:"",source:"",listingUrl:"",notes:""};
+  const set=(k,v)=>{$("#lf_"+k).value=(v==null?"":v);};
+  $("#lf_id").value=editing?id:"";
+  set("street",l.street);set("neighborhood",l.neighborhood);set("zip",l.zip);set("city",l.city);set("state",l.state);set("lat",l.lat);set("lng",l.lng);
+  set("units",l.units);set("yearBuilt",l.yearBuilt);set("listPrice",l.listPrice);set("dom",l.dom);set("noi",l.noi);set("grossRent",l.grossRent);
+  set("broker",l.broker);set("source",l.source);set("url",l.listingUrl||"");set("notes",l.notes);
+  $("#listingFormOverlay").classList.add("open");
+  setTimeout(()=>$("#lf_street").focus(),50);
+}
+$("#omAdd").addEventListener("click",()=>openListingForm(null));
+$("#listingForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const id=$("#lf_id").value, n=k=>{const v=parseFloat($("#lf_"+k).value);return isNaN(v)?"":v;};
+  const data={street:$("#lf_street").value.trim(),neighborhood:$("#lf_neighborhood").value.trim(),zip:$("#lf_zip").value.trim(),city:$("#lf_city").value.trim(),state:$("#lf_state").value.trim().toUpperCase(),lat:n("lat"),lng:n("lng"),units:+$("#lf_units").value,yearBuilt:+$("#lf_yearBuilt").value||null,listPrice:+$("#lf_listPrice").value,noi:+$("#lf_noi").value||0,grossRent:+$("#lf_grossRent").value||0,dom:+$("#lf_dom").value||0,broker:$("#lf_broker").value.trim(),source:$("#lf_source").value.trim(),listingUrl:$("#lf_url").value.trim(),notes:$("#lf_notes").value.trim()};
+  if(id){const l=listings.find(x=>x.id===+id);Object.assign(l,data);toast("Listing updated");}
+  else{data.id=Math.max(0,...listings.map(l=>l.id))+1;listings.unshift(data);toast("Listing added");}
+  saveListings();initOnMarket();$("#listingFormOverlay").classList.remove("open");renderOnMarket();renderDashboard();
+});
+$("#lf_geo").addEventListener("click",async()=>{
+  const q=[$("#lf_street").value,$("#lf_city").value,$("#lf_state").value,$("#lf_zip").value].map(s=>s.trim()).filter(Boolean).join(", ");
+  if(!q){toast("Enter an address first");return;}
+  const btn=$("#lf_geo"),old=btn.innerHTML;btn.disabled=true;btn.textContent="Locating…";
+  try{const r=await fetch("https://nominatim.openstreetmap.org/search?format=json&limit=1&q="+encodeURIComponent(q),{headers:{Accept:"application/json"}});const j=await r.json();if(j&&j[0]){$("#lf_lat").value=(+j[0].lat).toFixed(5);$("#lf_lng").value=(+j[0].lon).toFixed(5);toast("Address found & pinned");}else toast("Address not found");}catch(e){toast("Geocoding needs network — use the downloadable version");}
+  btn.disabled=false;btn.innerHTML=old;
 });
 
 /* ===== calculators ===== */
@@ -1233,13 +1383,13 @@ window.underwriteDeal=function(kind,id){
   const d=findDeal(kind,id);if(!d)return;
   const price=d.listPrice||d.value, gr=d.grossRent||Math.round((d.noi||0)/0.6);
   setVal("cm_price",price);setVal("cm_units",d.units);setVal("cm_gross",gr);setVal("cm_vac",0);setVal("cm_opex",Math.max(0,gr-(d.noi||0)));setVal("cm_down",25);setVal("cm_rate",6.5);setVal("cm_amort",25);setVal("cm_closing",2);
-  $("#detailOverlay").classList.remove("open");go("calc");setCalcTab("commercial");computeCommercial();toast("Loaded into underwriting");
+  closeModals();go("calc");setCalcTab("commercial");computeCommercial();toast("Loaded into underwriting");
 };
 window.sellerFinanceDeal=function(kind,id){
   const d=findDeal(kind,id);if(!d)return;
   const price=d.listPrice||d.value;
   setVal("sf_price",price);setVal("sf_down",15);setVal("sf_rate",6);setVal("sf_amort",30);setVal("sf_balloon",7);setVal("sf_noi",d.noi||0);setVal("sf_units",d.units);
-  $("#detailOverlay").classList.remove("open");go("calc");setCalcTab("seller");computeSeller();toast("Loaded into seller finance");
+  closeModals();go("calc");setCalcTab("seller");computeSeller();toast("Loaded into seller finance");
 };
 
 initFilters();

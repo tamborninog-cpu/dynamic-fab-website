@@ -30,10 +30,10 @@
       </a>
       <ul class="nav__links" id="navLinks">
         <li><a href="#services" class="nav__link">Services</a></li>
-        <li><a href="#about" class="nav__link">About</a></li>
-        <li><a href="#process" class="nav__link">Process</a></li>
+        <li><a href="#configurator" class="nav__link">Configurator</a></li>
+        <li><a href="#colors" class="nav__link">Colors</a></li>
         <li><a href="#gallery" class="nav__link">Work</a></li>
-        <li><a href="#testimonials" class="nav__link">Reviews</a></li>
+        <li><a href="#faq" class="nav__link">FAQ</a></li>
         <li><a href="#quote" class="nav__link nav__link--cta">Get a Quote</a></li>
       </ul>
       <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu">
@@ -219,6 +219,84 @@
     </div>
   </section>
 
+  <!-- Project Configurator -->
+  <section class="configurator" id="configurator">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Build Your Project</span>
+        <h2 class="section-title">Configure It. <span class="text-accent">We'll Quote It.</span></h2>
+        <p class="section-sub">Tell us what you need in a few clicks. We'll build your project summary and drop it straight into a quote request — no back-and-forth to get started.</p>
+      </div>
+
+      <div class="configurator__panel">
+        <div class="configurator__builder">
+
+          <div class="cfg-step">
+            <div class="cfg-step__label"><span class="cfg-step__num">1</span> What do you need?</div>
+            <div class="cfg-options" data-group="service">
+              <button type="button" class="cfg-chip" data-value="Metal Fabrication" aria-pressed="false">Metal Fabrication</button>
+              <button type="button" class="cfg-chip" data-value="Powder Coating" aria-pressed="false">Powder Coating</button>
+              <button type="button" class="cfg-chip" data-value="Sandblasting" aria-pressed="false">Sandblasting</button>
+              <button type="button" class="cfg-chip" data-value="Welding &amp; Repairs" aria-pressed="false">Welding &amp; Repairs</button>
+            </div>
+          </div>
+
+          <div class="cfg-step">
+            <div class="cfg-step__label"><span class="cfg-step__num">2</span> Material</div>
+            <div class="cfg-options" data-group="material" data-single="true">
+              <button type="button" class="cfg-chip" data-value="Mild / Carbon Steel" aria-pressed="false">Mild / Carbon Steel</button>
+              <button type="button" class="cfg-chip" data-value="Stainless Steel" aria-pressed="false">Stainless Steel</button>
+              <button type="button" class="cfg-chip" data-value="Aluminum" aria-pressed="false">Aluminum</button>
+              <button type="button" class="cfg-chip" data-value="Not sure yet" aria-pressed="false">Not sure yet</button>
+            </div>
+          </div>
+
+          <div class="cfg-step">
+            <div class="cfg-step__label"><span class="cfg-step__num">3</span> Project size</div>
+            <div class="cfg-options" data-group="size" data-single="true">
+              <button type="button" class="cfg-chip" data-value="Small — a few parts" aria-pressed="false">Small</button>
+              <button type="button" class="cfg-chip" data-value="Medium — batch run" aria-pressed="false">Medium batch</button>
+              <button type="button" class="cfg-chip" data-value="Large — production volume" aria-pressed="false">Production volume</button>
+            </div>
+          </div>
+
+          <div class="cfg-step">
+            <div class="cfg-step__label"><span class="cfg-step__num">4</span> How soon?</div>
+            <div class="cfg-options" data-group="timeline" data-single="true">
+              <button type="button" class="cfg-chip" data-value="ASAP / Rush" data-timeline="asap" aria-pressed="false">ASAP / Rush</button>
+              <button type="button" class="cfg-chip" data-value="1–2 Weeks" data-timeline="1-2weeks" aria-pressed="false">1–2 Weeks</button>
+              <button type="button" class="cfg-chip" data-value="2–4 Weeks" data-timeline="2-4weeks" aria-pressed="false">2–4 Weeks</button>
+              <button type="button" class="cfg-chip" data-value="Flexible" data-timeline="flexible" aria-pressed="false">Flexible</button>
+            </div>
+          </div>
+
+        </div>
+
+        <aside class="configurator__summary" id="cfgSummary" aria-live="polite">
+          <h3 class="configurator__summary-title">Your Project</h3>
+          <ul class="cfg-summary-list" id="cfgSummaryList">
+            <li class="cfg-summary-empty">Start selecting options and your project summary builds here.</li>
+          </ul>
+          <div class="configurator__meta">
+            <div class="cfg-meta-row">
+              <span>Estimated turnaround</span>
+              <strong id="cfgTurnaround">—</strong>
+            </div>
+            <div class="cfg-meta-row">
+              <span>Scope</span>
+              <strong id="cfgScope">—</strong>
+            </div>
+          </div>
+          <button type="button" class="btn btn--primary btn--block btn--lg" id="cfgSubmit">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            Get My Quote
+          </button>
+          <p class="configurator__note">Ballpark turnaround only — your exact quote and lead time come back within 1 business day.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- About / Trust -->
   <section class="about" id="about">
     <div class="container">
@@ -351,6 +429,81 @@
     </div>
   </section>
 
+  <!-- Color Studio -->
+  <section class="colors" id="colors">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Powder Coat Color Studio</span>
+        <h2 class="section-title">Hundreds of Colors. <span class="text-accent">Pick Yours.</span></h2>
+        <p class="section-sub">Powder coating outlasts paint — chip, scratch, and fade resistant. Tap a color to preview it on a part, then request it by name on your quote.</p>
+      </div>
+
+      <div class="colors__studio">
+        <div class="colors__preview">
+          <svg class="colors__part" viewBox="0 0 240 200" role="img" aria-label="Coated metal bracket preview" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="coatSheen" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+                <stop offset="45%" stop-color="#ffffff" stop-opacity="0.05"/>
+                <stop offset="100%" stop-color="#000000" stop-opacity="0.25"/>
+              </linearGradient>
+            </defs>
+            <g id="coatPart">
+              <path d="M40 40 h120 a20 20 0 0 1 20 20 v100 h-40 v-70 a10 10 0 0 0 -10 -10 h-90 z" fill="#f97316"/>
+              <rect x="40" y="40" width="60" height="120" rx="8" fill="#f97316"/>
+              <circle cx="70" cy="70" r="9" fill="rgba(0,0,0,0.35)"/>
+              <circle cx="70" cy="130" r="9" fill="rgba(0,0,0,0.35)"/>
+            </g>
+            <path d="M40 40 h120 a20 20 0 0 1 20 20 v100 h-40 v-70 a10 10 0 0 0 -10 -10 h-90 z" fill="url(#coatSheen)"/>
+            <rect x="40" y="40" width="60" height="120" rx="8" fill="url(#coatSheen)"/>
+          </svg>
+          <div class="colors__current">
+            <span class="colors__current-swatch" id="colorSwatch"></span>
+            <div>
+              <strong id="colorName">Safety Orange</strong>
+              <span id="colorFinish">Gloss finish</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="colors__picker">
+          <div class="colors__swatches" id="colorSwatches" role="listbox" aria-label="Powder coat colors"></div>
+          <a href="#quote" class="btn btn--primary colors__cta" id="colorCta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Quote this color
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Before / After -->
+  <section class="beforeafter" id="beforeafter">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">See The Difference</span>
+        <h2 class="section-title">From Rusted to <span class="text-accent">Restored</span></h2>
+        <p class="section-sub">Drag the handle to reveal what sandblasting and powder coating do to worn, corroded metal.</p>
+      </div>
+
+      <div class="ba" id="baSlider">
+        <div class="ba__img ba__img--after" aria-hidden="true">
+          <div class="ba__label ba__label--after">After</div>
+        </div>
+        <div class="ba__img ba__img--before" id="baBefore" aria-hidden="true">
+          <div class="ba__label ba__label--before">Before</div>
+        </div>
+        <div class="ba__handle" id="baHandle" role="slider" tabindex="0" aria-label="Before and after comparison slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+          <span class="ba__handle-line"></span>
+          <span class="ba__handle-grip">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/><polyline points="9 6 15 12 9 18" transform="translate(0,0)"/></svg>
+          </span>
+        </div>
+      </div>
+      <p class="beforeafter__note">Illustrative preview — swap in your real project photos to show off your best work.</p>
+    </div>
+  </section>
+
   <!-- Gallery -->
   <section class="gallery" id="gallery">
     <div class="container">
@@ -414,6 +567,68 @@
       <div class="gallery__note">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
         Photo placeholders — replace with your actual project photos
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Questions</span>
+        <h2 class="section-title">Answers Before You <span class="text-accent">Ask</span></h2>
+        <p class="section-sub">The things customers ask us most, up front and straight.</p>
+      </div>
+      <div class="faq__list">
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>Do you handle both fabrication and finishing in-house?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Yes. We cut, form, weld, blast, and powder coat all under one roof — so your parts go from raw material to finished product without shipping between vendors. That means tighter quality control and faster turnaround.</p></div>
+        </div>
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>How fast can I get a quote?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Most quote requests get a detailed, no-obligation response within one business day. Rush projects? Call us at (715) 552-4454 and we'll move fast.</p></div>
+        </div>
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>What materials do you work with?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Mild and carbon steel, stainless steel, aluminum, and specialty alloys. If you're not sure what's right for the job, tell us the application and we'll recommend the best material.</p></div>
+        </div>
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>Do you take small jobs or only large runs?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Both. From a single custom bracket or a one-off repair to high-volume production runs, we bring the same precision and attention to every job.</p></div>
+        </div>
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>Why powder coating instead of paint?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Powder coat is dramatically more durable — it resists chipping, scratching, corrosion, and UV fading far better than liquid paint, and it's an environmentally friendlier process. It comes in hundreds of colors and textures too. Check out our Color Studio above.</p></div>
+        </div>
+
+        <div class="faq__item">
+          <button type="button" class="faq__q" aria-expanded="false">
+            <span>Can you work from my drawings or specs?</span>
+            <svg class="faq__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </button>
+          <div class="faq__a"><p>Absolutely. Upload PDFs, DWG, or DXF files right on the quote form. No drawings? Describe what you need and we'll help spec it out with you.</p></div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -697,6 +912,18 @@
       </div>
     </div>
   </footer>
+
+  <!-- Sticky mobile action bar -->
+  <div class="mobilebar" id="mobilebar">
+    <a href="tel:+17155524454" class="mobilebar__btn mobilebar__btn--call">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Call Now
+    </a>
+    <a href="#quote" class="mobilebar__btn mobilebar__btn--quote">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+      Free Quote
+    </a>
+  </div>
 
   <script src="script.js"></script>
 </body>
